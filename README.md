@@ -8,9 +8,9 @@ https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f
 
 ### Source Code
 
-* [contracts/HoprToken.sol](contracts/HoprToken.sol) - copied from https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol
-* [contracts/ERC777Snapshot.sol](contracts/ERC777Snapshot.sol) - copied from https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol
-* [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) - copied from https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol
+* [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol)
+* [contracts/ERC777Snapshot.sol](contracts/ERC777Snapshot.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol)
+* [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol)
 
 <br />
 
@@ -57,6 +57,6 @@ Flattened with OpenZeppelin v3.0.2.
 ### HoprDistributor
 
 * [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol)
-  * [contracts/openzeppelin/access/Ownable.sol](contracts/openzeppelin/access/Ownable.sol) - `import "@openzeppelin/contracts/access/Ownable.sol";`
-    * [contracts/openzeppelin/GSN/Context.sol](contracts/openzeppelin/GSN/Context.sol) - `import "../GSN/Context.sol";`
+  * [contracts/openzeppelin/access/Ownable.sol](contracts/openzeppelin/access/Ownable.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/access/Ownable.sol)
+    * [contracts/openzeppelin/GSN/Context.sol](contracts/openzeppelin/GSN/Context.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/GSN/Context.sol)
   * import "./HoprToken.sol";
