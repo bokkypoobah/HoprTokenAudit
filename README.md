@@ -40,8 +40,20 @@ Flattened with OpenZeppelin v3.0.2.
 ### HoprToken
 
 * [contracts/HoprToken.sol](contracts/HoprToken.sol)
-  * import "@openzeppelin/contracts/access/AccessControl.sol";
+  * [contracts/openzeppelin/access/AccessControl.sol](contracts/openzeppelin/access/AccessControl.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/access/AccessControl.sol)
+    * [contracts/openzeppelin/utils/EnumerableSet.sol](contracts/openzeppelin/utils/EnumerableSet.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/utils/EnumerableSet.sol)
+    * [contracts/openzeppelin/utils/Address.sol](contracts/openzeppelin/utils/Address.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/utils/Address.sol)
+    * [contracts/openzeppelin/GSN/Context.sol](contracts/openzeppelin/GSN/Context.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/GSN/Context.sol)
   * import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
+    * [contracts/openzeppelin/token/ERC777/ERC777.sol](contracts/openzeppelin/token/ERC777/ERC777.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/token/ERC777/ERC777.sol)
+      * import "../../GSN/Context.sol";
+      * [contracts/openzeppelin/token/ERC777/IERC777.sol](contracts/openzeppelin/token/ERC777/IERC777.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/token/ERC777/IERC777.sol)
+      * [contracts/openzeppelin/token/ERC777/IERC777Recipient.sol](contracts/openzeppelin/token/ERC777/IERC777Recipient.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/token/ERC777/IERC777Recipient.sol)
+      * [contracts/openzeppelin/token/ERC777/IERC777Sender.sol](contracts/openzeppelin/token/ERC777/IERC777Sender.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/token/ERC777/IERC777Sender.sol)
+      * [contracts/openzeppelin/token/ERC20/IERC20.sol](contracts/openzeppelin/token/ERC20/IERC20.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/token/ERC20/IERC20.sol)
+      * import "../../math/SafeMath.sol";
+      * import "../../utils/Address.sol";
+      * import "../../introspection/IERC1820Registry.sol";
   * import "./ERC777/ERC777Snapshot.sol";
 
 <br />
