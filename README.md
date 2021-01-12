@@ -1,4 +1,5 @@
 # HoprTokenAudit
+
 HOPR ERC-777 Token Contract Audit
 
 
@@ -8,7 +9,7 @@ https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f
 
 ### Source Code
 
-Imports adjusted to compile from local directory.
+Imports adjusted to compile with OpenZeppelin from local directory.
 
 * [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol)
 * [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol)
@@ -78,12 +79,10 @@ Flattened with OpenZeppelin v3.0.2.
 
 <br />
 
-Using [truffle-flattener](https://github.com/nomiclabs/truffle-flattener) and the script [10_flattenSolidityFiles.sh](10_flattenSolidityFiles.sh) to generate the flattened files:
+### Code Review
 
-* [flattened/HoprDistributor_flattened.sol](flattened/HoprDistributor_flattened.sol)
-* [flattened/HoprToken_flattened.sol](flattened/HoprToken_flattened.sol)
+Using [truffle-flattener](https://github.com/nomiclabs/truffle-flattener) and the script [10_flattenSolidityFiles.sh](10_flattenSolidityFiles.sh) to generate the flattened file [flattened/HoprDistributor_flattened.sol](flattened/HoprDistributor_flattened.sol) . Note that this contains the HoprToken contract.
 
 These have been copied into the following files for code review:
 
 * [code-review/HoprDistributor_flattened.md](code-review/HoprDistributor_flattened.md)
-* [code-review/HoprToken_flattened.md](code-review/HoprToken_flattened.md)
