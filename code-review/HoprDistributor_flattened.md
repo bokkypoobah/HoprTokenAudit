@@ -845,16 +845,16 @@ interface IERC777Recipient {
      */
 
     // BK OK
-    //   interface ERC777TokensRecipient {
-    //       function tokensReceived(
-    //           address operator,
-    //           address from,
-    //           address to,
-    //           uint256 amount,
-    //           bytes calldata data,
-    //           bytes calldata operatorData
-    //       ) external;
-    //   }
+    // BK  interface ERC777TokensRecipient {
+    // BK      function tokensReceived(
+    // BK          address operator,
+    // BK          address from,
+    // BK          address to,
+    // BK          uint256 amount,
+    // BK          bytes calldata data,
+    // BK          bytes calldata operatorData
+    // BK      ) external;
+    // BK  }
     function tokensReceived(
         address operator,
         address from,
