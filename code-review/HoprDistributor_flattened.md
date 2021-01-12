@@ -1913,7 +1913,9 @@ pragma solidity ^0.6.0;
 contract HoprToken is AccessControl, ERC777Snapshot {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
+    // BK OK - ERC777.constructor(string memory name, string memory symbol, address[] memory defaultOperators) public;
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
+        // BK OK - function _setupRole(bytes32 role, address account) internal virtual;
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
