@@ -638,17 +638,19 @@ pragma solidity ^0.6.0;
  * for the associated interfaces in said registry. See {IERC1820Registry} and
  * {ERC1820Implementer}.
  */
-// BK CHECK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
+// BK OK - ERC777Token - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777 {
     /**
      * @dev Returns the name of the token.
      */
+    // BK OK - function name() external view returns (string memory);
     function name() external view returns (string memory);
 
     /**
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
+    // BK OK - function symbol() external view returns (string memory);
     function symbol() external view returns (string memory);
 
     /**
@@ -658,16 +660,19 @@ interface IERC777 {
      *
      * For most token contracts, this value will equal 1.
      */
+    // BK OK - function granularity() external view returns (uint256);
     function granularity() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens in existence.
      */
+    // BK OK - function totalSupply() external view returns (uint256);
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by an account (`owner`).
      */
+    // BK OK - function balanceOf(address holder) external view returns (uint256);
     function balanceOf(address owner) external view returns (uint256);
 
     /**
@@ -686,6 +691,7 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+    // BK OK - function send(address to, uint256 amount, bytes calldata data) external;
     function send(address recipient, uint256 amount, bytes calldata data) external;
 
     /**
@@ -701,6 +707,7 @@ interface IERC777 {
      *
      * - the caller must have at least `amount` tokens.
      */
+    // BK OK - function burn(uint256 amount, bytes calldata data) external;
     function burn(uint256 amount, bytes calldata data) external;
 
     /**
@@ -710,6 +717,11 @@ interface IERC777 {
      *
      * See {operatorSend} and {operatorBurn}.
      */
+    // BK OK
+    // BK   function isOperatorFor(
+    // BK       address operator,
+    // BK       address holder
+    // BK   ) external view returns (bool);
     function isOperatorFor(address operator, address tokenHolder) external view returns (bool);
 
     /**
@@ -723,6 +735,7 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
+    // BK OK - function authorizeOperator(address operator) external;
     function authorizeOperator(address operator) external;
 
     /**
@@ -736,6 +749,7 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
+    // BK OK - function revokeOperator(address operator) external;
     function revokeOperator(address operator) external;
 
     /**
@@ -746,6 +760,7 @@ interface IERC777 {
      * This list is immutable, but individual holders may revoke these via
      * {revokeOperator}, in which case {isOperatorFor} will return false.
      */
+    // BK OK - function defaultOperators() external view returns (address[] memory);
     function defaultOperators() external view returns (address[] memory);
 
     /**
@@ -767,6 +782,14 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+    // BK OK
+    // BK   function operatorSend(
+    // BK       address from,
+    // BK       address to,
+    // BK       uint256 amount,
+    // BK       bytes calldata data,
+    // BK       bytes calldata operatorData
+    // BK   ) external;
     function operatorSend(
         address sender,
         address recipient,
@@ -790,6 +813,13 @@ interface IERC777 {
      * - `account` must have at least `amount` tokens.
      * - the caller must be an operator for `account`.
      */
+    // BK OK?
+    // BK   function operatorBurn(
+    // BK       address from,
+    // BK       uint256 amount,
+    // BK       bytes calldata data,
+    // BK       bytes calldata operatorData
+    // BK   ) external;
     function operatorBurn(
         address account,
         uint256 amount,
@@ -797,6 +827,15 @@ interface IERC777 {
         bytes calldata operatorData
     ) external;
 
+    // BK OK
+    // BK   event Sent(
+    // BK       address indexed operator,
+    // BK       address indexed from,
+    // BK       address indexed to,
+    // BK       uint256 amount,
+    // BK       bytes data,
+    // BK       bytes operatorData
+    // BK   );
     event Sent(
         address indexed operator,
         address indexed from,
@@ -806,12 +845,34 @@ interface IERC777 {
         bytes operatorData
     );
 
+    // BK OK
+    // BK   event Minted(
+    // BK       address indexed operator,
+    // BK       address indexed to,
+    // BK       uint256 amount,
+    // BK       bytes data,
+    // BK       bytes operatorData
+    // BK   );
     event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
 
+    // BK OK
+    // BK   event Burned(
+    // BK       address indexed operator,
+    // BK       address indexed from,
+    // BK       uint256 amount,
+    // BK       bytes data,
+    // BK       bytes operatorData
+    // BK   );
     event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
 
+    // BK OK
+    // BK   event AuthorizedOperator(
+    // BK       address indexed operator,
+    // BK       address indexed holder
+    // BK   );
     event AuthorizedOperator(address indexed operator, address indexed tokenHolder);
 
+    // BK OK - event RevokedOperator(address indexed operator, address indexed holder);
     event RevokedOperator(address indexed operator, address indexed tokenHolder);
 }
 

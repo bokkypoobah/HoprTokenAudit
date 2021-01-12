@@ -96,7 +96,7 @@ Outline:
 * [ ] abstract contract AccessControl
   * [ ] using EnumerableSet for EnumerableSet.AddressSet;
   * [ ] using Address for address;
-* [ ] interface IERC777
+* [x] interface IERC777
 * [x] interface IERC777Recipient
 * [x] interface IERC777Sender
 * [x] interface IERC20
