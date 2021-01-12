@@ -845,16 +845,16 @@ interface IERC777Recipient {
      */
 
     // BK OK
-    // BK  interface ERC777TokensRecipient {
-    // BK      function tokensReceived(
-    // BK          address operator,
-    // BK          address from,
-    // BK          address to,
-    // BK          uint256 amount,
-    // BK          bytes calldata data,
-    // BK          bytes calldata operatorData
-    // BK      ) external;
-    // BK  }
+    // BK   interface ERC777TokensRecipient {
+    // BK       function tokensReceived(
+    // BK           address operator,
+    // BK           address from,
+    // BK           address to,
+    // BK           uint256 amount,
+    // BK           bytes calldata data,
+    // BK           bytes calldata operatorData
+    // BK       ) external;
+    // BK   }
     function tokensReceived(
         address operator,
         address from,
@@ -893,6 +893,18 @@ interface IERC777Sender {
      *
      * This function may revert to prevent the operation from being executed.
      */
+
+    // BK CHECK
+    // BK    interface ERC777TokensSender {
+    // BK        function tokensToSend(
+    // BK            address operator,
+    // BK            address from,
+    // BK            address to,
+    // BK            uint256 amount,
+    // BK            bytes calldata userData,
+    // BK            bytes calldata operatorData
+    // BK        ) external;
+    // BK    }     
     function tokensToSend(
         address operator,
         address from,

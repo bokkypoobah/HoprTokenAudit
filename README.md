@@ -98,7 +98,7 @@ Outline:
   * [ ] using Address for address;
 * [ ] interface IERC777
 * [x] interface IERC777Recipient
-* [ ] interface IERC777Sender
+* [x] interface IERC777Sender
 * [x] interface IERC20
 * [ ] library SafeMath
 * [ ] interface IERC1820Registry
