@@ -1,0 +1,1062 @@
+Script started on Tue Jan 12 20:13:34 2021
+Now using node v12.19.0 (npm v6.14.8)
+[?1034hIota:hoprnet bok$ 
+Iota:hoprnet bok$ yarn test
+[2K[1G[1myarn run v1.22.4[22m
+[2K[1G[2m$ lerna run test --stream[22m
+[37;40mlerna[0m [0m[34;40mnotice[0m [0m[35mcli[0m v3.22.1
+[0m[37;40mlerna[0m [0m[32minfo[0m[35m[0m Executing command in 5 packages: "yarn run test"
+[0m[36m[1m@hoprnet/hopr-utils[22m[39m: $ mocha --parallel
+[36m[1m@hoprnet/hopr-utils[22m[39m:   testing promise pool
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ limitConcurrency should be similar to promise.all below a threshold
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ limitConcurrency should run a maximum of maxConcurrency promises at once
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should act like Promise.all - rejections cause exit
+[36m[1m@hoprnet/hopr-utils[22m[39m:   testing random permutation
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should apply a random permutation (78ms)
+[36m[1m@hoprnet/hopr-utils[22m[39m:   testing random subset
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a subset with a filter function
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a subset
+[36m[1m@hoprnet/hopr-utils[22m[39m:   getBootstrapAddresses
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ passed addresses resolved first
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ falls back to dns (423ms)
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test hash iterator
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should iterate
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test clean directory
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should delete the directory structure recursively
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test Pseudo-Random Permutation
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should 'encrypt' and 'decrypt' a U8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should 'decrypt' and 'encrypt' a U8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:   check gcd computation
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should compute the gcd of two integers
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test convertPubKeyFromPeerId
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should equal to a newly created pubkey from PeerId
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should equal to pubkey from a PeerId CID
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test hasB58String
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a boolean value
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return false to a content w/o a b58string
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return true to a content w/a b58string
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return true to a content w/a b58string
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test hasB58String
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a string value
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return an empty string to a content w/o a b58string
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return the b58string to a content w/a b58string
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return the b58string to a content w/a b58string
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test moveDecimalPoint
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should result to 100
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should result to 100
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should result to 0.01
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should result to 0.01
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test randomFloat
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should output a random float (100ms)
+[36m[1m@hoprnet/hopr-utils[22m[39m:   testing random-number generator
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should output generate values between [0, end)
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should output values between [start, end) with start > 0
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should yield correct values for edge cases
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should verify the randomInteger by using deterministic seeds
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test time
+[36m[1m@hoprnet/hopr-utils[22m[39m:     durations
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 1 second
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 2 seconds
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 1 minute
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 2 minutes
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 1 hour
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 2 hours
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 1 day
+[36m[1m@hoprnet/hopr-utils[22m[39m:       ✓ should be 2 days
+[36m[1m@hoprnet/hopr-utils[22m[39m:   testing timeoutAfter
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ if promise resolves first, it is no-op
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ rejects if promise does not resolve
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8aAllocate spec
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should not throw an error if the added page is smaller than the given offset
+[36m[1m@hoprnet/hopr-utils[22m[39m:   Test Pseudo-Random Generator
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should create a digest
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8a equals
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should check whether two (or more) Uint8Arrays are equal
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8a concat
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should always return 0 when undefined or same array is given
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should run under 100ms execution time
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should concat two Uint8Arrays
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should concat two Uint8Arrays in under 100ms
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test length-prefixed to u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should convert a length-prefixed u8a to u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should convert a length-prefixed u8a with additional padding to u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test toHex
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should create a Hex string
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8a to length-prefixed u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a length-prefixed u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a length-prefixed u8a with additional padding
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8a addition
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should add two u8a with modulo
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should add two u8a with modulo in-place
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test number to u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a fixed-size u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should return a u8a
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8aCompare
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should compare uint8Arrays
+[36m[1m@hoprnet/hopr-utils[22m[39m:   test u8aToNumber
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should convert a u8a to a number
+[36m[1m@hoprnet/hopr-utils[22m[39m:   testing XORing Uint8Array
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should XOR two arrays
+[36m[1m@hoprnet/hopr-utils[22m[39m:     ✓ should XOR more than two arrays
+[36m[1m@hoprnet/hopr-utils[22m[39m:   63 passing (7s)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m: $ hardhat test --no-compile --network hardhat
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   Contract: ERC777
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     with default operators
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       - does not emit AuthorizedOperator events for default operators
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       as an ERC20 token
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         total supply
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns the total amount of tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         balanceOf
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the requested account has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ returns zero
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the requested account has some tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ returns the total amount of tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         transfer
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the recipient is not the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender does not have enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts (57ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender transfers all balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ transfers the requested amount (55ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ emits a transfer event
+[35m@hoprnet/hopr-ethereum[39m: (node:32333) DeprecationWarning: expectEvent.inLogs() is deprecated. Use expectEvent() instead.
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender transfers zero tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ transfers the requested amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ emits a transfer event
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the recipient is the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         transfer from
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the token owner is not the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the recipient is not the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the spender has enough approved balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 when the token owner has enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ transfers the requested amount (50ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ decreases the spender allowance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ emits a transfer event
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ emits an approval event
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 when the token owner does not have enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the spender does not have enough approved balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 when the token owner has enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 when the token owner does not have enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                   ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the recipient is the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the token owner is the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         approve
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the spender is not the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender has enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ emits an approval event (41ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when there was no approved amount before
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the spender had an approved amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount and replaces the previous one
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender does not have enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ emits an approval event
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when there was no approved amount before
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the spender had an approved amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount and replaces the previous one
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the spender is the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         _approve
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the spender is not the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender has enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ emits an approval event
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when there was no approved amount before
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the spender had an approved amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount and replaces the previous one
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender does not have enough balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ emits an approval event
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when there was no approved amount before
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the spender had an approved amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ approves the requested amount and replaces the previous one
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the spender is the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           when the owner is the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       basic information
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ returns the name
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ returns the symbol
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ returns a granularity of 1
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ returns the default operators
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ default operators are operators for all accounts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ returns the total supply
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ returns 18 when decimals is called
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ the ERC777Token interface is registered in the registry
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ the ERC20Token interface is registered in the registry
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       balanceOf
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         for an account with no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns zero
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         for an account with tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns their balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       with no ERC777TokensSender and no ERC777TokensRecipient implementers
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         send/burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           direct send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ can send an amount of 0 (49ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ can send an amount of 1 (46ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts when sending more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts when sending to the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ can send an amount of 0 (55ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts when sending a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           direct burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ can burn an amount of 1 (45ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts when burning more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts when burning a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with self operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (65ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 1 (53ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending to the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (39ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 1 (38ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with first default operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (42ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 1 (41ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending to the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 1
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with second default operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (41ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 1 (56ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending to the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (42ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 1
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           before authorizing a new operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with new authorized operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (42ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 1 (68ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending to the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can send an amount of 0 (45ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when sending from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             operator burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 1
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning more than the balance
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when the sender has no tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operator can burn an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning a non-zero amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts when burning from the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             with revoked operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               operator send
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               operator burn
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         mint (internal)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with default operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ can (internal) mint an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ can (internal) mint an amount of 5
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts when minting tokens for the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with non operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ can (internal) mint an amount of 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ can (internal) mint an amount of 5 (48ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ reverts when minting tokens for the zero address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       operator management
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ accounts are their own operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ reverts when self-authorizing
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ reverts when self-revoking
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ non-operators can be revoked
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ non-operators can be authorized
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         new operators
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ are not added to the default operators list
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ can be re-authorized
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ can be revoked
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         default operators
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ can be re-authorized
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ can be revoked
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ cannot be revoked for themselves
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with revoked default operator
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ default operator is not revoked for other holders
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ other default operators are not revoked
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ default operators list is not modified
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ revoked default operator can be re-authorized
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       send and receive hooks
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         tokensReceived
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with no ERC777TokensRecipient implementer
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             with contract recipient
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorSend reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ mint (internal) reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ (ERC20) transfer succeeds
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ (ERC20) transferFrom succeeds
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with ERC777TokensRecipient implementer
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             with contract as implementer for an externally owned account
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when TokensRecipient reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operatorSend reverts (47ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ mint (internal) reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when TokensRecipient does not revert
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives send data and is called after state mutation (40ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives operatorSend data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives mint (internal) data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             with contract as implementer for another contract
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when TokensRecipient reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operatorSend reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ mint (internal) reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when TokensRecipient does not revert
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives send data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives operatorSend data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives mint (internal) data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             with contract as implementer for itself
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when TokensRecipient reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ operatorSend reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ mint (internal) reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               when TokensRecipient does not revert
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives send data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives operatorSend data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:                 ✓ TokensRecipient receives mint (internal) data and is called after state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         tokensToSend
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with a contract as implementer for an externally owned account
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when TokensSender reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorSend reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ burn reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorBurn reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when TokensSender does not revert
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives send data and is called before state mutation (53ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives operatorSend data and is called before state mutation (49ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives burn data and is called before state mutation (81ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives operatorBurn data and is called before state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with contract as implementer for another contract
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when TokensSender reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorSend reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ burn reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorBurn reverts (38ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when TokensSender does not revert
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives send data and is called before state mutation (61ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives operatorSend data and is called before state mutation (53ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives burn data and is called before state mutation (42ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives operatorBurn data and is called before state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with a contract as implementer for itself
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when TokensSender reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ send reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorSend reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ burn reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ operatorBurn reverts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             when TokensSender does not revert
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives send data and is called before state mutation (63ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives operatorSend data and is called before state mutation (71ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives burn data and is called before state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:               ✓ TokensSender receives operatorBurn data and is called before state mutation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     with no default operators
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ default operators list is empty
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   ERC777Snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should revert when trying to snapshot unsupported amount
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     totalSupplyAt
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should return 0 at block 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should return latest totalSupply at block number after creation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should return latest totalSupply at a not-yet-created block number (47ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       with initial snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         with no supply changes after the snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns the current total supply
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         with supply changes after the snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns the total supply before the changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with a second snapshot after supply changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ snapshots return the supply before and after the changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with multiple snapshots after supply changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ all posterior snapshots return the supply after the changes (38ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     balanceOfAt
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should return 0 at block 0
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should return latest balance at block number after creation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should return latest balance at a not-yet-created block number
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       with initial snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         with no balance changes after the snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns the current balance for all accounts
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         with balance changes after the snapshot
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           ✓ returns the balances before the changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with a second snapshot after supply changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ snapshots return the balances before and after the changes (47ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:           with multiple snapshots after supply changes
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:             ✓ all posterior snapshots return the supply after the changes (600ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   HoprChannels
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     integration tests
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       make payments between 'partyA' and 'partyB' using a fresh channel and 'fundChannel'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' should fund 'partyA' with 1 HOPR (61ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyB' should fund 'partyB' with 1 HOPR
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ should set hashed secret for 'partyA'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ should set hashed secret for 'partyB'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ should open channel
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' should reedem winning ticket of 0.2 HOPR (47ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyB' should reedem winning ticket of 1.2 HOPR
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyB' should initiate closure
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' should reedem winning ticket of 0.5 HOPR
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' should close channel (74ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       make payments between 'partyA' and 'partyB' using a recycled channel and 'fundChannelWithSig'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' and 'partyB' should fund a total of 1 HOPR (126ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ should set hashed secret for 'partyA'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ should set hashed secret for 'partyB'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ should open channel (59ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' should reedem winning ticket of 0.3 HOPR
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyB' should reedem winning ticket of 0.5 HOPR (59ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyB' should initiate closure
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyA' should reedem winning ticket of 1 HOPR
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:         ✓ 'partyB' should close channel (38ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     unit tests
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should initialize the on-chain values
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should revert on falsy initialization values (117ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should have set hashedSecret correctly (80ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should have funded channel correctly using 'fundChannel' (95ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ ticket 'signer' should be 'partyA'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ fund 'signer' should be 'partyA'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should open a channel and redeem one ticket (119ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail when creating an open channel a second time (103ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail 'fundChannel' when token balance too low (59ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should initiate channel closure by partyA (99ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should initiate channel closure by partyB (112ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should 'claimChannelClosure' before 'closureTime' when partyA is initiator (135ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail when 'claimChannelClosure' is called before 'closureTime' (104ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   HoprDistributor
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     schedules
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should add schedule (49ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add schedule again
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add schedule with mismatching inputs
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add schedule when durations are not in ascending order
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add schedule when durations are not in ascending order
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add schedule when percent is higher than multiplier
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     allocations
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add allocation when schedule does not exist
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should add allocation
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add allocation with mismatching inputs
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to add allocation again
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should add second allocation (78ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     claimable
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should be able to claim 100 after 2 minutes using SCHEDULE_1_MIN_ALL
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should be able to claim 0 after 2 minutes using SCHEDULE_TEAM
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should be able to claim 14 after 5 minutes using SCHEDULE_TEAM
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should be able to claim 28 after 8 minutes using SCHEDULE_TEAM (46ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should be able to claim 100 after 17 minutes using SCHEDULE_TEAM
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     claim
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 100 after 2 minutes using SCHEDULE_1_MIN_ALL
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 0 after 2 minutes using SCHEDULE_TEAM
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 14 after 5 minutes using SCHEDULE_TEAM (42ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 28 after 8 minutes using SCHEDULE_TEAM (77ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 100 after 17 minutes using SCHEDULE_TEAM (52ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     claimFor
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 100 after 2 minutes using SCHEDULE_1_MIN_ALL (50ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 0 after 2 minutes using SCHEDULE_TEAM (59ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 14 after 5 minutes using SCHEDULE_TEAM (125ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 28 after 8 minutes using SCHEDULE_TEAM (66ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should claim 100 after 17 minutes using SCHEDULE_TEAM (56ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     revoke
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to claim SCHEDULE_1_MIN_ALL after revoked
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to claim SCHEDULE_TEAM after revoked (107ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to revoke if allocation does not exist
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     max mint
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to allocate if totalToBeMinted is higher than max mint (57ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   HoprFaucet
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should mint tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should pause minting
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should unpause minting
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should not allow pausing by unauthorized address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should not allow unpausing by unauthorized address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   HoprFaucet with singleUser enabled
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should mint tokens
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should pause minting
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should unpause minting
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should not allow minting by unauthorized address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should not allow pausing by unauthorized address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should not allow unpausing by unauthorized address
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   HoprMinter
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     unit tests
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ 'user' should fail to 'increaseBalance'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to 'increaseBalance' after deadline
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ should fail to 'increaseBalance' past maximum
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     integration tests
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ claim 50 HOPR after 50 days (45ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ claim 25 HOPR after 25 days
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ increase user's minter balance by 75
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ claim 60 HOPR after 15 days (49ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:       ✓ claim remaining HOPR after deadline (50ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   HoprToken
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should be named 'HOPR Token'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should have symbol 'HOPR'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should have a supply of '0'
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should fail mint
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ 'owner' should be a minter
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:     ✓ should mint 100 HOPR for 'owner' (39ms)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   282 passing (33s)
+[35m[1m@hoprnet/hopr-ethereum[22m[39m:   1 pending
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ mocha --exit
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat compile && hardhat extract
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Nothing to compile
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Creating Typechain artifacts in directory ./types for target truffle-v5
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Successfully generated Typechain artifacts!
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Extracting ABIs
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Extracted ABIs
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   ✓ should create new signedTicket using struct
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   ✓ should create new signedTicket using array
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   ✓ should create new signedTicket out of continous memory
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test Account class
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ticketEpoch
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should be 1 initially
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should be 2 after setting new secret
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should be 3 after reconnecting to web3 (2004ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test Channel class
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create a channel and submit tickets (3382ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test dbKeys
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'Channel' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should parse 'Channel' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'Challenge' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should parse 'Challenge' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'ChannelId' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'Nonce' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'OnChainSecret' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'AcknowledgedTicket' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should parse 'AcknowledgedTicket' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'ConfirmedBlockNumber' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 'ChannelEntry' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should parse 'ChannelEntry' key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test hashedSecret
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     random pre-image
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 1
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [ '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f' ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should publish a hashed secret (1222ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     deterministic debug pre-image
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 1
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [ '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f' ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should publish a hashed secret (1017ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should reserve a preImage for tickets with 100% winning probabilty resp. should not reserve for 0% winning probability (250ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should reserve a preImage for tickets with arbitrary winning probability (1452ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     integration
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 1
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [ '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f' ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should initialize hashedSecret (1351ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should already be initialized (162ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should reinitialize hashedSecret when off-chain secret is missing (849ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 1
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [ '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f' ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should submit hashedSecret when on-chain secret is missing (8919ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test connector
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 2
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf'
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should catch initOnchainValues (1122ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     events
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should clear events once resolved (234ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test withdraw
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 2
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf'
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should withdraw 1 wei (ETH) (47ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should withdraw 1 wei (HOPR) (52ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test indexer
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Starting ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network ready at ws://127.0.0.1:8545
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat migrate
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "migrate" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   shouldVerify: false,
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   mintUsing: 'minter',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   revokeRoles: false
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying ERC1820Registry
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprToken
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprChannels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deploying hoprMinter
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updating addresses.json
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Updated addresses.json for localhost network
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 4
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Running task "fund" with config: {
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   network: 'localhost',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   amount: '1000000000000000000000000',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   accounts: [
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0xbd9c6A0b75F383FA94dCB8543CdEf83cFe74274B',
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     '0xEd5526CAD966596b5861583a5dAcF5511049a7f0'
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   ]
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: }
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xbd9c6A0b75F383FA94dCB8543CdEf83cFe74274B
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Funded: 0xEd5526CAD966596b5861583a5dAcF5511049a7f0
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     intergration tests
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not store channel before confirmations (246ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should store channel & blockNumber correctly (97ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should find all channels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should find channel using partyA
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should find channel using partyB
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should find channel using partyA & partyB
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should store another channel (218ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not delete channel before confirmations (113ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should delete channel (92ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should stop indexer and open new channel (135ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not index new channel (92ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should start indexer (1004ms)
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     unit tests
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not store older channel according to blockNumber
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not delete latest channel according to blockNumber
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not store older channel according to transactionIndex
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not delete latest channel according to transactionIndex
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not store older channel according to logIndex
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should not delete latest channel according to logIndex
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:       ✓ should filter channels
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Closing ganache instance
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m: Network closed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   nonce-tracker
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonces from 1 to 10
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonces from 5 to 10 because we have 5 confirmed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 4 when we have 3 confirmed and 1 pending
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 2 again when nonce 2 has failed
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 32 when we dont have confirmed txs
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 0
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 2 when duplicate nonces exist
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 3 when local confirmed count is higher than network nonce
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 2 when local pending count is higher than other metrics
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 5 after those when provider nonce is higher than other metrics
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 5 after those when there are some pending nonces below the remote one and some over.
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create 0 nonce after network nonce when there are pending nonces non sequentially over the network nonce
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 50 after network nonce When all three return different values
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create nonce 74 after network nonce
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test BNE
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should return a Uint8Array
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test Uint8ArrayE
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should return an equal Uint8Array
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should return a hex
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should return a subarray
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test signedChannel construction
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create new signedChannel using struct
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create new signedChannel using array
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create new signedChannel out of continous memory
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test ticket construction
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create new ticket using struct
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create new ticket using array
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should create new ticket out of continous memory
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should generate the hash correctly #1
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should generate the hash correctly #2
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   test utils
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should hash values
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should sign and verify signer
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should sign and verify messages
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should get private key using public key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should get address using public key
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should compute the winning probability properly
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:     ✓ should compute a winning probability and convert it to float
+[34m[1m@hoprnet/hopr-core-ethereum[22m[39m:   83 passing (2m)
+[33m[1m@hoprnet/hopr-core[22m[39m: $ yarn testOnce
+[33m[1m@hoprnet/hopr-core[22m[39m: $ node --trace-warnings --unhandled-rejections=strict node_modules/.bin/mocha --reporter=tap --full-trace --exit
+[33m[1m@hoprnet/hopr-core[22m[39m: Starting ganache instance
+[33m[1m@hoprnet/hopr-core[22m[39m: Network ready at ws://127.0.0.1:8545
+[33m[1m@hoprnet/hopr-core[22m[39m: $ hardhat compile && hardhat extract
+[33m[1m@hoprnet/hopr-core[22m[39m: Nothing to compile
+[33m[1m@hoprnet/hopr-core[22m[39m: Creating Typechain artifacts in directory ./types for target truffle-v5
+[33m[1m@hoprnet/hopr-core[22m[39m: Successfully generated Typechain artifacts!
+[33m[1m@hoprnet/hopr-core[22m[39m: Extracting ABIs
+[33m[1m@hoprnet/hopr-core[22m[39m: Extracted ABIs
+[33m[1m@hoprnet/hopr-core[22m[39m: $ hardhat migrate
+[33m[1m@hoprnet/hopr-core[22m[39m: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[33m[1m@hoprnet/hopr-core[22m[39m: Running task "migrate" with config: {
+[33m[1m@hoprnet/hopr-core[22m[39m:   deployer: '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[33m[1m@hoprnet/hopr-core[22m[39m:   network: 'localhost',
+[33m[1m@hoprnet/hopr-core[22m[39m:   shouldVerify: false,
+[33m[1m@hoprnet/hopr-core[22m[39m:   mintUsing: 'minter',
+[33m[1m@hoprnet/hopr-core[22m[39m:   revokeRoles: false
+[33m[1m@hoprnet/hopr-core[22m[39m: }
+[33m[1m@hoprnet/hopr-core[22m[39m: Deploying ERC1820Registry
+[33m[1m@hoprnet/hopr-core[22m[39m: Deployed or Found ERC1820Registry: 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
+[33m[1m@hoprnet/hopr-core[22m[39m: Deploying hoprToken
+[33m[1m@hoprnet/hopr-core[22m[39m: Deployed hoprToken: 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E
+[33m[1m@hoprnet/hopr-core[22m[39m: Deploying hoprChannels
+[33m[1m@hoprnet/hopr-core[22m[39m: Deployed hoprChannels: 0x0a67180CF519aDF27f1FD32F7255bBa00B536FC6
+[33m[1m@hoprnet/hopr-core[22m[39m: Deploying hoprMinter
+[33m[1m@hoprnet/hopr-core[22m[39m: Deployed hoprMinter: 0x6c97048D67c39ADCe38bbB228fc1bA415fc8f096
+[33m[1m@hoprnet/hopr-core[22m[39m: Updating addresses.json
+[33m[1m@hoprnet/hopr-core[22m[39m: Updated addresses.json for localhost network
+[33m[1m@hoprnet/hopr-core[22m[39m: $ hardhat fund --address 0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E --accounts-to-fund 5
+[33m[1m@hoprnet/hopr-core[22m[39m: Running task "fund" with config: {
+[33m[1m@hoprnet/hopr-core[22m[39m:   network: 'localhost',
+[33m[1m@hoprnet/hopr-core[22m[39m:   address: '0x66DB78F4ADD912a6Cb92b672Dfa09028ecc3085E',
+[33m[1m@hoprnet/hopr-core[22m[39m:   amount: '1000000000000000000000000',
+[33m[1m@hoprnet/hopr-core[22m[39m:   accounts: [
+[33m[1m@hoprnet/hopr-core[22m[39m:     '0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f',
+[33m[1m@hoprnet/hopr-core[22m[39m:     '0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf',
+[33m[1m@hoprnet/hopr-core[22m[39m:     '0xbd9c6A0b75F383FA94dCB8543CdEf83cFe74274B',
+[33m[1m@hoprnet/hopr-core[22m[39m:     '0xEd5526CAD966596b5861583a5dAcF5511049a7f0',
+[33m[1m@hoprnet/hopr-core[22m[39m:     '0xa1C9DB3C3a35B699Dfd638EF129dDa7ceb37F807'
+[33m[1m@hoprnet/hopr-core[22m[39m:   ]
+[33m[1m@hoprnet/hopr-core[22m[39m: }
+[33m[1m@hoprnet/hopr-core[22m[39m: Funded: 0xB3Aa2138DE698597e2e3F84f60eF415d13731b6f
+[33m[1m@hoprnet/hopr-core[22m[39m: Funded: 0x32C160A5008e517Ce06Df4f7d4a39fFC52E049cf
+[33m[1m@hoprnet/hopr-core[22m[39m: Funded: 0xbd9c6A0b75F383FA94dCB8543CdEf83cFe74274B
+[33m[1m@hoprnet/hopr-core[22m[39m: Funded: 0xEd5526CAD966596b5861583a5dAcF5511049a7f0
+[33m[1m@hoprnet/hopr-core[22m[39m: Funded: 0xa1C9DB3C3a35B699Dfd638EF129dDa7ceb37F807
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 1 filters peers
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 2 test hopr-core should start a node
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 3 test hopr-core should not call ourself
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 4 check heartbeat mechanism should dispatch a heartbeat
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 5 check heartbeat mechanism should trigger a heartbeat timeout
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 6 test acknowledgement generation should generate a valid acknowledgement
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 7 test creation & verification of a challenge should create a verifiable challenge
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 8 test creation & transformation of a header should derive parameters
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 9 test creation & transformation of a header should create a header
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 10 test creation & transformation of a header should create a header with a path less than MAX_HOPS nodes
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 11 test creation & transformation of a header should create a header with exactly two nodes
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 12 test packet composition and decomposition should create packets and decompose them
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 13 test messages should create a Message object and encrypt / decrypt it
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 14 check serialization and deserialization of ticket objects should create a winning ticket
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 15 test mixer  should push and pop a single element
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 16 test mixer  should push and pop multiple element
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 17 test mixer  probabilistic test, packet ordering
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 18 unit test heartbeat check nodes is noop with empty store
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 19 unit test heartbeat check nodes is noop with only new peers
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 20 unit test heartbeat check nodes interacts with an old peer
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 21 unit test heartbeat test heartbeat flow
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 22 test PeerStore should register new peers
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 23 test PeerStore should allow randomSubset to be taken of peer ids
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 24 test PeerStore should _ping_ peers
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 25 test the STUN functionalities should launch a STUN server and connect to it
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 26 test pathfinder with some simple topologies should find a path through a reliable star
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 27 test pathfinder with some simple topologies should find the most valuable path through a reliable star
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 28 test pathfinder with some simple topologies should not find a path if it doesnt exist
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 29 test pathfinder with some simple topologies should find a path through a reliable arrow
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 30 test pathfinder with some simple topologies should not find a path if a node is unreliable
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 31 keypair/index.spec.ts test serialisation and deserialisation of encrypted keypair should serialize and deserialize a keypair
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 32 unit test validateUnacknowledgedTicket should pass if ticket is okay
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 33 unit test validateUnacknowledgedTicket should throw when signer is not sender
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 34 unit test validateUnacknowledgedTicket should throw when ticket amount is low
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 35 unit test validateUnacknowledgedTicket should throw when ticket chance is low
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 36 unit test validateUnacknowledgedTicket should throw if there no channel open
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 37 unit test validateUnacknowledgedTicket should throw if channel is not stored
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 38 unit test validateUnacknowledgedTicket should throw if ticket epoch does not match our account counter
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 39 unit test validateUnacknowledgedTicket should throw if ticket's channel iteration does not match the current channel iteration
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 40 unit test validateUnacknowledgedTicket should throw if channel does not have enough funds
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 41 unit test validateUnacknowledgedTicket should throw if channel does not have enough funds when you include unredeemed tickets
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 42 unit test validateCreatedTicket should pass if ticket is okay
+[33m[1m@hoprnet/hopr-core[22m[39m: ok 43 unit test validateCreatedTicket should throw when signer is not sender
+[33m[1m@hoprnet/hopr-core[22m[39m: # tests 43
+[33m[1m@hoprnet/hopr-core[22m[39m: # pass 43
+[33m[1m@hoprnet/hopr-core[22m[39m: # fail 0
+[33m[1m@hoprnet/hopr-core[22m[39m: 1..43
+[33m[1m@hoprnet/hopr-core[22m[39m: Closing ganache instance
+[33m[1m@hoprnet/hopr-core[22m[39m: Network closed
+[32m[1m@hoprnet/hoprd[22m[39m: $ mocha
+[32m[1m@hoprnet/hoprd[22m[39m:   Commands
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ can import commands
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ can construct Commands object
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ responds to nonsense commands
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ ping
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ help
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ address
+[32m[1m@hoprnet/hoprd[22m[39m: Sending message to 16Uiu2HAmAJStiomwq27Kkvtat8KiEHLBSnAkkKCqZmLYKVLtkiB7 ...
+[32m[1m@hoprnet/hoprd[22m[39m: Sending message to 16Uiu2HAkyXRaL7fKu4qcjaKuo4WXizrpK63Ltd6kG2tH6oSV58AW via bafzaajiiaijccaw5avyldbn3txrklgjmgvjix53wnnwcbyxuvrwqs6t2scpeux272y ...
+[32m[1m@hoprnet/hoprd[22m[39m: Sending message to 16Uiu2HAkyXRaL7fKu4qcjaKuo4WXizrpK63Ltd6kG2tH6oSV58AW via  ...
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ send message
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ autocomplete sendmessage
+[32m[1m@hoprnet/hoprd[22m[39m: [2K[1A[2K[sending message "hello"]
+[32m[1m@hoprnet/hoprd[22m[39m: [2K    ✓ multisend
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ withdraw
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ settings
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ settings includeRecipient
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ settings strategy
+[32m[1m@hoprnet/hoprd[22m[39m: Sending message to 16Uiu2HAmQDFS8a4Bj5PGaTqQLME5SZTRNikz9nUPT3G4T6YL9o7V ...
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ alias addresses
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ close channel
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ cover traffic
+[32m[1m@hoprnet/hoprd[22m[39m:   LogStream
+[32m[1m@hoprnet/hoprd[22m[39m:     ✓ create logger
+[32m[1m@hoprnet/hoprd[22m[39m:   17 passing (72ms)
+[32m@hoprnet/hoprd[39m: error Command failed with signal "SIGSEGV".
+[32m[1m@hoprnet/hoprd[22m[39m: info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+[37;40mlerna[0m [0m[31;40mERR![0m [0m[35myarn run test[0m exited 1 in '@hoprnet/hoprd'
+[0m[2K[1G[31merror[39m Command failed with exit code 1.
+[2K[1G[34minfo[39m Visit [1mhttps://yarnpkg.com/en/docs/cli/run[22m for documentation about this command.
+Iota:hoprnet bok$ exit
+
+Script done on Tue Jan 12 20:17:43 2021

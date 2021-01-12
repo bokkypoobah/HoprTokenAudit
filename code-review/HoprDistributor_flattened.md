@@ -11,6 +11,7 @@ Source file [../flattened/HoprDistributor_flattened.sol](../flattened/HoprDistri
 
 // SPDX-License-Identifier: MIT
 
+// BK NOTE - Current version 0.6.12 used for testing
 pragma solidity ^0.6.0;
 
 /*
@@ -61,14 +62,18 @@ pragma solidity ^0.6.0;
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
+// BK CHECK
 contract Ownable is Context {
+    // BK OK
     address private _owner;
 
+    // BK OK
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
+    // BK CHECK
     constructor () internal {
         address msgSender = _msgSender();
         _owner = msgSender;

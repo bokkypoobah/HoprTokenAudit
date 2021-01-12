@@ -109,3 +109,11 @@ Outline:
   * [ ] using SafeMath for uint256;
 * [ ] contract HoprToken is AccessControl, ERC777Snapshot
 * [ ] contract HoprDistributor is Ownable
+
+<br />
+
+<hr />
+
+## Testing
+
+Installed and ran the `yarn test` with results saved into [test_results.script](test_results.script).
