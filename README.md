@@ -99,7 +99,7 @@ Outline:
 * [ ] interface IERC777
 * [ ] interface IERC777Recipient
 * [ ] interface IERC777Sender
-* [ ] interface IERC20
+* [x] interface IERC20
 * [ ] library SafeMath
 * [ ] interface IERC1820Registry
 * [ ] contract ERC777 is Context, IERC777, IERC20
