@@ -363,6 +363,7 @@ pragma solidity ^0.6.2;
 /**
  * @dev Collection of functions related to the address type
  */
+// BK OK
 library Address {
     /**
      * @dev Returns true if `account` is a contract.
@@ -381,14 +382,19 @@ library Address {
      *  - an address where a contract lived, but was destroyed
      * ====
      */
+    // BK OK - https://eips.ethereum.org/EIPS/eip-1052
     function isContract(address account) internal view returns (bool) {
         // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
         // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
         // for accounts without code, i.e. `keccak256('')`
+        // BK OK
         bytes32 codehash;
+        // BK OK
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
         // solhint-disable-next-line no-inline-assembly
+        // BK OK
         assembly { codehash := extcodehash(account) }
+        // BK OK
         return (codehash != accountHash && codehash != 0x0);
     }
 
@@ -408,6 +414,7 @@ library Address {
      * {ReentrancyGuard} or the
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
+    // BK Unused
     function sendValue(address payable recipient, uint256 amount) internal {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
@@ -813,7 +820,7 @@ interface IERC777 {
      * - `account` must have at least `amount` tokens.
      * - the caller must be an operator for `account`.
      */
-    // BK OK?
+    // BK OK
     // BK   function operatorBurn(
     // BK       address from,
     // BK       uint256 amount,
@@ -1255,6 +1262,7 @@ pragma solidity ^0.6.0;
  *
  * For an in-depth explanation and source code analysis, see the EIP text.
  */
+// BK CHECK - https://eips.ethereum.org/EIPS/eip-1820
 interface IERC1820Registry {
     /**
      * @dev Sets `newManager` as the manager for `account`. A manager of an

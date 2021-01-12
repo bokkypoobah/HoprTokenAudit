@@ -92,7 +92,7 @@ Outline:
 * [ ] contract Context
 * [ ] contract Ownable is Context
 * [ ] library EnumerableSet
-* [ ] library Address
+* [x] library Address
 * [ ] abstract contract AccessControl
   * [ ] using EnumerableSet for EnumerableSet.AddressSet;
   * [ ] using Address for address;
