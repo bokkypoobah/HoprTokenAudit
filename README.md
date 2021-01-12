@@ -8,8 +8,10 @@ https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f
 
 ### Source Code
 
+Imports adjusted to compile from local directory.
+
 * [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol)
-* [contracts/ERC777Snapshot.sol](contracts/ERC777Snapshot.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol)
+* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol)
 * [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol)
 
 <br />
@@ -28,6 +30,13 @@ https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f
 ## Testing Environment
 
 Hardhat https://hardhat.org/
+
+
+npx hardhat
+
+npm install --save-dev @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers ethers
+
+Using latest Solidity ^0.6.0 => 0.6.12 currently
 
 <br />
 
@@ -60,7 +69,7 @@ Flattened with OpenZeppelin v3.0.2.
 
 ### ERC777Snapshot
 
-* [contracts/ERC777Snapshot.sol](contracts/ERC777Snapshot.sol)
+* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol)
   * `import "@openzeppelin/contracts/math/SafeMath.sol";` - see above
   * `import "@openzeppelin/contracts/token/ERC777/ERC777.sol";` - see above
 
