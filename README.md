@@ -89,7 +89,7 @@ These have been copied into the following files for code review:
 
 Outline:
 
-* [ ] contract Context
+* [x] contract Context
 * [ ] contract Ownable is Context
 * [ ] library EnumerableSet
 * [x] library Address
