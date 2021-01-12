@@ -86,3 +86,26 @@ Using [truffle-flattener](https://github.com/nomiclabs/truffle-flattener) and th
 These have been copied into the following files for code review:
 
 * [code-review/HoprDistributor_flattened.md](code-review/HoprDistributor_flattened.md)
+
+Outline:
+
+* [ ] contract Context
+* [ ] contract Ownable is Context
+* [ ] library EnumerableSet
+* [ ] library Address
+* [ ] abstract contract AccessControl
+  * [ ] using EnumerableSet for EnumerableSet.AddressSet;
+  * [ ] using Address for address;
+* [ ] interface IERC777
+* [ ] interface IERC777Recipient
+* [ ] interface IERC777Sender
+* [ ] interface IERC20
+* [ ] library SafeMath
+* [ ] interface IERC1820Registry
+* [ ] contract ERC777 is Context, IERC777, IERC20
+  * [ ] using SafeMath for uint256;
+  * [ ] using Address for address;
+* [ ] abstract contract ERC777Snapshot is ERC777
+  * [ ] using SafeMath for uint256;
+* [ ] contract HoprToken is AccessControl, ERC777Snapshot
+* [ ] contract HoprDistributor is Ownable
