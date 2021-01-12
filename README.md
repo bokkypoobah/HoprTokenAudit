@@ -116,4 +116,4 @@ Outline:
 
 ## Testing
 
-Installed and ran the `yarn test` with results saved into [test_results.script](test_results.script).
+Installed and ran the `FORCE_COLOR=0 yarn test` with results saved into [test_results.script](test_results.script).
