@@ -638,6 +638,7 @@ pragma solidity ^0.6.0;
  * for the associated interfaces in said registry. See {IERC1820Registry} and
  * {ERC1820Implementer}.
  */
+// BK CHECK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777 {
     /**
      * @dev Returns the name of the token.
@@ -830,6 +831,7 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
+// BK OK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777Recipient {
     /**
      * @dev Called by an {IERC777} token contract whenever tokens are being
@@ -841,6 +843,18 @@ interface IERC777Recipient {
      *
      * This function may revert to prevent the operation from being executed.
      */
+
+    // BK OK
+    //   interface ERC777TokensRecipient {
+    //       function tokensReceived(
+    //           address operator,
+    //           address from,
+    //           address to,
+    //           uint256 amount,
+    //           bytes calldata data,
+    //           bytes calldata operatorData
+    //       ) external;
+    //   }
     function tokensReceived(
         address operator,
         address from,
@@ -867,6 +881,7 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
+// BK CHECK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777Sender {
     /**
      * @dev Called by an {IERC777} token contract whenever a registered holder's

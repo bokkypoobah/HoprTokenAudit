@@ -97,7 +97,7 @@ Outline:
   * [ ] using EnumerableSet for EnumerableSet.AddressSet;
   * [ ] using Address for address;
 * [ ] interface IERC777
-* [ ] interface IERC777Recipient
+* [x] interface IERC777Recipient
 * [ ] interface IERC777Sender
 * [x] interface IERC20
 * [ ] library SafeMath
