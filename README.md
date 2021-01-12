@@ -63,15 +63,9 @@ Flattened with OpenZeppelin v3.0.2.
       * [contracts/openzeppelin/math/SafeMath.sol](contracts/openzeppelin/math/SafeMath.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/math/SafeMath.sol)
       * `import "../../utils/Address.sol";` - see below
       * [contracts/openzeppelin/introspection/IERC1820Registry.sol](contracts/openzeppelin/introspection/IERC1820Registry.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/introspection/IERC1820Registry.sol)
-  * `import "./ERC777/ERC777Snapshot.sol";` - see below
-
-<br />
-
-### ERC777Snapshot
-
-* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol)
-  * `import "@openzeppelin/contracts/math/SafeMath.sol";` - see above
-  * `import "@openzeppelin/contracts/token/ERC777/ERC777.sol";` - see above
+  * [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol)
+    * `import "@openzeppelin/contracts/math/SafeMath.sol";` - see above
+    * `import "@openzeppelin/contracts/token/ERC777/ERC777.sol";` - see above
 
 <br />
 
@@ -81,3 +75,15 @@ Flattened with OpenZeppelin v3.0.2.
   * [contracts/openzeppelin/access/Ownable.sol](contracts/openzeppelin/access/Ownable.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/access/Ownable.sol)
     * [contracts/openzeppelin/GSN/Context.sol](contracts/openzeppelin/GSN/Context.sol) - [source](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/GSN/Context.sol)
   * `import "./HoprToken.sol";` - see above
+
+<br />
+
+Using [truffle-flattener](https://github.com/nomiclabs/truffle-flattener) and the script [10_flattenSolidityFiles.sh](10_flattenSolidityFiles.sh) to generate the flattened files:
+
+* [flattened/HoprDistributor_flattened.sol](flattened/HoprDistributor_flattened.sol)
+* [flattened/HoprToken_flattened.sol](flattened/HoprToken_flattened.sol)
+
+These have been copied into the following files for code review:
+
+* [code-review/HoprDistributor_flattened.md](code-review/HoprDistributor_flattened.md)
+* [code-review/HoprToken_flattened.md](code-review/HoprToken_flattened.md)
