@@ -2078,9 +2078,10 @@ contract HoprToken is AccessControl, ERC777Snapshot {
 pragma solidity ^0.6.0;
 
 
-
+// BK NOTE - Different sized `uint`'s don't save gas generally unless in a packed structure. The use of 32 bits for the timestamp comparison limits the code to operate until Jan 19 2038 - the code below can be rewritten to improve the code.
 contract HoprDistributor is Ownable {
     // helps us create more accurate calculations
+    // BK OK
     uint32 public constant MULTIPLIER = 10 ** 6;
 
     // total amount minted
@@ -2176,6 +2177,7 @@ contract HoprDistributor is Ownable {
 
         uint32 lastDuration = 0;
         for (uint256 i = 0; i < durations.length; i++) {
+            // BK QUERY Can have duplicate durations. Is this intended?
             require(lastDuration <= durations[i], "Durations must be added in ascending order");
             lastDuration = durations[i];
             require(percents[i] <= MULTIPLIER, "Percent provided must be smaller or equal to MULTIPLIER");
@@ -2183,6 +2185,7 @@ contract HoprDistributor is Ownable {
 
         schedules[name] = Schedule(durations, percents);
 
+        // BK OK - event ScheduleAdded(uint32[] durations, uint32[] percents, string name);
         emit ScheduleAdded(durations, percents, name);
     }
 
@@ -2300,10 +2303,13 @@ contract HoprDistributor is Ownable {
             uint32 scheduleDeadline = _addUint32(startTime, schedule.durations[i]);
 
             // schedule deadline not passed, exiting
+            // BK CHECK
             if (scheduleDeadline > _currentBlockTimestamp()) break;
             // already claimed during this period, skipping
+            // BK CHECK
             if (allocation.lastClaim > scheduleDeadline) continue;
 
+            // BK CHECK claimable += allocation.amount * schedule.percents[i] / MULTIPLIER;
             claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
         }
 
@@ -2380,6 +2386,7 @@ contract HoprDistributor is Ownable {
         return c;
     }
 
+    // BK OK
     event ScheduleAdded(uint32[] durations, uint32[] percents, string name);
     event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
     event Claimed(address indexed account, uint128 amount, string scheduleName);
