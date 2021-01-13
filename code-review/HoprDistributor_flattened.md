@@ -489,6 +489,7 @@ abstract contract AccessControl is Context {
 
     mapping (bytes32 => RoleData) private _roles;
 
+    // BK OK
     bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
 
     /**
@@ -1396,10 +1397,12 @@ pragma solidity ^0.6.0;
  * are no special restrictions in the amount of tokens that created, moved, or
  * destroyed. This makes integration with ERC20 applications seamless.
  */
+ // BK TODO - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 contract ERC777 is Context, IERC777, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 
+    // BK OK - https://eips.ethereum.org/EIPS/eip-1820
     IERC1820Registry constant internal _ERC1820_REGISTRY = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
 
     mapping(address => uint256) private _balances;
@@ -2307,48 +2310,73 @@ contract HoprDistributor is Ownable {
         return claimable;
     }
 
+    // BK OK - Rolls over at year 2038
     function _currentBlockTimestamp() internal view returns (uint32) {
         // solhint-disable-next-line
+        // BK OK
         return uint32(block.timestamp % 2 ** 32);
     }
 
     // SafeMath variations
+    // BK OK
+    // BK NOTE - Used for timestamp, 2^32 gives the max unixtime limit of Jan 19 2038
     function _addUint32(uint32 a, uint32 b) internal pure returns (uint32) {
+        // BK OK
         uint32 c = a + b;
+        // BK OK
         require(c >= a, "uint32 addition overflow");
 
+        // BK OK
         return c;
     }
 
+    // BK OK
     function _addUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         uint128 c = a + b;
+        // BK OK        
         require(c >= a, "uint128 addition overflow");
 
+        // BK OK
         return c;
     }
 
+    // BK OK
     function _subUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         require(b <= a, "uint128 subtraction overflow");
+        // BK OK
         uint128 c = a - b;
 
+        // BK OK
         return c;
     }
 
+    // BK OK
     function _mulUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         if (a == 0) {
+            // BK OK
             return 0;
         }
 
+        // BK OK
         uint128 c = a * b;
+        // BK OK
         require(c / a == b, "uint128 multiplication overflow");
 
+        // BK OK
         return c;
     }
 
+    // BK OK
     function _divUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         require(b > 0, "uint128 division by zero");
+        // BK OK
         uint128 c = a / b;
 
+        // BK OK
         return c;
     }
 

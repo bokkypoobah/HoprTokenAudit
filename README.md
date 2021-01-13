@@ -117,3 +117,11 @@ Outline:
 ## Testing
 
 Installed and ran the `FORCE_COLOR=0 yarn test` with results saved into [test_results.script](test_results.script).
+
+<br />
+
+<hr />
+
+## Notes
+
+`uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(0)`
