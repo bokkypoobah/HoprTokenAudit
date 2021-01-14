@@ -2075,7 +2075,7 @@ contract HoprToken is AccessControl, ERC777Snapshot {
      *
      * - the caller must have the `MINTER_ROLE`.
      */
-    // BK TEST Roles
+    // BK CHECK Roles, userData and operatorData
     function mint(
         address account,
         uint256 amount,

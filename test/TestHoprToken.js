@@ -10,14 +10,36 @@ let InterestUtils;
 describe("TestHoprToken", function() {
   let owner, user0, user1, hoprToken;
 
+  function printEvents(contract, receipt) {
+    receipt.logs.forEach((log) => {
+      try {
+        var data = contract.interface.parseLog(log);
+        var result = data.name + "(";
+        let separator = "";
+        data.eventFragment.inputs.forEach((a) => {
+          result = result + separator + a.name + ": ";
+          result = result + data.args[a.name].toString();
+          separator = ", ";
+        });
+        result = result + ")";
+        console.log("      + " + result);
+      } catch (e) {
+        console.log("      + " + JSON.stringify(log));
+      }
+    });
+  }
+
   before(async function () {
     [owner, user0, user1] = await web3.eth.getAccounts();
-    console.log("owner: " + owner + "; user0: " + user0 + "; user1: " + user1);
+    console.log("    owner: " + owner + "; user0: " + user0 + "; user1: " + user1);
 
     await singletons.ERC1820Registry(owner)
 
     HoprToken = await ethers.getContractFactory("HoprToken");
+    console.log("    owner -> HoprToken.deploy()");
     hoprToken = await HoprToken.deploy();
+    const deployHoprTokenTransactionReceipt = await hoprToken.deployTransaction.wait();
+    printEvents(hoprToken, deployHoprTokenTransactionReceipt);
     await hoprToken.grantRole(await hoprToken.MINTER_ROLE(), owner);
   })
 
@@ -26,16 +48,19 @@ describe("TestHoprToken", function() {
 
 
     // expect(await hoprToken.name()).to.be.equal('HOPR Token', 'wrong name');
-    console.log("name: " + await hoprToken.name());
-    console.log("symbol: " + await hoprToken.symbol());
-    console.log("decimals: " + await hoprToken.decimals());
-    console.log("granularity: " + await hoprToken.granularity());
-    console.log("totalSupply at deployment: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
+    console.log("    name: " + await hoprToken.name());
+    console.log("    symbol: " + await hoprToken.symbol());
+    console.log("    decimals: " + await hoprToken.decimals());
+    console.log("    granularity: " + await hoprToken.granularity());
+    console.log("    totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
 
-    const tokensToMint = ethers.utils.parseUnits("123.123456789123456789", 18);
+    console.log("    owner -> hoprToken.mint(user0, 123, '', '')");
+    const mint1 = await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
+    printEvents(hoprToken, await mint1.wait());
 
-    await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
-    await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x00', '0x00');
+    console.log("    owner -> hoprToken.mint(user1, 0.123456789123456789, '', '')");
+    const mint2 = await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x00', '0x00');
+    printEvents(hoprToken, await mint2.wait());
     console.log("totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
     console.log("user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
     console.log("user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));

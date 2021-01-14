@@ -124,6 +124,7 @@ npm install --save-dev @openzeppelin/test-helpers
 
 npm install --save-dev @nomiclabs/hardhat-web3 web3
 
+Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestHoprToken.js](test/TestHoprToken.js) to generate [results/TestHoprToken.txt](results/TestHoprToken.txt).
 
 <br />
 

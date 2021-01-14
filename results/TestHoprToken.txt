@@ -2,18 +2,28 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
 
 
   TestHoprToken
-owner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; user0: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; user1: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
-name: HOPR Token
-symbol: HOPR
-decimals: 18
-granularity: 1
-totalSupply at deployment: 0.0
+    owner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; user0: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; user1: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+    owner -> HoprToken.deploy()
+      + {"transactionIndex":0,"blockNumber":3,"transactionHash":"0xd40068c07908a28f9ecbe437f7b151631203bd64c4a23ea753dc1d105e58229f","address":"0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24","topics":["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"],"data":"0x","logIndex":0,"blockHash":"0x37fbdb0f569411413a81a93cd62eb7e328156943e7325629c5c4c6952f4bc4b8"}
+      + {"transactionIndex":0,"blockNumber":3,"transactionHash":"0xd40068c07908a28f9ecbe437f7b151631203bd64c4a23ea753dc1d105e58229f","address":"0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24","topics":["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"],"data":"0x","logIndex":1,"blockHash":"0x37fbdb0f569411413a81a93cd62eb7e328156943e7325629c5c4c6952f4bc4b8"}
+      + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, sender: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+    name: HOPR Token
+    symbol: HOPR
+    decimals: 18
+    granularity: 1
+    totalSupply: 0.0
+    owner -> hoprToken.mint(user0, 123, '', '')
+      + Minted(operator: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, amount: 123000000000000000000, data: 0x00, operatorData: 0x00)
+      + Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, value: 123000000000000000000)
+    owner -> hoprToken.mint(user1, 0.123456789123456789, '', '')
+      + Minted(operator: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, amount: 123456789123456789, data: 0x00, operatorData: 0x00)
+      + Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, value: 123456789123456789)
 totalSupply: 123.123456789123456789
 user0.balance: 123.0
 user1.balance: 0.123456789123456789
         --- Test Completed ---
 
-    ✓ TestHoprToken - #0 (206ms)
+    ✓ TestHoprToken - #0 (234ms)
 
 
   1 passing (2s)
