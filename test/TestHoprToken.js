@@ -37,18 +37,18 @@ describe("TestHoprToken", function() {
 
     HoprToken = await ethers.getContractFactory("HoprToken");
     HoprDistributor = await ethers.getContractFactory("HoprDistributor");
-    console.log("    owner -> HoprToken.deploy()");
     hoprToken = await HoprToken.deploy();
     const deployHoprTokenTransactionReceipt = await hoprToken.deployTransaction.wait();
+    console.log("    owner -> HoprToken.deploy() to " + hoprToken.address);
     printEvents(hoprToken, deployHoprTokenTransactionReceipt);
     console.log("    owner -> hoprToken.grantRole(MINTER_ROLE, owner)");
     const grantRole1 = await hoprToken.grantRole(await hoprToken.MINTER_ROLE(), owner);
     printEvents(hoprToken, await grantRole1.wait());
 
     const now = parseInt(new Date() / 1000);
-    const maxMintAmount = ethers.utils.parseUnits("123", 18);
-    console.log("    owner -> HoprDistributor.deploy(hoprToken, " + now + ", " + ethers.utils.formatUnits(maxMintAmount, 18) + ")");
+    const maxMintAmount = ethers.utils.parseUnits("123.456", 18);
     hoprDistributor = await HoprDistributor.deploy(hoprToken.address, now, maxMintAmount);
+    console.log("    owner -> HoprDistributor.deploy(hoprToken, " + now + ", " + ethers.utils.formatUnits(maxMintAmount, 18) + ") to " + hoprDistributor.address);
     printEvents(hoprDistributor, await hoprDistributor.deployTransaction.wait());
   })
 
@@ -73,6 +73,11 @@ describe("TestHoprToken", function() {
     console.log("    hoprToken.user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
 
     console.log("    hoprDistributor.MULTIPLIER: " + await hoprDistributor.MULTIPLIER());
+    console.log("    hoprDistributor.totalMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalMinted(), 18));
+    console.log("    hoprDistributor.totalToBeMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalToBeMinted(), 18));
+    console.log("    hoprDistributor.startTime: " + await hoprDistributor.startTime());
+    console.log("    hoprDistributor.token: " + await hoprDistributor.token());
+    console.log("    hoprDistributor.maxMintAmount: " + ethers.utils.formatUnits(await hoprDistributor.maxMintAmount(), 18));
     // Decimal.set({ precision: 30 });
     // const SECONDS_PER_DAY = 60 * 60 * 24;
     // const SECONDS_PER_YEAR = 365 * SECONDS_PER_DAY;
