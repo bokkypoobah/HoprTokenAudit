@@ -4,12 +4,12 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
   TestHoprToken
     owner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; user0: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; user1: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
     owner -> HoprToken.deploy() to 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-      + {"transactionIndex":0,"blockNumber":3,"transactionHash":"0xd40068c07908a28f9ecbe437f7b151631203bd64c4a23ea753dc1d105e58229f","address":"0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24","topics":["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"],"data":"0x","logIndex":0,"blockHash":"0x8a6fed4862261649ee950410c842dfa041541c2b3f4d2a1cbcc7467ecb80dbdf"}
-      + {"transactionIndex":0,"blockNumber":3,"transactionHash":"0xd40068c07908a28f9ecbe437f7b151631203bd64c4a23ea753dc1d105e58229f","address":"0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24","topics":["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"],"data":"0x","logIndex":1,"blockHash":"0x8a6fed4862261649ee950410c842dfa041541c2b3f4d2a1cbcc7467ecb80dbdf"}
+      + {"transactionIndex":0,"blockNumber":3,"transactionHash":"0xd40068c07908a28f9ecbe437f7b151631203bd64c4a23ea753dc1d105e58229f","address":"0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24","topics":["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"],"data":"0x","logIndex":0,"blockHash":"0xf4dc05f78b3bf967cca7bf72104122d316fa2a466efd8a8de7502658e4980424"}
+      + {"transactionIndex":0,"blockNumber":3,"transactionHash":"0xd40068c07908a28f9ecbe437f7b151631203bd64c4a23ea753dc1d105e58229f","address":"0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24","topics":["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"],"data":"0x","logIndex":1,"blockHash":"0xf4dc05f78b3bf967cca7bf72104122d316fa2a466efd8a8de7502658e4980424"}
       + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, sender: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, sender: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
-    owner -> HoprDistributor.deploy(hoprToken, 1610661400, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+    owner -> HoprDistributor.deploy(hoprToken, 1610663770, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       + OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
     hoprToken.name: HOPR Token
     hoprToken.symbol: HOPR
@@ -28,12 +28,17 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
     hoprDistributor.MULTIPLIER: 1000000
     hoprDistributor.totalMinted: 0.0
     hoprDistributor.totalToBeMinted: 0.0
-    hoprDistributor.startTime: 1610661400
+    hoprDistributor.startTime: 1610663770
     hoprDistributor.token: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
     hoprDistributor.maxMintAmount: 123.456
+    owner -> hoprDistributor.addSchedule(durations, percents, 'test)
+      + ScheduleAdded(durations: 1,10,100,1000, percents: 1000,10000,100000,1000000, name: test)
+    owner -> hoprDistributor.addAllocations(accounts, amounts, 'test)
+      + AllocationAdded(account: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, amount: 1000000000, scheduleName: test)
+      + AllocationAdded(account: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, amount: 1000000000, scheduleName: test)
         --- Test Completed ---
 
-    ✓ TestHoprToken - #0 (220ms)
+    ✓ TestHoprToken - #0 (313ms)
 
 
   1 passing (2s)

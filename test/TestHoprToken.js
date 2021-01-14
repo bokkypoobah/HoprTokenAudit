@@ -78,6 +78,19 @@ describe("TestHoprToken", function() {
     console.log("    hoprDistributor.startTime: " + await hoprDistributor.startTime());
     console.log("    hoprDistributor.token: " + await hoprDistributor.token());
     console.log("    hoprDistributor.maxMintAmount: " + ethers.utils.formatUnits(await hoprDistributor.maxMintAmount(), 18));
+
+    console.log("    owner -> hoprDistributor.addSchedule(durations, percents, 'test)");
+    const durations = [1, 10, 100, 1000];
+    const percents = [1000, 10000, 100000, 1000000];
+    const addSchedule1 = await hoprDistributor.addSchedule(durations, percents, 'test');
+    printEvents(hoprDistributor, await addSchedule1.wait());
+
+    console.log("    owner -> hoprDistributor.addAllocations(accounts, amounts, 'test)");
+    const accounts = [user0, user1];
+    const amounts = [1000000000, 1000000000];
+    const addAllocations1 = await hoprDistributor.addAllocations(accounts, amounts, 'test');
+    printEvents(hoprDistributor, await addAllocations1.wait());
+
     // Decimal.set({ precision: 30 });
     // const SECONDS_PER_DAY = 60 * 60 * 24;
     // const SECONDS_PER_YEAR = 365 * SECONDS_PER_DAY;
