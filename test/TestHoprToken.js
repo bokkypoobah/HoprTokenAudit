@@ -40,13 +40,13 @@ describe("TestHoprToken", function() {
     hoprToken = await HoprToken.deploy();
     const deployHoprTokenTransactionReceipt = await hoprToken.deployTransaction.wait();
     printEvents(hoprToken, deployHoprTokenTransactionReceipt);
-    await hoprToken.grantRole(await hoprToken.MINTER_ROLE(), owner);
+    console.log("    owner -> hoprToken.grantRole(MINTER_ROLE, owner)");
+    const grantRole1 = await hoprToken.grantRole(await hoprToken.MINTER_ROLE(), owner);
+    printEvents(hoprToken, await grantRole1.wait());
   })
 
 
   it("TestHoprToken - #0", async function() {
-
-
     // expect(await hoprToken.name()).to.be.equal('HOPR Token', 'wrong name');
     console.log("    name: " + await hoprToken.name());
     console.log("    symbol: " + await hoprToken.symbol());
@@ -54,16 +54,16 @@ describe("TestHoprToken", function() {
     console.log("    granularity: " + await hoprToken.granularity());
     console.log("    totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
 
-    console.log("    owner -> hoprToken.mint(user0, 123, '', '')");
+    console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");
     const mint1 = await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
     printEvents(hoprToken, await mint1.wait());
 
-    console.log("    owner -> hoprToken.mint(user1, 0.123456789123456789, '', '')");
-    const mint2 = await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x00', '0x00');
+    console.log("    owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')");
+    const mint2 = await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x01', '0x02');
     printEvents(hoprToken, await mint2.wait());
-    console.log("totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
-    console.log("user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
-    console.log("user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
+    console.log(    "totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
+    console.log(    "user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
+    console.log(    "user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
 
     // Decimal.set({ precision: 30 });
     // const SECONDS_PER_DAY = 60 * 60 * 24;

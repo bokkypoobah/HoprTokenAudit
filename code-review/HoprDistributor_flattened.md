@@ -2075,14 +2075,17 @@ contract HoprToken is AccessControl, ERC777Snapshot {
      *
      * - the caller must have the `MINTER_ROLE`.
      */
-    // BK CHECK Roles, userData and operatorData
+    // BK TODO
     function mint(
         address account,
         uint256 amount,
         bytes memory userData,
         bytes memory operatorData
     ) public {
+        // BK CHECK Role
         require(hasRole(MINTER_ROLE, msg.sender), "HoprToken: caller does not have minter role");
+        // BK CHECK userData and operatorData flow
+        // BK OK function ERC777._mint(address account, uint256 amount, bytes memory userData, bytes memory operatorData)
         _mint(account, amount, userData, operatorData);
     }
 }
