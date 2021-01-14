@@ -983,7 +983,7 @@ interface IERC777Sender {
     // BK            bytes calldata userData,
     // BK            bytes calldata operatorData
     // BK        ) external;
-    // BK    }     
+    // BK    }
     function tokensToSend(
         address operator,
         address from,
@@ -1409,6 +1409,7 @@ contract ERC777 is Context, IERC777, IERC20 {
 
     uint256 private _totalSupply;
 
+    // BK Next 2 OK
     string private _name;
     string private _symbol;
 
@@ -1444,7 +1445,9 @@ contract ERC777 is Context, IERC777, IERC20 {
         string memory symbol,
         address[] memory defaultOperators
     ) public {
+        // BK OK
         _name = name;
+        // BK OK
         _symbol = symbol;
 
         _defaultOperatorsArray = defaultOperators;
@@ -1460,14 +1463,18 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-name}.
      */
+    // BK OK - Override function IERC777.name() external view returns (string memory);
     function name() public view override returns (string memory) {
+        // BK OK
         return _name;
     }
 
     /**
      * @dev See {IERC777-symbol}.
      */
+    // BK - Override function IERC777.symbol() external view returns (string memory);
     function symbol() public view override returns (string memory) {
+        // BK OK
         return _symbol;
     }
 
@@ -1477,7 +1484,9 @@ contract ERC777 is Context, IERC777, IERC20 {
      * Always returns 18, as per the
      * [ERC777 EIP](https://eips.ethereum.org/EIPS/eip-777#backward-compatibility).
      */
+    // BK OK - function decimals() public view returns (uint8) from https://eips.ethereum.org/EIPS/eip-20
     function decimals() public pure returns (uint8) {
+        // BK OK
         return 18;
     }
 
@@ -1486,13 +1495,17 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * This implementation always returns `1`.
      */
+    // BK OK - function granularity() external view returns (uint256);
     function granularity() public view override returns (uint256) {
+        // BK OK
         return 1;
     }
 
     /**
      * @dev See {IERC777-totalSupply}.
      */
+    // BK - function totalSupply() external view returns (uint256);
+    // BK - Check override
     function totalSupply() public view override(IERC20, IERC777) returns (uint256) {
         return _totalSupply;
     }
@@ -2047,6 +2060,7 @@ contract HoprToken is AccessControl, ERC777Snapshot {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     // BK OK - ERC777.constructor(string memory name, string memory symbol, address[] memory defaultOperators) public;
+    // BK Tested name(), symbol()
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
         // BK OK - function _setupRole(bytes32 role, address account) internal virtual;
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -2061,6 +2075,7 @@ contract HoprToken is AccessControl, ERC777Snapshot {
      *
      * - the caller must have the `MINTER_ROLE`.
      */
+    // BK TEST Roles
     function mint(
         address account,
         uint256 amount,
@@ -2180,6 +2195,7 @@ contract HoprDistributor is Ownable {
             // BK QUERY Can have duplicate durations. Is this intended?
             require(lastDuration <= durations[i], "Durations must be added in ascending order");
             lastDuration = durations[i];
+            // BK OK - uint32 <= 10^6{uint32}
             require(percents[i] <= MULTIPLIER, "Percent provided must be smaller or equal to MULTIPLIER");
         }
 
@@ -2211,6 +2227,7 @@ contract HoprDistributor is Ownable {
             totalToBeMinted = _addUint128(totalToBeMinted, amounts[i]);
             assert(totalToBeMinted <= maxMintAmount);
 
+            // BK BK - event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
             emit AllocationAdded(accounts[i], amounts[i], scheduleName);
         }
     }
@@ -2269,11 +2286,15 @@ contract HoprDistributor is Ownable {
 
         totalMinted = newTotalMinted;
         allocation.claimed = newClaimed;
+        // BK OK - {uint32} = {uint32}
         allocation.lastClaim = _currentBlockTimestamp();
 
         // mint tokens
+        // BK - function mint(address account, uint256 amount, bytes memory userData, bytes memory operatorData) public;
+        // BK - token.mint(account, claimable{uint128}, "", "");
         token.mint(account, claimable, "", "");
 
+        // BK OK - event Claimed(address indexed account, uint128 amount, string scheduleName);
         emit Claimed(account, claimable, scheduleName);
     }
 
@@ -2309,7 +2330,7 @@ contract HoprDistributor is Ownable {
             // BK CHECK
             if (allocation.lastClaim > scheduleDeadline) continue;
 
-            // BK CHECK claimable += allocation.amount * schedule.percents[i] / MULTIPLIER;
+            // BK CHECK claimable{uint128} += allocation.amount{uint128} * schedule.percents[i]{uint32} / MULTIPLIER{uint32};
             claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
         }
 
@@ -2340,7 +2361,7 @@ contract HoprDistributor is Ownable {
     function _addUint128(uint128 a, uint128 b) internal pure returns (uint128) {
         // BK OK
         uint128 c = a + b;
-        // BK OK        
+        // BK OK
         require(c >= a, "uint128 addition overflow");
 
         // BK OK
@@ -2388,7 +2409,9 @@ contract HoprDistributor is Ownable {
 
     // BK OK
     event ScheduleAdded(uint32[] durations, uint32[] percents, string name);
+    // BK OK
     event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
+    // BK OK
     event Claimed(address indexed account, uint128 amount, string scheduleName);
 }
 ```

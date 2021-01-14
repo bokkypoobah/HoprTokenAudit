@@ -1,0 +1,20 @@
+$ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results/TestHoprToken.txt
+
+
+  TestHoprToken
+owner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; user0: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; user1: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+name: HOPR Token
+symbol: HOPR
+decimals: 18
+granularity: 1
+totalSupply at deployment: 0.0
+totalSupply: 123.123456789123456789
+user0.balance: 123.0
+user1.balance: 0.123456789123456789
+        --- Test Completed ---
+
+    ✓ TestHoprToken - #0 (206ms)
+
+
+  1 passing (2s)
+
