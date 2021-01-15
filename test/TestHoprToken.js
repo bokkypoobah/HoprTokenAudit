@@ -24,16 +24,51 @@ describe("TestHoprToken", function() {
         result = result + ")";
         console.log("      + " + result);
       } catch (e) {
-        console.log("      + " + JSON.stringify(log));
+        console.log("      + " + log.address + " " + JSON.stringify(log.topics));
       }
     });
+  }
+
+  async function printHoprTokenDetails(header = false) {
+    console.log("    --- hoprToken '" + await hoprToken.symbol() + "', '" + await hoprToken.name() + "' ---");
+    if (header) {
+      console.log("      - decimals: " + await hoprToken.decimals());
+      console.log("      - granularity: " + await hoprToken.granularity());
+    }
+    console.log("      - totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
+    console.log("      - user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
+    console.log("      - user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
+  }
+
+  async function printHoprDistributorDetails(header = false) {
+    console.log("    --- hoprDistributor ---");
+    if (header) {
+      console.log("      - MULTIPLIER: " + await hoprDistributor.MULTIPLIER());
+      console.log("      - totalToBeMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalToBeMinted(), 18));
+      console.log("      - startTime: " + await hoprDistributor.startTime());
+      console.log("      - token: " + await hoprDistributor.token());
+      console.log("      - maxMintAmount: " + ethers.utils.formatUnits(await hoprDistributor.maxMintAmount(), 18));
+    }
+    console.log("      - totalMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalMinted(), 18));
+    console.log("      - getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
+    const allocation0 = await hoprDistributor.allocations(user0, 'test');
+    console.log("      - allocations(user0, 'test') - amount: " + ethers.utils.formatUnits(allocation0.amount, 18) +
+      ", claimed: " + ethers.utils.formatUnits(allocation0.claimed, 18) + ", lastClaim: " + allocation0.lastClaim + ", revoked: " + allocation0.revoked);
+    const allocation1 = await hoprDistributor.allocations(user1, 'test');
+    console.log("      - allocations(user1, 'test') - amount: " + ethers.utils.formatUnits(allocation1.amount, 18) +
+      ", claimed: " + ethers.utils.formatUnits(allocation1.claimed, 18) + ", lastClaim: " + allocation1.lastClaim + ", revoked: " + allocation1.revoked);
+    try {
+      console.log("      - getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
+      console.log("      - getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
+    } catch (e) {
+    }
   }
 
   before(async function () {
     [owner, user0, user1] = await web3.eth.getAccounts();
     console.log("    owner: " + owner + "; user0: " + user0 + "; user1: " + user1);
 
-    await singletons.ERC1820Registry(owner)
+    const registry = await singletons.ERC1820Registry(owner);
 
     HoprToken = await ethers.getContractFactory("HoprToken");
     HoprDistributor = await ethers.getContractFactory("HoprDistributor");
@@ -54,12 +89,8 @@ describe("TestHoprToken", function() {
 
 
   it("TestHoprToken - #0", async function() {
+    await printHoprTokenDetails(true);
     // expect(await hoprToken.name()).to.be.equal('HOPR Token', 'wrong name');
-    console.log("    hoprToken.name: " + await hoprToken.name());
-    console.log("    hoprToken.symbol: " + await hoprToken.symbol());
-    console.log("    hoprToken.decimals: " + await hoprToken.decimals());
-    console.log("    hoprToken.granularity: " + await hoprToken.granularity());
-    console.log("    hoprToken.totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
 
     console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");
     const mint1 = await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
@@ -68,16 +99,9 @@ describe("TestHoprToken", function() {
     console.log("    owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')");
     const mint2 = await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x01', '0x02');
     printEvents(hoprToken, await mint2.wait());
-    console.log("    hoprToken.totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
-    console.log("    hoprToken.user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
-    console.log("    hoprToken.user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
+    await printHoprTokenDetails();
 
-    console.log("    hoprDistributor.MULTIPLIER: " + await hoprDistributor.MULTIPLIER());
-    console.log("    hoprDistributor.totalMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalMinted(), 18));
-    console.log("    hoprDistributor.totalToBeMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalToBeMinted(), 18));
-    console.log("    hoprDistributor.startTime: " + await hoprDistributor.startTime());
-    console.log("    hoprDistributor.token: " + await hoprDistributor.token());
-    console.log("    hoprDistributor.maxMintAmount: " + ethers.utils.formatUnits(await hoprDistributor.maxMintAmount(), 18));
+    await printHoprDistributorDetails(true);
 
     console.log("    owner -> hoprDistributor.addSchedule(durations, percents, 'test)");
     const durations = [0, 10, 20, 100];
@@ -91,32 +115,36 @@ describe("TestHoprToken", function() {
     const addAllocations1 = await hoprDistributor.addAllocations(accounts, amounts, 'test');
     printEvents(hoprDistributor, await addAllocations1.wait());
 
-    console.log("    Time 0");
-    console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
-    console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
-    console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
+    console.log("    Time @ 0s");
+    await printHoprDistributorDetails();
 
-    console.log("    Time 10");
+    // console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
+    // console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
+    // console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
+
+    console.log("    Time @ 10s");
     let waitUntil = startTime + 10;
     console.log("    waitUntil: " + waitUntil);
     while ((new Date()).getTime() <= waitUntil * 1000) {
     }
     const transfer1 = await hoprToken.transfer(user0, 0);
     printEvents(hoprToken, await transfer1.wait());
-    console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
-    console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
-    console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
+    await printHoprDistributorDetails();
+    // console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
+    // console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
+    // console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
 
-    console.log("    Time 20");
-    waitUntil = startTime + 20;
+    console.log("    Time @ 17s");
+    waitUntil = startTime + 17;
     console.log("    waitUntil: " + waitUntil);
     while ((new Date()).getTime() <= waitUntil * 1000) {
     }
     const transfer2 = await hoprToken.transfer(user0, 0);
     printEvents(hoprToken, await transfer2.wait());
-    console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
-    console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
-    console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
+    await printHoprDistributorDetails();
+    // console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
+    // console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
+    // console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
 
     // Decimal.set({ precision: 30 });
     // const SECONDS_PER_DAY = 60 * 60 * 24;
