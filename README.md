@@ -108,6 +108,36 @@ Outline:
 * [ ] abstract contract ERC777Snapshot is ERC777
   * [ ] using SafeMath for uint256;
 * [ ] contract HoprToken is AccessControl, ERC777Snapshot
+  * [ ] ERC20
+    * [ ] function totalSupply()
+    * [ ] function balanceOf(...)
+    * [ ] function transfer(...)
+    * [ ] function allowance(...)
+    * [ ] function approve(...)
+    * [ ] function transferFrom(...)
+    * [ ] event Transfer
+    * [ ] event Approval
+  * [ ] ERC777
+    * [ ] function name()
+    * [ ] function symbol()
+    * [ ] function granularity()
+    * [ ] function totalSupply()
+    * [ ] function balanceOf(...)
+    * [ ] function send(...)
+    * [ ] function burn(...)
+    * [ ] function isOperatorFor(...)
+    * [ ] function authorizeOperator(...)
+    * [ ] function revokeOperator(...)
+    * [ ] function defaultOperators()
+    * [ ] function operatorSend(...)
+    * [ ] function operatorBurn(...)
+    * [ ] event Sent
+    * [ ] event Minted
+    * [ ] event Burned
+    * [ ] event AuthorizedOperator
+    * [ ] event RevokedOperator
+  * [ ] Other
+    * 
 * [ ] contract HoprDistributor is Ownable
 
 <br />

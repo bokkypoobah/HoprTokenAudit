@@ -13,7 +13,7 @@ describe("TestHoprToken", function() {
   function addAccount(account, accountName) {
     accounts.push(account);
     accountNames[account.toLowerCase()] = accountName;
-    console.log("        Address " + account + " => " + getShortAccountName(account));
+    console.log("      Mapping " + account + " => " + getShortAccountName(account));
   }
 
   function getShortAccountName(address) {
@@ -55,6 +55,20 @@ describe("TestHoprToken", function() {
     if (header) {
       console.log("      - decimals: " + await hoprToken.decimals());
       console.log("      - granularity: " + await hoprToken.granularity());
+      const adminRole = await hoprToken.DEFAULT_ADMIN_ROLE();
+      console.log("      - DEFAULT_ADMIN_ROLE: " + adminRole);
+      console.log("      - hoprToken.getRoleMemberCount(adminRole): " + await hoprToken.getRoleMemberCount(adminRole));
+      console.log("      - hoprToken.getRoleMember(adminRole, 0): " + getShortAccountName(await hoprToken.getRoleMember(adminRole, 0)));
+      console.log("      - hoprToken.getRoleAdmin(adminRole): " + await hoprToken.getRoleAdmin(adminRole));
+      console.log("      - hoprToken.hasRole(owner, DEFAULT_ADMIN_ROLE): " + await hoprToken.hasRole(adminRole, owner));
+      console.log("      - hoprToken.hasRole(user1, DEFAULT_ADMIN_ROLE): " + await hoprToken.hasRole(adminRole, user1));
+      const minterRole = await hoprToken.MINTER_ROLE();
+      console.log("      - MINTER_ROLE: " + minterRole);
+      console.log("      - hoprToken.getRoleMemberCount(minterRole): " + await hoprToken.getRoleMemberCount(minterRole));
+      console.log("      - hoprToken.getRoleMember(minterRole, 0): " + getShortAccountName(await hoprToken.getRoleMember(minterRole, 0)));
+      console.log("      - hoprToken.getRoleAdmin(minterRole): " + await hoprToken.getRoleAdmin(minterRole));
+      console.log("      - hoprToken.hasRole(owner, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, owner));
+      console.log("      - hoprToken.hasRole(user1, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, user1));
     }
     console.log("      - totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
     console.log("      - user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
@@ -86,20 +100,20 @@ describe("TestHoprToken", function() {
 
   before(async function () {
     [owner, user0, user1] = await web3.eth.getAccounts();
-    // console.log("    owner: " + owner + "; user0: " + user0 + "; user1: " + user1);
 
+    console.log("    --- Setup ---");
     addAccount("0x0000000000000000000000000000000000000000", "null");
     addAccount(owner, "owner");
     addAccount(user0, "user0");
     addAccount(user1, "user1");
 
     const registry = await singletons.ERC1820Registry(owner);
-    addAccount(registry.address, "1820");
+    addAccount(registry.address, "1820Reg");
 
     HoprToken = await ethers.getContractFactory("HoprToken");
     HoprDistributor = await ethers.getContractFactory("HoprDistributor");
     hoprToken = await HoprToken.deploy();
-    addAccount(hoprToken.address, "HOPR");
+    addAccount(hoprToken.address, "HOPRToken");
     const deployHoprTokenTransactionReceipt = await hoprToken.deployTransaction.wait();
     console.log("    owner -> HoprToken.deploy() to " + hoprToken.address);
     printEvents(hoprToken, deployHoprTokenTransactionReceipt);

@@ -2,25 +2,38 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
 
 
   TestHoprToken
-        Address 0x0000000000000000000000000000000000000000 => null:0x0000
-        Address 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 => owner:0xf39F
-        Address 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 => user0:0x7099
-        Address 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC => user1:0x3C44
-        Address 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 => 1820:0x1820
-        Address 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 => HOPR:0xe7f1
+    --- Setup ---
+      Mapping 0x0000000000000000000000000000000000000000 => null:0x0000
+      Mapping 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 => owner:0xf39F
+      Mapping 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 => user0:0x7099
+      Mapping 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC => user1:0x3C44
+      Mapping 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 => 1820Reg:0x1820
+      Mapping 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 => HOPRToken:0xe7f1
     owner -> HoprToken.deploy() to 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-      + 1820:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
-      + 1820:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
+      + 1820Reg:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
+      + 1820Reg:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
       + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
-        Address 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1610757187, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+      Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
+    owner -> HoprDistributor.deploy(hoprToken, 1610760531, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       + OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
     - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - decimals: 18
       - granularity: 1
+      - DEFAULT_ADMIN_ROLE: 0x0000000000000000000000000000000000000000000000000000000000000000
+      - hoprToken.getRoleMemberCount(adminRole): 1
+      - hoprToken.getRoleMember(adminRole, 0): owner:0xf39F
+      - hoprToken.getRoleAdmin(adminRole): 0x0000000000000000000000000000000000000000000000000000000000000000
+      - hoprToken.hasRole(owner, DEFAULT_ADMIN_ROLE): true
+      - hoprToken.hasRole(user1, DEFAULT_ADMIN_ROLE): false
+      - MINTER_ROLE: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
+      - hoprToken.getRoleMemberCount(minterRole): 1
+      - hoprToken.getRoleMember(minterRole, 0): owner:0xf39F
+      - hoprToken.getRoleAdmin(minterRole): 0x0000000000000000000000000000000000000000000000000000000000000000
+      - hoprToken.hasRole(owner, MINTER_ROLE): true
+      - hoprToken.hasRole(user1, MINTER_ROLE): false
       - totalSupply: 0.0
       - user0.balance: 0.0
       - user1.balance: 0.0
@@ -38,8 +51,8 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - owner: owner:0xf39F
       - MULTIPLIER: 1000000
       - totalToBeMinted: 0.0
-      - startTime: 1610757187
-      - token: HOPR:0xe7f1
+      - startTime: 1610760531
+      - token: HOPRToken:0xe7f1
       - maxMintAmount: 123.456
       - totalMinted: 0.0
       - getSchedule('test'): [[],[]]
@@ -59,7 +72,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
     Time @ 12s
-    waitUntil: 1610757199
+    waitUntil: 1610760543
       + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
       + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
@@ -70,7 +83,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 13.53
       - getClaimable(user1, 'test'): 14.74
     Time @ 20s
-    waitUntil: 1610757207
+    waitUntil: 1610760551
       + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
       + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
@@ -82,9 +95,9 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user1, 'test'): 14.74
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (19809ms)
+    ✓ TestHoprDistributor - #0 (19406ms)
 
 
-  1 passing (22s)
+  1 passing (21s)
   1 pending
 

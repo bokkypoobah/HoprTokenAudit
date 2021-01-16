@@ -624,6 +624,7 @@ abstract contract AccessControl is Context {
     /**
      * @dev Sets `adminRole` as ``role``'s admin role.
      */
+    // BK Unused
     function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {
         _roles[role].adminRole = adminRole;
     }
@@ -1417,10 +1418,12 @@ contract ERC777 is Context, IERC777, IERC20 {
     // See https://github.com/ethereum/solidity/issues/4024.
 
     // keccak256("ERC777TokensSender")
+    // BK web3.sha3("ERC777TokensSender") => "0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895"
     bytes32 constant private _TOKENS_SENDER_INTERFACE_HASH =
         0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895;
 
     // keccak256("ERC777TokensRecipient")
+    // BK web3.sha3("ERC777TokensRecipient") => "0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b"
     bytes32 constant private _TOKENS_RECIPIENT_INTERFACE_HASH =
         0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b;
 
@@ -2057,12 +2060,15 @@ pragma solidity ^0.6.0;
 
 
 contract HoprToken is AccessControl, ERC777Snapshot {
+    // BK web3.sha3("MINTER_ROLE") => "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
+    // BK OK MINTER_ROLE: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     // BK OK - ERC777.constructor(string memory name, string memory symbol, address[] memory defaultOperators) public;
     // BK Tested name(), symbol()
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
         // BK OK - function _setupRole(bytes32 role, address account) internal virtual;
+        // BK   + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
