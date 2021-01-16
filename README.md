@@ -145,6 +145,13 @@ Outline:
     * [ ] bytes32 DEFAULT_ADMIN_ROLE
     * [ ] bytes32 MINTER_ROLE
     * [ ] constructor(...)
+    * [ ] function hasRole(...) view
+    * [ ] function getRoleMemberCount(...) view
+    * [ ] function getRoleMember(...) view
+    * [ ] function getRoleAdmin(...) view
+    * [ ] function grantRole(...) adminRole
+    * [ ] function revokeRole(...) adminRole
+    * [ ] function renounceRole(...)
     * [ ] function mint(...) MINTER_ROLE
     * [ ] event RoleGranted
     * [ ] event RoleRevoked
