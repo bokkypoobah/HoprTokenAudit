@@ -2,15 +2,22 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
 
 
   TestHoprToken
-    owner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; user0: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8; user1: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC
+        Address 0x0000000000000000000000000000000000000000 => null:0x0000
+        Address 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 => owner:0xf39F
+        Address 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 => user0:0x7099
+        Address 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC => user1:0x3C44
+        Address 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 => 1820:0x1820
+        Address 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 => HOPR:0xe7f1
     owner -> HoprToken.deploy() to 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-      + 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
-      + 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
-      + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, sender: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+      + 1820:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
+      + 1820:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
+      + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
-      + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, sender: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
-    owner -> HoprDistributor.deploy(hoprToken, 1610688043, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
-      + OwnershipTransferred(previousOwner: 0x0000000000000000000000000000000000000000, newOwner: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266)
+      + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
+        Address 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
+    owner -> HoprDistributor.deploy(hoprToken, 1610757187, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+      + OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
+    - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - decimals: 18
       - granularity: 1
@@ -18,64 +25,66 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - user0.balance: 0.0
       - user1.balance: 0.0
     owner -> hoprToken.mint(user0, 123, '0x00', '0x00')
-      + Minted(operator: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, amount: 123000000000000000000, data: 0x00, operatorData: 0x00)
-      + Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, value: 123000000000000000000)
+      + Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123000000000000000000, data: 0x00, operatorData: 0x00)
+      + Transfer(from: null:0x0000, to: user0:0x7099, value: 123000000000000000000)
     owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')
-      + Minted(operator: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, amount: 123456789123456789, data: 0x01, operatorData: 0x02)
-      + Transfer(from: 0x0000000000000000000000000000000000000000, to: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, value: 123456789123456789)
+      + Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 123456789123456789, data: 0x01, operatorData: 0x02)
+      + Transfer(from: null:0x0000, to: user1:0x3C44, value: 123456789123456789)
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - totalSupply: 123.123456789123456789
       - user0.balance: 123.0
       - user1.balance: 0.123456789123456789
     --- hoprDistributor ---
+      - owner: owner:0xf39F
       - MULTIPLIER: 1000000
       - totalToBeMinted: 0.0
-      - startTime: 1610688043
-      - token: 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+      - startTime: 1610757187
+      - token: HOPR:0xe7f1
       - maxMintAmount: 123.456
       - totalMinted: 0.0
       - getSchedule('test'): [[],[]]
       - allocations(user0, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
     owner -> hoprDistributor.addSchedule(durations, percents, 'test)
-      + ScheduleAdded(durations: 0,10,20,100, percents: 100000,200000,800000,1000000, name: test)
+      + ScheduleAdded(durations: 0,12,20,100, percents: 100000,200000,800000,1000000, name: test)
     owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test)
-      + AllocationAdded(account: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, amount: 12300000000000000000, scheduleName: test)
-      + AllocationAdded(account: 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC, amount: 13400000000000000000, scheduleName: test)
+      + AllocationAdded(account: user0:0x7099, amount: 12300000000000000000, scheduleName: test)
+      + AllocationAdded(account: user1:0x3C44, amount: 13400000000000000000, scheduleName: test)
     Time @ 0s
     --- hoprDistributor ---
       - totalMinted: 0.0
-      - getSchedule('test'): [[0,10,20,100],[100000,200000,800000,1000000]]
+      - getSchedule('test'): [[0,12,20,100],[100000,200000,800000,1000000]]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 3.69
-      - getClaimable(user1, 'test'): 4.02
-    Time @ 10s
-    waitUntil: 1610688053
-      + Sent(operator: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, from: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, amount: 0, data: 0x, operatorData: 0x)
-      + Transfer(from: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, value: 0)
+      - getClaimable(user0, 'test'): 1.23
+      - getClaimable(user1, 'test'): 1.34
+    Time @ 12s
+    waitUntil: 1610757199
+      + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
+      + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
       - totalMinted: 0.0
-      - getSchedule('test'): [[0,10,20,100],[100000,200000,800000,1000000]]
+      - getSchedule('test'): [[0,12,20,100],[100000,200000,800000,1000000]]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 3.69
-      - getClaimable(user1, 'test'): 4.02
-    Time @ 17s
-    waitUntil: 1610688060
-      + Sent(operator: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, from: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, amount: 0, data: 0x, operatorData: 0x)
-      + Transfer(from: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266, to: 0x70997970C51812dc3A010C7d01b50e0d17dc79C8, value: 0)
+      - getClaimable(user0, 'test'): 13.53
+      - getClaimable(user1, 'test'): 14.74
+    Time @ 20s
+    waitUntil: 1610757207
+      + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
+      + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
       - totalMinted: 0.0
-      - getSchedule('test'): [[0,10,20,100],[100000,200000,800000,1000000]]
+      - getSchedule('test'): [[0,12,20,100],[100000,200000,800000,1000000]]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
       - getClaimable(user0, 'test'): 13.53
       - getClaimable(user1, 'test'): 14.74
         --- Test Completed ---
 
-    ✓ TestHoprToken - #0 (16098ms)
+    ✓ TestHoprDistributor - #0 (19809ms)
 
 
-  1 passing (17s)
+  1 passing (22s)
+  1 pending
 

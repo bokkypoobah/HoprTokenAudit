@@ -2185,6 +2185,7 @@ contract HoprDistributor is Ownable {
      * instead of using 100 we scale the value up to {MULTIPLIER} so we can have more accurate
      * "percentages".
      */
+    // BK NOTE Low importance - can be improved by checking that percents[] add up to MULTIPLIER
     function addSchedule(
         uint32[] calldata durations,
         uint32[] calldata percents,

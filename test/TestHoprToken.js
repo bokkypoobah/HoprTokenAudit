@@ -1,14 +1,31 @@
-// import { singletons, expectRevert } from '@openzeppelin/test-helpers'
 const { singletons, expectRevert } = require("@openzeppelin/test-helpers");
 const { expect, assert } = require("chai");
 const { BigNumber } = require("ethers");
 const util = require('util');
-// const { Decimal } = require("decimal.js");
 
 let InterestUtils;
 
 describe("TestHoprToken", function() {
   let owner, user0, user1, hoprToken, hoprDistributor, startTime;
+  const accounts = [];
+  const accountNames = {};
+
+  function addAccount(account, accountName) {
+    accounts.push(account);
+    accountNames[account.toLowerCase()] = accountName;
+    console.log("        Address " + account + " => " + getShortAccountName(account));
+  }
+
+  function getShortAccountName(address) {
+    if (address != null) {
+      var a = address.toLowerCase();
+      var n = accountNames[a];
+      if (n !== undefined) {
+        return n + ":" + address.substring(0, 6);
+      }
+    }
+    return address;
+  }
 
   function printEvents(contract, receipt) {
     receipt.logs.forEach((log) => {
@@ -18,13 +35,17 @@ describe("TestHoprToken", function() {
         let separator = "";
         data.eventFragment.inputs.forEach((a) => {
           result = result + separator + a.name + ": ";
-          result = result + data.args[a.name].toString();
+          if (a.type == 'address') {
+            result = result + getShortAccountName(data.args[a.name].toString());
+          } else {
+            result = result + data.args[a.name].toString();
+          }
           separator = ", ";
         });
         result = result + ")";
         console.log("      + " + result);
       } catch (e) {
-        console.log("      + " + log.address + " " + JSON.stringify(log.topics));
+        console.log("      + " + getShortAccountName(log.address) + " " + JSON.stringify(log.topics));
       }
     });
   }
@@ -43,20 +64,19 @@ describe("TestHoprToken", function() {
   async function printHoprDistributorDetails(header = false) {
     console.log("    --- hoprDistributor ---");
     if (header) {
+      console.log("      - owner: " + getShortAccountName(await hoprDistributor.owner()));
       console.log("      - MULTIPLIER: " + await hoprDistributor.MULTIPLIER());
       console.log("      - totalToBeMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalToBeMinted(), 18));
       console.log("      - startTime: " + await hoprDistributor.startTime());
-      console.log("      - token: " + await hoprDistributor.token());
+      console.log("      - token: " + getShortAccountName(await hoprDistributor.token()));
       console.log("      - maxMintAmount: " + ethers.utils.formatUnits(await hoprDistributor.maxMintAmount(), 18));
     }
     console.log("      - totalMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalMinted(), 18));
     console.log("      - getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
     const allocation0 = await hoprDistributor.allocations(user0, 'test');
-    console.log("      - allocations(user0, 'test') - amount: " + ethers.utils.formatUnits(allocation0.amount, 18) +
-      ", claimed: " + ethers.utils.formatUnits(allocation0.claimed, 18) + ", lastClaim: " + allocation0.lastClaim + ", revoked: " + allocation0.revoked);
+    console.log("      - allocations(user0, 'test') - amount: " + ethers.utils.formatUnits(allocation0.amount, 18) + ", claimed: " + ethers.utils.formatUnits(allocation0.claimed, 18) + ", lastClaim: " + allocation0.lastClaim + ", revoked: " + allocation0.revoked);
     const allocation1 = await hoprDistributor.allocations(user1, 'test');
-    console.log("      - allocations(user1, 'test') - amount: " + ethers.utils.formatUnits(allocation1.amount, 18) +
-      ", claimed: " + ethers.utils.formatUnits(allocation1.claimed, 18) + ", lastClaim: " + allocation1.lastClaim + ", revoked: " + allocation1.revoked);
+    console.log("      - allocations(user1, 'test') - amount: " + ethers.utils.formatUnits(allocation1.amount, 18) + ", claimed: " + ethers.utils.formatUnits(allocation1.claimed, 18) + ", lastClaim: " + allocation1.lastClaim + ", revoked: " + allocation1.revoked);
     try {
       console.log("      - getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
       console.log("      - getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
@@ -66,13 +86,20 @@ describe("TestHoprToken", function() {
 
   before(async function () {
     [owner, user0, user1] = await web3.eth.getAccounts();
-    console.log("    owner: " + owner + "; user0: " + user0 + "; user1: " + user1);
+    // console.log("    owner: " + owner + "; user0: " + user0 + "; user1: " + user1);
+
+    addAccount("0x0000000000000000000000000000000000000000", "null");
+    addAccount(owner, "owner");
+    addAccount(user0, "user0");
+    addAccount(user1, "user1");
 
     const registry = await singletons.ERC1820Registry(owner);
+    addAccount(registry.address, "1820");
 
     HoprToken = await ethers.getContractFactory("HoprToken");
     HoprDistributor = await ethers.getContractFactory("HoprDistributor");
     hoprToken = await HoprToken.deploy();
+    addAccount(hoprToken.address, "HOPR");
     const deployHoprTokenTransactionReceipt = await hoprToken.deployTransaction.wait();
     console.log("    owner -> HoprToken.deploy() to " + hoprToken.address);
     printEvents(hoprToken, deployHoprTokenTransactionReceipt);
@@ -83,14 +110,31 @@ describe("TestHoprToken", function() {
     startTime = parseInt(new Date() / 1000);
     const maxMintAmount = ethers.utils.parseUnits("123.456", 18);
     hoprDistributor = await HoprDistributor.deploy(hoprToken.address, startTime, maxMintAmount);
+    addAccount(hoprDistributor.address, "HOPRDistributor");
     console.log("    owner -> HoprDistributor.deploy(hoprToken, " + startTime + ", " + ethers.utils.formatUnits(maxMintAmount, 18) + ") to " + hoprDistributor.address);
     printEvents(hoprDistributor, await hoprDistributor.deployTransaction.wait());
   })
 
 
-  it("TestHoprToken - #0", async function() {
+  it.skip("TestHoprToken - #0", async function() {
     await printHoprTokenDetails(true);
-    // expect(await hoprToken.name()).to.be.equal('HOPR Token', 'wrong name');
+
+    console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");
+    const mint1 = await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
+    printEvents(hoprToken, await mint1.wait());
+
+    console.log("    owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')");
+    const mint2 = await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x01', '0x02');
+    printEvents(hoprToken, await mint2.wait());
+    await printHoprTokenDetails();
+
+    console.log("        --- Test Completed ---");
+    console.log("");
+  });
+
+
+  it("TestHoprDistributor - #0", async function() {
+    await printHoprTokenDetails(true);
 
     console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");
     const mint1 = await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
@@ -104,7 +148,7 @@ describe("TestHoprToken", function() {
     await printHoprDistributorDetails(true);
 
     console.log("    owner -> hoprDistributor.addSchedule(durations, percents, 'test)");
-    const durations = [0, 10, 20, 100];
+    const durations = [0, 12, 20, 100];
     const percents = [100000, 200000, 800000, 1000000];
     const addSchedule1 = await hoprDistributor.addSchedule(durations, percents, 'test');
     printEvents(hoprDistributor, await addSchedule1.wait());
@@ -118,66 +162,23 @@ describe("TestHoprToken", function() {
     console.log("    Time @ 0s");
     await printHoprDistributorDetails();
 
-    // console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
-    // console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
-    // console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
-
-    console.log("    Time @ 10s");
-    let waitUntil = startTime + 10;
+    console.log("    Time @ 12s");
+    let waitUntil = startTime + 12;
     console.log("    waitUntil: " + waitUntil);
     while ((new Date()).getTime() <= waitUntil * 1000) {
     }
     const transfer1 = await hoprToken.transfer(user0, 0);
     printEvents(hoprToken, await transfer1.wait());
     await printHoprDistributorDetails();
-    // console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
-    // console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
-    // console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
 
-    console.log("    Time @ 17s");
-    waitUntil = startTime + 17;
+    console.log("    Time @ 20s");
+    waitUntil = startTime + 20;
     console.log("    waitUntil: " + waitUntil);
     while ((new Date()).getTime() <= waitUntil * 1000) {
     }
     const transfer2 = await hoprToken.transfer(user0, 0);
     printEvents(hoprToken, await transfer2.wait());
     await printHoprDistributorDetails();
-    // console.log("      hoprDistributor.getSchedule('test'): " + JSON.stringify(await hoprDistributor.getSchedule('test')));
-    // console.log("      hoprDistributor.getClaimable(user0, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user0, 'test'), 18));
-    // console.log("      hoprDistributor.getClaimable(user1, 'test'): " + ethers.utils.formatUnits(await hoprDistributor.getClaimable(user1, 'test'), 18));
-
-    // Decimal.set({ precision: 30 });
-    // const SECONDS_PER_DAY = 60 * 60 * 24;
-    // const SECONDS_PER_YEAR = 365 * SECONDS_PER_DAY;
-    //
-    // HoprToken = await ethers.getContractFactory("HoprToken");
-    //
-    // console.log("        --- Test 1 - Deploy TestHoprToken ---");
-    // const setup1a = [];
-    // setup1a.push(TestHoprToken.deploy());
-    // const [testInterestUtils] = await Promise.all(setup1a);
-    // const hoprToken = await HoprToken.deploy();
-    //
-    // const _from = parseInt(new Date().getTime()/1000);
-    // const _to = parseInt(_from) + SECONDS_PER_YEAR * 2;
-    // const amount = 1000000;
-    // const _amount = ethers.utils.parseUnits(amount.toString(), 18);
-    //
-    // for (let date = _from; date < _to; date += (SECONDS_PER_DAY * 23.13)) {
-    //   console.log("        date: " + new Date(date * 1000).toUTCString());
-    //   const term = date - _from;
-    //   for (let rate = 0; rate < 3; rate = parseFloat(rate) + 0.231345) {
-    //     const exp = Decimal.exp(new Decimal(rate).mul(term).div(SECONDS_PER_YEAR).div(100));
-    //     // console.log("      > exp: " + exp.toPrecision(30));
-    //     const expectedFV = exp.mul(_amount.toString());
-    //     const _rate = ethers.utils.parseUnits(rate.toString(), 16);
-    //     const [fv, gasUsed] = await testInterestUtils.futureValue_(_amount, BigNumber.from(_from), BigNumber.from(date), _rate);
-    //     const _diff = fv.sub(expectedFV.toFixed(0));
-    //     const diff = ethers.utils.formatUnits(_diff, 18);
-    //     console.log("          rate: " + rate + " => fv: " + ethers.utils.formatUnits(fv, 18) + " vs expectedFV: " + ethers.utils.formatUnits(expectedFV.toFixed(0), 18) + ", diff: " + ethers.utils.formatUnits(_diff.toString(), 18) + ", gasUsed: " + gasUsed);
-    //     expect(parseFloat(diff.toString())).to.be.closeTo(0, 0.000000001, "Diff too large");
-    //   }
-    // }
 
     console.log("        --- Test Completed ---");
     console.log("");
