@@ -136,9 +136,41 @@ Outline:
     * [ ] event Burned
     * [ ] event AuthorizedOperator
     * [ ] event RevokedOperator
+  * [ ] Snapshot
+    * [ ] mapping(address, Snapshot[]) snapshots
+    * [ ] Snapshot[] totalSupplySnapshots
+    * [ ] function balanceOfAt(...) view
+    * [ ] function totalSupplyAt(...) view
   * [ ] Other
-    * 
+    * [ ] bytes32 DEFAULT_ADMIN_ROLE
+    * [ ] bytes32 MINTER_ROLE
+    * [ ] constructor(...)
+    * [ ] function mint(...) MINTER_ROLE
+    * [ ] event RoleGranted
+    * [ ] event RoleRevoked
 * [ ] contract HoprDistributor is Ownable
+  * [ ] uint32 constant MULTIPLIER
+  * [ ] uint128 totalMinted
+  * [ ] uint128 totalToBeMinted
+  * [ ] uint32 startTime
+  * [ ] HoprToken token
+  * [ ] uint128 maxMintAmount
+  * [ ] mapping(address, Allocation) allocations
+  * [ ] constructor(...)
+  * [ ] function owner() view
+  * [ ] function renounceOwnership() onlyOwner
+  * [ ] function transferOwnership(...) onlyOwner
+  * [ ] function getSchedule(...) view
+  * [ ] function revokeAccount(...) onlyOwner
+  * [ ] function addSchedule(...) onlyOwner
+  * [ ] function addAllocations(...) onlyOwner
+  * [ ] function claim(...)
+  * [ ] function claimFor(...)
+  * [ ] function getClaimable(...) view
+  * [ ] event OwnershipTransferred
+  * [ ] event ScheduleAdded
+  * [ ] event AllocationAdded
+  * [ ] event Claimed
 
 <br />
 
