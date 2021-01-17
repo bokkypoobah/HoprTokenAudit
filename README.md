@@ -23,7 +23,7 @@ This audit has been conducted on Hopr's source code as described in [AUDIT.md](h
 
 ## Recommendations
 
-* [ ] [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) will not allow tokens to be claimed after Jan 19 2038 due to the use of `uint32` variables. Except for non-arrays and structs, it is generally cheaper gas-wise to use the native 256 bit `uint256` (or `uint`) compared to `uint32` and `uint128`. Consider the gas cost operations over the life of the contract - write once, read many. Using `uint256` will also simplify the auditing of these contracts as there are less type conversions in the code.
+* [ ] [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) will not allow tokens to be claimed after Jan 19 2038 due to the use of `uint32` variables. Except for non-arrays and structs, it is generally cheaper gas-wise to use the native 256 bit `uint256` (or the `uint` alias) compared to `uint32` and `uint128`. Consider the gas cost operations over the life of the contract - write once, read many. Using `uint256` will also simplify the auditing of these contracts as there are less type conversions in the code.
   * [ ] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#L9](contracts/HoprDistributor.sol#L9)
   * [ ] **MEDIUM IMPORTANCE** Convert all `uint128` to `uint256`, e.g., [contracts/HoprDistributor.sol#L12](contracts/HoprDistributor.sol#L12)
   * [ ] **MEDIUM IMPORTANCE** Replace `_currentBlockTimestamp()` with `block.timestamp`, e.g., [contracts/HoprDistributor.sol#L194](contracts/HoprDistributor.sol#L194) and remove [`_currentBlockTimestamp()`](contracts/HoprDistributor.sol#L238-L241)
