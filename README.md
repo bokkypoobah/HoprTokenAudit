@@ -24,9 +24,9 @@ This audit has been conducted on Hopr's source code as described in [AUDIT.md](h
 ## Recommendations
 
 * [ ] [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) will not allow tokens to be claimed after Jan 19 2038 due to the use of `uint32` variables
-  * [ ] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#9](contracts/HoprDistributor.sol#9)
-  * [ ] **MEDIUM IMPORTANCE** Convert all `uint128` to `uint256`, e.g., [contracts/HoprDistributor.sol#12](contracts/HoprDistributor.sol#12)
-  * [ ] **MEDIUM IMPORTANCE** Replace `_currentBlockTimestamp()` with `block.timestamp`, e.g., [contracts/HoprDistributor.sol#194](contracts/HoprDistributor.sol#194) and remove [`_currentBlockTimestamp()`](contracts/HoprDistributor.sol#238-241)
+  * [ ] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#L9](contracts/HoprDistributor.sol#L9)
+  * [ ] **MEDIUM IMPORTANCE** Convert all `uint128` to `uint256`, e.g., [contracts/HoprDistributor.sol#L12](contracts/HoprDistributor.sol#L12)
+  * [ ] **MEDIUM IMPORTANCE** Replace `_currentBlockTimestamp()` with `block.timestamp`, e.g., [contracts/HoprDistributor.sol#L194](contracts/HoprDistributor.sol#L194) and remove [`_currentBlockTimestamp()`](contracts/HoprDistributor.sol#L238-L241)
 
 <br />
 
