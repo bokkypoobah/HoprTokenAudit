@@ -28,10 +28,10 @@ This audit has been conducted on Hopr's source code as described in [AUDIT.md](h
   * [ ] **MEDIUM IMPORTANCE** Convert all `uint128` to `uint256`, e.g., [contracts/HoprDistributor.sol#L12](contracts/HoprDistributor.sol#L12)
   * [ ] **MEDIUM IMPORTANCE** Replace `_currentBlockTimestamp()` with `block.timestamp`, e.g., [contracts/HoprDistributor.sol#L194](contracts/HoprDistributor.sol#L194) and remove [`_currentBlockTimestamp()`](contracts/HoprDistributor.sol#L238-L241)
   * [ ] **MEDIUM IMPORTANCE** Remove `_addUint32(...)`, `_addUint128(...)`, `_subUint128(...)`, `_mulUint128(...)` and `_divUint128()` in [contracts/HoprDistributor.sol#L243-L281](contracts/HoprDistributor.sol#L243-L281) and use OpenZeppelin's SafeMath
-  * [ ] **LOW IMPORTANCE** Move the events from [contracts/HoprDistributor.sol#L283-L285](contracts/HoprDistributor.sol#L283-L285) before the constructor
-  * [ ] **MEDIUM IMPORTANCE** Replace [`lastDuration <= durations[i]`](contracts/HoprDistributor.sol#L104) with `lastDuration < durations[i]` to prevent duplicate durations
-  * [ ] **LOW IMPORTANCE** Check that the sum of `percents[]` adds up to `MULTIPLIER` in [`addSchedule(...)`](contracts/HoprDistributor.sol#L94-L112)
-  * [ ] **LOW IMPORTANCE** Refactor the statements in [_getClaimable(...)](contracts/HoprDistributor.sol#L227-L230) to remove the `break` and `continue` to simplify the algorithm
+* [ ] **LOW IMPORTANCE** Move the events from [contracts/HoprDistributor.sol#L283-L285](contracts/HoprDistributor.sol#L283-L285) before the constructor
+* [ ] **MEDIUM IMPORTANCE** Replace `lastDuration <= durations[i]` with `lastDuration < durations[i]` in [contracts/HoprDistributor.sol#L104](contracts/HoprDistributor.sol#L104) to prevent duplicate durations
+* [ ] **LOW IMPORTANCE** Check that the sum of `percents[]` adds up to `MULTIPLIER` in `addSchedule(...)` - [contracts/HoprDistributor.sol#L94-L112](contracts/HoprDistributor.sol#L94-L112)
+* [ ] **LOW IMPORTANCE** Refactor the statements in `_getClaimable(...)`[contracts/HoprDistributor.sol#L227-L230](contracts/HoprDistributor.sol#L227-L230) to remove the `break` and `continue` to simplify the algorithm
 
 
 <br />
