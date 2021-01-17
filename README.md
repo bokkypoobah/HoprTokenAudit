@@ -1,11 +1,36 @@
-# HoprTokenAudit
+# Hopr Token And Distributor Smart Contract Audit
 
-HOPR ERC-777 Token Contract Audit
+## Summary
 
+[Hopr](https://hoprnet.org/) intends to deploy an ERC-777 (and ERC-20) compliant token and a token distributor as smart contracts on the Ethereum blockchain.
 
-## Scope
+Bok Consulting Pty Ltd has been commissioned to perform an audit on the Ethereum smart contracts.
 
-https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md
+This audit has been conducted on Hopr's source code as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md).
+
+<br />
+
+<hr />
+
+## Table Of Contents
+
+* [Summary](#summary)
+* [Recommendations](#recommendations)
+
+<br />
+
+<hr />
+
+## Recommendations
+
+* [ ] [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) will not allow tokens to be claimed after Jan 19 2038 due to the use of `uint32` variables
+  * [ ] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#9](contracts/HoprDistributor.sol#9)
+  * [ ] **MEDIUM IMPORTANCE** Convert all `uint128` to `uint256`, e.g., [contracts/HoprDistributor.sol#12](contracts/HoprDistributor.sol#12)
+  * [ ] **MEDIUM IMPORTANCE** Replace `_currentBlockTimestamp()` with `block.timestamp`, e.g., [contracts/HoprDistributor.sol#194](contracts/HoprDistributor.sol#194) and remove [`_currentBlockTimestamp()`](contracts/HoprDistributor.sol#238-241)
+
+<br />
+
+<hr />
 
 ### Source Code
 

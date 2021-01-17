@@ -2318,6 +2318,7 @@ contract HoprDistributor is Ownable {
         Allocation storage allocation
     ) internal view returns (uint128) {
         // first unlock hasn't passed yet
+        // BK NOTE - This will return 0 after Jan 19 2038
         if (_addUint32(startTime, schedule.durations[0]) > _currentBlockTimestamp()) {
             return 0;
         }
