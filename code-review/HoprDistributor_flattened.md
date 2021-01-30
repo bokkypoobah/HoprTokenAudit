@@ -11,7 +11,6 @@ Source file [../flattened/HoprDistributor_flattened.sol](../flattened/HoprDistri
 
 // SPDX-License-Identifier: MIT
 
-// BK NOTE - Current version 0.6.12 used for testing
 pragma solidity ^0.6.0;
 
 /*
@@ -24,20 +23,15 @@ pragma solidity ^0.6.0;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-// BK Ok
 contract Context {
     // Empty internal constructor, to prevent people from mistakenly deploying
     // an instance of this contract, which should be used via inheritance.
-    // BK Ok
     constructor () internal { }
 
-    // BK Ok
     function _msgSender() internal view virtual returns (address payable) {
-        // BK Ok
         return msg.sender;
     }
 
-    // BK Unused
     function _msgData() internal view virtual returns (bytes memory) {
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
@@ -62,18 +56,14 @@ pragma solidity ^0.6.0;
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
-// BK CHECK
 contract Ownable is Context {
-    // BK OK
     address private _owner;
 
-    // BK OK
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
-    // BK CHECK
     constructor () internal {
         address msgSender = _msgSender();
         _owner = msgSender;
@@ -373,7 +363,6 @@ pragma solidity ^0.6.2;
 /**
  * @dev Collection of functions related to the address type
  */
-// BK OK
 library Address {
     /**
      * @dev Returns true if `account` is a contract.
@@ -392,19 +381,14 @@ library Address {
      *  - an address where a contract lived, but was destroyed
      * ====
      */
-    // BK OK - https://eips.ethereum.org/EIPS/eip-1052
     function isContract(address account) internal view returns (bool) {
         // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
         // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
         // for accounts without code, i.e. `keccak256('')`
-        // BK OK
         bytes32 codehash;
-        // BK OK
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
         // solhint-disable-next-line no-inline-assembly
-        // BK OK
         assembly { codehash := extcodehash(account) }
-        // BK OK
         return (codehash != accountHash && codehash != 0x0);
     }
 
@@ -424,7 +408,6 @@ library Address {
      * {ReentrancyGuard} or the
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
-    // BK Unused
     function sendValue(address payable recipient, uint256 amount) internal {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
@@ -489,7 +472,6 @@ abstract contract AccessControl is Context {
 
     mapping (bytes32 => RoleData) private _roles;
 
-    // BK OK
     bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
 
     /**
@@ -624,7 +606,6 @@ abstract contract AccessControl is Context {
     /**
      * @dev Sets `adminRole` as ``role``'s admin role.
      */
-    // BK Unused
     function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {
         _roles[role].adminRole = adminRole;
     }
@@ -657,19 +638,16 @@ pragma solidity ^0.6.0;
  * for the associated interfaces in said registry. See {IERC1820Registry} and
  * {ERC1820Implementer}.
  */
-// BK OK - ERC777Token - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777 {
     /**
      * @dev Returns the name of the token.
      */
-    // BK OK - function name() external view returns (string memory);
     function name() external view returns (string memory);
 
     /**
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
-    // BK OK - function symbol() external view returns (string memory);
     function symbol() external view returns (string memory);
 
     /**
@@ -679,19 +657,16 @@ interface IERC777 {
      *
      * For most token contracts, this value will equal 1.
      */
-    // BK OK - function granularity() external view returns (uint256);
     function granularity() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens in existence.
      */
-    // BK OK - function totalSupply() external view returns (uint256);
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by an account (`owner`).
      */
-    // BK OK - function balanceOf(address holder) external view returns (uint256);
     function balanceOf(address owner) external view returns (uint256);
 
     /**
@@ -710,7 +685,6 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
-    // BK OK - function send(address to, uint256 amount, bytes calldata data) external;
     function send(address recipient, uint256 amount, bytes calldata data) external;
 
     /**
@@ -726,7 +700,6 @@ interface IERC777 {
      *
      * - the caller must have at least `amount` tokens.
      */
-    // BK OK - function burn(uint256 amount, bytes calldata data) external;
     function burn(uint256 amount, bytes calldata data) external;
 
     /**
@@ -736,11 +709,6 @@ interface IERC777 {
      *
      * See {operatorSend} and {operatorBurn}.
      */
-    // BK OK
-    // BK   function isOperatorFor(
-    // BK       address operator,
-    // BK       address holder
-    // BK   ) external view returns (bool);
     function isOperatorFor(address operator, address tokenHolder) external view returns (bool);
 
     /**
@@ -754,7 +722,6 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
-    // BK OK - function authorizeOperator(address operator) external;
     function authorizeOperator(address operator) external;
 
     /**
@@ -768,7 +735,6 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
-    // BK OK - function revokeOperator(address operator) external;
     function revokeOperator(address operator) external;
 
     /**
@@ -779,7 +745,6 @@ interface IERC777 {
      * This list is immutable, but individual holders may revoke these via
      * {revokeOperator}, in which case {isOperatorFor} will return false.
      */
-    // BK OK - function defaultOperators() external view returns (address[] memory);
     function defaultOperators() external view returns (address[] memory);
 
     /**
@@ -801,14 +766,6 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
-    // BK OK
-    // BK   function operatorSend(
-    // BK       address from,
-    // BK       address to,
-    // BK       uint256 amount,
-    // BK       bytes calldata data,
-    // BK       bytes calldata operatorData
-    // BK   ) external;
     function operatorSend(
         address sender,
         address recipient,
@@ -832,13 +789,6 @@ interface IERC777 {
      * - `account` must have at least `amount` tokens.
      * - the caller must be an operator for `account`.
      */
-    // BK OK
-    // BK   function operatorBurn(
-    // BK       address from,
-    // BK       uint256 amount,
-    // BK       bytes calldata data,
-    // BK       bytes calldata operatorData
-    // BK   ) external;
     function operatorBurn(
         address account,
         uint256 amount,
@@ -846,15 +796,6 @@ interface IERC777 {
         bytes calldata operatorData
     ) external;
 
-    // BK OK
-    // BK   event Sent(
-    // BK       address indexed operator,
-    // BK       address indexed from,
-    // BK       address indexed to,
-    // BK       uint256 amount,
-    // BK       bytes data,
-    // BK       bytes operatorData
-    // BK   );
     event Sent(
         address indexed operator,
         address indexed from,
@@ -864,34 +805,12 @@ interface IERC777 {
         bytes operatorData
     );
 
-    // BK OK
-    // BK   event Minted(
-    // BK       address indexed operator,
-    // BK       address indexed to,
-    // BK       uint256 amount,
-    // BK       bytes data,
-    // BK       bytes operatorData
-    // BK   );
     event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
 
-    // BK OK
-    // BK   event Burned(
-    // BK       address indexed operator,
-    // BK       address indexed from,
-    // BK       uint256 amount,
-    // BK       bytes data,
-    // BK       bytes operatorData
-    // BK   );
     event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
 
-    // BK OK
-    // BK   event AuthorizedOperator(
-    // BK       address indexed operator,
-    // BK       address indexed holder
-    // BK   );
     event AuthorizedOperator(address indexed operator, address indexed tokenHolder);
 
-    // BK OK - event RevokedOperator(address indexed operator, address indexed holder);
     event RevokedOperator(address indexed operator, address indexed tokenHolder);
 }
 
@@ -911,7 +830,6 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
-// BK OK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777Recipient {
     /**
      * @dev Called by an {IERC777} token contract whenever tokens are being
@@ -923,18 +841,6 @@ interface IERC777Recipient {
      *
      * This function may revert to prevent the operation from being executed.
      */
-
-    // BK OK
-    // BK   interface ERC777TokensRecipient {
-    // BK       function tokensReceived(
-    // BK           address operator,
-    // BK           address from,
-    // BK           address to,
-    // BK           uint256 amount,
-    // BK           bytes calldata data,
-    // BK           bytes calldata operatorData
-    // BK       ) external;
-    // BK   }
     function tokensReceived(
         address operator,
         address from,
@@ -961,7 +867,6 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
-// BK CHECK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 interface IERC777Sender {
     /**
      * @dev Called by an {IERC777} token contract whenever a registered holder's
@@ -973,18 +878,6 @@ interface IERC777Sender {
      *
      * This function may revert to prevent the operation from being executed.
      */
-
-    // BK CHECK
-    // BK    interface ERC777TokensSender {
-    // BK        function tokensToSend(
-    // BK            address operator,
-    // BK            address from,
-    // BK            address to,
-    // BK            uint256 amount,
-    // BK            bytes calldata userData,
-    // BK            bytes calldata operatorData
-    // BK        ) external;
-    // BK    }
     function tokensToSend(
         address operator,
         address from,
@@ -1004,18 +897,15 @@ pragma solidity ^0.6.0;
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
-// BK OK - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-20.md . Optinal name(), symbol() and decimals()
 interface IERC20 {
     /**
      * @dev Returns the amount of tokens in existence.
      */
-    // BK OK - function totalSupply() public view returns (uint256)
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by `account`.
      */
-    // BK OK - function balanceOf(address _owner) public view returns (uint256 balance)
     function balanceOf(address account) external view returns (uint256);
 
     /**
@@ -1025,7 +915,6 @@ interface IERC20 {
      *
      * Emits a {Transfer} event.
      */
-    // BK OK - function transfer(address _to, uint256 _value) public returns (bool success)
     function transfer(address recipient, uint256 amount) external returns (bool);
 
     /**
@@ -1035,7 +924,6 @@ interface IERC20 {
      *
      * This value changes when {approve} or {transferFrom} are called.
      */
-    // BK OK - function allowance(address _owner, address _spender) public view returns (uint256 remaining)
     function allowance(address owner, address spender) external view returns (uint256);
 
     /**
@@ -1052,7 +940,6 @@ interface IERC20 {
      *
      * Emits an {Approval} event.
      */
-    // BK OK - function approve(address _spender, uint256 _value) public returns (bool success)
     function approve(address spender, uint256 amount) external returns (bool);
 
     /**
@@ -1064,7 +951,6 @@ interface IERC20 {
      *
      * Emits a {Transfer} event.
      */
-    // BK OK - function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
     /**
@@ -1073,14 +959,12 @@ interface IERC20 {
      *
      * Note that `value` may be zero.
      */
-    // BK OK - event Transfer(address indexed _from, address indexed _to, uint256 _value)
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     /**
      * @dev Emitted when the allowance of a `spender` for an `owner` is set by
      * a call to {approve}. `value` is the new allowance.
      */
-    // BK OK - event Approval(address indexed _owner, address indexed _spender, uint256 _value)
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
@@ -1103,7 +987,6 @@ pragma solidity ^0.6.0;
  * Using this library instead of the unchecked operations eliminates an entire
  * class of bugs, so it's recommended to use it always.
  */
-// BK OK
 library SafeMath {
     /**
      * @dev Returns the addition of two unsigned integers, reverting on
@@ -1114,14 +997,10 @@ library SafeMath {
      * Requirements:
      * - Addition cannot overflow.
      */
-    // BK OK
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        // BK OK
         uint256 c = a + b;
-        // BK OK
         require(c >= a, "SafeMath: addition overflow");
 
-        // BK OK
         return c;
     }
 
@@ -1134,9 +1013,7 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
-    // BK OK
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        // BK OK
         return sub(a, b, "SafeMath: subtraction overflow");
     }
 
@@ -1149,13 +1026,10 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
-    // BK OK
     function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        // BK OK
         require(b <= a, errorMessage);
-        // BK OK
         uint256 c = a - b;
-        // BK OK
+
         return c;
     }
 
@@ -1168,7 +1042,6 @@ library SafeMath {
      * Requirements:
      * - Multiplication cannot overflow.
      */
-    // BK Unused
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
@@ -1194,7 +1067,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Unused
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
         return div(a, b, "SafeMath: division by zero");
     }
@@ -1210,7 +1082,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Unused
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         // Solidity only automatically asserts when dividing by 0
         require(b > 0, errorMessage);
@@ -1231,7 +1102,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Unused
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
         return mod(a, b, "SafeMath: modulo by zero");
     }
@@ -1247,7 +1117,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Unused
     function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b != 0, errorMessage);
         return a % b;
@@ -1274,7 +1143,6 @@ pragma solidity ^0.6.0;
  *
  * For an in-depth explanation and source code analysis, see the EIP text.
  */
-// BK CHECK - https://eips.ethereum.org/EIPS/eip-1820
 interface IERC1820Registry {
     /**
      * @dev Sets `newManager` as the manager for `account`. A manager of an
@@ -1398,19 +1266,16 @@ pragma solidity ^0.6.0;
  * are no special restrictions in the amount of tokens that created, moved, or
  * destroyed. This makes integration with ERC20 applications seamless.
  */
- // BK TODO - https://github.com/ethereum/EIPs/blob/master/EIPS/eip-777.md
 contract ERC777 is Context, IERC777, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 
-    // BK OK - https://eips.ethereum.org/EIPS/eip-1820
     IERC1820Registry constant internal _ERC1820_REGISTRY = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
 
     mapping(address => uint256) private _balances;
 
     uint256 private _totalSupply;
 
-    // BK Next 2 OK
     string private _name;
     string private _symbol;
 
@@ -1418,21 +1283,17 @@ contract ERC777 is Context, IERC777, IERC20 {
     // See https://github.com/ethereum/solidity/issues/4024.
 
     // keccak256("ERC777TokensSender")
-    // BK web3.sha3("ERC777TokensSender") => "0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895"
     bytes32 constant private _TOKENS_SENDER_INTERFACE_HASH =
         0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895;
 
     // keccak256("ERC777TokensRecipient")
-    // BK web3.sha3("ERC777TokensRecipient") => "0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b"
     bytes32 constant private _TOKENS_RECIPIENT_INTERFACE_HASH =
         0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b;
 
     // This isn't ever read from - it's only used to respond to the defaultOperators query.
-    // BK NOTE - `defaultOperators` is not in use as HoprToken.constructor() sets it to empty and there are no public functions to modify it
     address[] private _defaultOperatorsArray;
 
     // Immutable, but accounts may revoke them (tracked in __revokedDefaultOperators).
-    // BK NOTE - `defaultOperators` is not in use as HoprToken.constructor() sets it to empty and there are no public functions to modify it
     mapping(address => bool) private _defaultOperators;
 
     // For each account, a mapping of its operators and revoked default operators.
@@ -1450,12 +1311,9 @@ contract ERC777 is Context, IERC777, IERC20 {
         string memory symbol,
         address[] memory defaultOperators
     ) public {
-        // BK OK
         _name = name;
-        // BK OK
         _symbol = symbol;
 
-        // BK NOTE - `defaultOperators` is not in use as HoprToken.constructor() sets it to empty and there are no public functions to modify it
         _defaultOperatorsArray = defaultOperators;
         for (uint256 i = 0; i < _defaultOperatorsArray.length; i++) {
             _defaultOperators[_defaultOperatorsArray[i]] = true;
@@ -1469,18 +1327,14 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-name}.
      */
-    // BK OK - Override function IERC777.name() external view returns (string memory);
     function name() public view override returns (string memory) {
-        // BK OK
         return _name;
     }
 
     /**
      * @dev See {IERC777-symbol}.
      */
-    // BK - Override function IERC777.symbol() external view returns (string memory);
     function symbol() public view override returns (string memory) {
-        // BK OK
         return _symbol;
     }
 
@@ -1490,9 +1344,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      * Always returns 18, as per the
      * [ERC777 EIP](https://eips.ethereum.org/EIPS/eip-777#backward-compatibility).
      */
-    // BK OK - function decimals() public view returns (uint8) from https://eips.ethereum.org/EIPS/eip-20
     function decimals() public pure returns (uint8) {
-        // BK OK
         return 18;
     }
 
@@ -1501,17 +1353,13 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * This implementation always returns `1`.
      */
-    // BK OK - function granularity() external view returns (uint256);
     function granularity() public view override returns (uint256) {
-        // BK OK
         return 1;
     }
 
     /**
      * @dev See {IERC777-totalSupply}.
      */
-    // BK - function totalSupply() external view returns (uint256);
-    // BK - Check override
     function totalSupply() public view override(IERC20, IERC777) returns (uint256) {
         return _totalSupply;
     }
@@ -2055,23 +1903,16 @@ abstract contract ERC777Snapshot is ERC777 {
 
 // File: contracts/HoprToken.sol
 
+// SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.6.0;
-
-// SPDX-License-Identifier: LGPL-3.0-only
 
 
 
 
 contract HoprToken is AccessControl, ERC777Snapshot {
-    // BK web3.sha3("MINTER_ROLE") => "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
-    // BK OK MINTER_ROLE: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    // BK OK - ERC777.constructor(string memory name, string memory symbol, address[] memory defaultOperators) public;
-    // BK Tested name(), symbol()
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
-        // BK OK - function _setupRole(bytes32 role, address account) internal virtual;
-        // BK   + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -2084,17 +1925,13 @@ contract HoprToken is AccessControl, ERC777Snapshot {
      *
      * - the caller must have the `MINTER_ROLE`.
      */
-    // BK TODO
     function mint(
         address account,
         uint256 amount,
         bytes memory userData,
         bytes memory operatorData
     ) public {
-        // BK CHECK Role
         require(hasRole(MINTER_ROLE, msg.sender), "HoprToken: caller does not have minter role");
-        // BK CHECK userData and operatorData flow
-        // BK OK function ERC777._mint(address account, uint256 amount, bytes memory userData, bytes memory operatorData)
         _mint(account, amount, userData, operatorData);
     }
 }
@@ -2105,11 +1942,32 @@ contract HoprToken is AccessControl, ERC777Snapshot {
 pragma solidity ^0.6.0;
 
 
-// BK NOTE - Different sized `uint`'s don't save gas generally unless in a packed structure. The use of 32 bits for the timestamp comparison limits the code to operate until Jan 19 2038 - the code below can be rewritten to improve the code.
+
 contract HoprDistributor is Ownable {
+    // A {Schedule} that defined when and how much will be claimed
+    // from an {Allocation}.
+    // The primary reason we decided to use uint128 is because the allocation
+    // may be used potentially thousands of times, this helps us reduce
+    // casting thus lower gas costs.
+    struct Schedule {
+        uint128[] durations;
+        uint128[] percents;
+    }
+
+    // An {Allocation} represents how much a account can claim, claimed,
+    // and when last claim occured.
+    // The primary reason we decided to use uint128 is so we can reduce
+    // our gas costs, since this struct will be stored potentially
+    // thousands of times.
+    struct Allocation {
+        uint128 amount;
+        uint128 claimed;
+        uint128 lastClaim;
+        bool revoked; // account can no longer claim
+    }
+
     // helps us create more accurate calculations
-    // BK OK
-    uint32 public constant MULTIPLIER = 10 ** 6;
+    uint128 public constant MULTIPLIER = 10 ** 6;
 
     // total amount minted
     uint128 public totalMinted = 0;
@@ -2117,27 +1975,11 @@ contract HoprDistributor is Ownable {
     uint128 public totalToBeMinted = 0;
 
     // time where the contract will consider as starting time
-    uint32 public startTime;
+    uint128 public startTime;
     // token which will be used
     HoprToken public token;
     // maximum tokens allowed to be minted
     uint128 public maxMintAmount;
-
-    // A {Schedule} that defined when and how much will be claimed
-    // from an {Allocation}
-    struct Schedule {
-        uint32[] durations;
-        uint32[] percents;
-    }
-
-    // An {Allocation} represents how much a account can claim, claimed,
-    // and when last claim occured
-    struct Allocation {
-        uint128 amount;
-        uint128 claimed;
-        uint32 lastClaim;
-        bool revoked; // account can no longer claim
-    }
 
     // schedule name -> Schedule
     mapping(string => Schedule) internal schedules;
@@ -2146,11 +1988,15 @@ contract HoprDistributor is Ownable {
     // allows for an account to have more than one type of Schedule
     mapping(address => mapping(string => Allocation)) public allocations;
 
+    event ScheduleAdded(uint128[] durations, uint128[] percents, string name);
+    event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
+    event Claimed(address indexed account, uint128 amount, string scheduleName);
+
     /**
-     * @param _startTime The timestamp to start counting
-     * @param _token The token which we will mint
+     * @param _startTime the timestamp to start counting
+     * @param _token the token which we will mint
      */
-    constructor(HoprToken _token, uint32 _startTime, uint128 _maxMintAmount) public {
+    constructor(HoprToken _token, uint128 _startTime, uint128 _maxMintAmount) public {
         startTime = _startTime;
         token = _token;
         maxMintAmount = _maxMintAmount;
@@ -2160,11 +2006,21 @@ contract HoprDistributor is Ownable {
      * @param name the schedule name
      * @return the schedule
      */
-    function getSchedule(string calldata name) external view returns (uint32[] memory, uint32[] memory) {
+    function getSchedule(string calldata name) external view returns (uint128[] memory, uint128[] memory) {
         return (
             schedules[name].durations,
             schedules[name].percents
         );
+    }
+
+    /**
+     * @dev Allows the owner to update the start time,
+     * in case there are unforeseen issues in the long schedule.
+     * @param _startTime the new timestamp to start counting
+     */
+    function updateStartTime(uint128 _startTime) external onlyOwner {
+        require(startTime > _currentBlockTimestamp(), "Previous start time must not be reached");
+        startTime = _startTime;
     }
 
     /**
@@ -2194,27 +2050,29 @@ contract HoprDistributor is Ownable {
      * instead of using 100 we scale the value up to {MULTIPLIER} so we can have more accurate
      * "percentages".
      */
-    // BK NOTE Low importance - can be improved by checking that percents[] add up to MULTIPLIER
     function addSchedule(
-        uint32[] calldata durations,
-        uint32[] calldata percents,
+        uint128[] calldata durations,
+        uint128[] calldata percents,
         string calldata name
     ) external onlyOwner {
         require(schedules[name].durations.length == 0, "Schedule must not exist");
         require(durations.length == percents.length, "Durations and percents must have equal length");
 
-        uint32 lastDuration = 0;
+        uint128 lastDuration = 0;
+        uint128 totalPercent = 0;
+
         for (uint256 i = 0; i < durations.length; i++) {
-            // BK QUERY Can have duplicate durations. Is this intended?
-            require(lastDuration <= durations[i], "Durations must be added in ascending order");
+            require(lastDuration < durations[i], "Durations must be added in ascending order");
             lastDuration = durations[i];
-            // BK OK - uint32 <= 10^6{uint32}
+
             require(percents[i] <= MULTIPLIER, "Percent provided must be smaller or equal to MULTIPLIER");
+            totalPercent = _addUint128(totalPercent, percents[i]);
         }
+
+        require(totalPercent == MULTIPLIER, "Percents must sum to MULTIPLIER amount");
 
         schedules[name] = Schedule(durations, percents);
 
-        // BK OK - event ScheduleAdded(uint32[] durations, uint32[] percents, string name);
         emit ScheduleAdded(durations, percents, name);
     }
 
@@ -2240,7 +2098,6 @@ contract HoprDistributor is Ownable {
             totalToBeMinted = _addUint128(totalToBeMinted, amounts[i]);
             assert(totalToBeMinted <= maxMintAmount);
 
-            // BK BK - event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
             emit AllocationAdded(accounts[i], amounts[i], scheduleName);
         }
     }
@@ -2299,15 +2156,11 @@ contract HoprDistributor is Ownable {
 
         totalMinted = newTotalMinted;
         allocation.claimed = newClaimed;
-        // BK OK - {uint32} = {uint32}
         allocation.lastClaim = _currentBlockTimestamp();
 
         // mint tokens
-        // BK - function mint(address account, uint256 amount, bytes memory userData, bytes memory operatorData) public;
-        // BK - token.mint(account, claimable{uint128}, "", "");
         token.mint(account, claimable, "", "");
 
-        // BK OK - event Claimed(address indexed account, uint128 amount, string scheduleName);
         emit Claimed(account, claimable, scheduleName);
     }
 
@@ -2321,13 +2174,12 @@ contract HoprDistributor is Ownable {
         Allocation storage allocation
     ) internal view returns (uint128) {
         // first unlock hasn't passed yet
-        // BK NOTE - This will return 0 after Jan 19 2038
-        if (_addUint32(startTime, schedule.durations[0]) > _currentBlockTimestamp()) {
+        if (_addUint128(startTime, schedule.durations[0]) > _currentBlockTimestamp()) {
             return 0;
         }
 
         // last unlock has passed
-        if (_addUint32(startTime, schedule.durations[schedule.durations.length - 1]) < _currentBlockTimestamp()) {
+        if (_addUint128(startTime, schedule.durations[schedule.durations.length - 1]) < _currentBlockTimestamp()) {
             // make sure to exclude already claimed amount
             return _subUint128(allocation.amount, allocation.claimed);
         }
@@ -2335,97 +2187,55 @@ contract HoprDistributor is Ownable {
         uint128 claimable = 0;
 
         for (uint256 i = 0; i < schedule.durations.length; i++) {
-            uint32 scheduleDeadline = _addUint32(startTime, schedule.durations[i]);
+            uint128 scheduleDeadline = _addUint128(startTime, schedule.durations[i]);
 
             // schedule deadline not passed, exiting
-            // BK CHECK
             if (scheduleDeadline > _currentBlockTimestamp()) break;
             // already claimed during this period, skipping
-            // BK CHECK
             if (allocation.lastClaim > scheduleDeadline) continue;
 
-            // BK CHECK claimable{uint128} += allocation.amount{uint128} * schedule.percents[i]{uint32} / MULTIPLIER{uint32};
             claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
         }
 
         return claimable;
     }
 
-    // BK OK - Rolls over at year 2038
-    function _currentBlockTimestamp() internal view returns (uint32) {
+    function _currentBlockTimestamp() internal view returns (uint128) {
         // solhint-disable-next-line
-        // BK OK
-        return uint32(block.timestamp % 2 ** 32);
+        return uint128(block.timestamp % 2 ** 128);
     }
 
     // SafeMath variations
-    // BK OK
-    // BK NOTE - Used for timestamp, 2^32 gives the max unixtime limit of Jan 19 2038
-    function _addUint32(uint32 a, uint32 b) internal pure returns (uint32) {
-        // BK OK
-        uint32 c = a + b;
-        // BK OK
-        require(c >= a, "uint32 addition overflow");
-
-        // BK OK
-        return c;
-    }
-
-    // BK OK
     function _addUint128(uint128 a, uint128 b) internal pure returns (uint128) {
-        // BK OK
         uint128 c = a + b;
-        // BK OK
         require(c >= a, "uint128 addition overflow");
 
-        // BK OK
         return c;
     }
 
-    // BK OK
     function _subUint128(uint128 a, uint128 b) internal pure returns (uint128) {
-        // BK OK
         require(b <= a, "uint128 subtraction overflow");
-        // BK OK
         uint128 c = a - b;
 
-        // BK OK
         return c;
     }
 
-    // BK OK
     function _mulUint128(uint128 a, uint128 b) internal pure returns (uint128) {
-        // BK OK
         if (a == 0) {
-            // BK OK
             return 0;
         }
 
-        // BK OK
         uint128 c = a * b;
-        // BK OK
         require(c / a == b, "uint128 multiplication overflow");
 
-        // BK OK
         return c;
     }
 
-    // BK OK
     function _divUint128(uint128 a, uint128 b) internal pure returns (uint128) {
-        // BK OK
         require(b > 0, "uint128 division by zero");
-        // BK OK
         uint128 c = a / b;
 
-        // BK OK
         return c;
     }
-
-    // BK OK
-    event ScheduleAdded(uint32[] durations, uint32[] percents, string name);
-    // BK OK
-    event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
-    // BK OK
-    event Claimed(address indexed account, uint128 amount, string scheduleName);
 }
 ```

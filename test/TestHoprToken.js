@@ -163,8 +163,8 @@ describe("TestHoprToken", function() {
     await printHoprDistributorDetails(true);
 
     console.log("    owner -> hoprDistributor.addSchedule(durations, percents, 'test)");
-    const durations = [0, 12, 20, 100];
-    const percents = [100000, 200000, 800000, 1000000];
+    const durations = [1, 12, 20, 100];
+    const percents = [100000, 200000, 300000, 400000];
     const addSchedule1 = await hoprDistributor.addSchedule(durations, percents, 'test');
     printEvents(hoprDistributor, await addSchedule1.wait());
 

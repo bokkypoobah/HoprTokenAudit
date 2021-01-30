@@ -28,15 +28,15 @@ This audit has been conducted on Hopr's source code as described in [AUDIT.md](h
 From the initial review of the source as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md):
 
 * [ ] [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) will not allow tokens to be claimed after Jan 19 2038 due to the use of `uint32` variables. Except for non-arrays and structs, it is generally cheaper gas-wise to use the native 256 bit `uint256` (or the `uint` alias) compared to `uint32` and `uint128`. Consider the gas cost operations over the life of the contract - write once, read many. Using `uint256` will also simplify the auditing of these contracts as there are less type conversions in the code.
-  * [ ] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#L9](contracts/HoprDistributor.sol#L9)
+  * [x] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#L9](contracts/HoprDistributor.sol#L9)
   * [ ] **MEDIUM IMPORTANCE** Convert all `uint128` to `uint256`, e.g., [contracts/HoprDistributor.sol#L12](contracts/HoprDistributor.sol#L12)
   * [ ] **MEDIUM IMPORTANCE** Replace `_currentBlockTimestamp()` with `block.timestamp`, e.g., [contracts/HoprDistributor.sol#L194](contracts/HoprDistributor.sol#L194) and remove [`_currentBlockTimestamp()`](contracts/HoprDistributor.sol#L238-L241)
   * [ ] **MEDIUM IMPORTANCE** Remove `_addUint32(...)`, `_addUint128(...)`, `_subUint128(...)`, `_mulUint128(...)` and `_divUint128()` in [contracts/HoprDistributor.sol#L243-L281](contracts/HoprDistributor.sol#L243-L281) and use OpenZeppelin's SafeMath
-* [ ] **MEDIUM IMPORTANCE** Replace `lastDuration <= durations[i]` with `lastDuration < durations[i]` in [contracts/HoprDistributor.sol#L104](contracts/HoprDistributor.sol#L104) to prevent duplicate durations
-* [ ] **LOW IMPORTANCE** Check that the sum of `percents[]` adds up to `MULTIPLIER` in `addSchedule(...)` - [contracts/HoprDistributor.sol#L94-L112](contracts/HoprDistributor.sol#L94-L112), so exactly 100% of the tokens are claimable.
+* [x] **MEDIUM IMPORTANCE** Replace `lastDuration <= durations[i]` with `lastDuration < durations[i]` in [contracts/HoprDistributor.sol#L104](contracts/HoprDistributor.sol#L104) to prevent duplicate durations. Replaced in [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9)
+* [x] **LOW IMPORTANCE** Check that the sum of `percents[]` adds up to `MULTIPLIER` in `addSchedule(...)` - [contracts/HoprDistributor.sol#L94-L112](contracts/HoprDistributor.sol#L94-L112), so exactly 100% of the tokens are claimable. Check added in [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9)
 * [ ] **LOW IMPORTANCE** Refactor the statements in `_getClaimable(...)`[contracts/HoprDistributor.sol#L227-L230](contracts/HoprDistributor.sol#L227-L230) to remove the `break` and `continue` to simplify the algorithm
-* [ ] **LOW IMPORTANCE** Move the events from [contracts/HoprDistributor.sol#L283-L285](contracts/HoprDistributor.sol#L283-L285) before the constructor - see [style guide](https://docs.soliditylang.org/en/v0.8.0/style-guide.html#order-of-layout)
-* [ ] **LOW IMPORTANCE** Move the structs from [contracts/HoprDistributor.sol#L23-L37](contracts/HoprDistributor.sol#L23-L37) before the variables - see [style guide](https://docs.soliditylang.org/en/v0.8.0/style-guide.html#order-of-layout)
+* [x] **LOW IMPORTANCE** Move the events from [contracts/HoprDistributor.sol#L283-L285](contracts/HoprDistributor.sol#L283-L285) before the constructor - see [style guide](https://docs.soliditylang.org/en/v0.8.0/style-guide.html#order-of-layout). Moved in [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9)
+* [x] **LOW IMPORTANCE** Move the structs from [contracts/HoprDistributor.sol#L23-L37](contracts/HoprDistributor.sol#L23-L37) before the variables - see [style guide](https://docs.soliditylang.org/en/v0.8.0/style-guide.html#order-of-layout). Moved in [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9)
 
 
 <br />
@@ -45,7 +45,7 @@ From the initial review of the source as described in [AUDIT.md](https://github.
 
 ### Source Code
 
-Imports adjusted to compile with OpenZeppelin from local directory.
+Imports adjusted to compile with OpenZeppelin from a local subdirectory.
 
 * [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprToken.sol).
 * [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol).

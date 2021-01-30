@@ -16,7 +16,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
       Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1611774425, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+    owner -> HoprDistributor.deploy(hoprToken, 1611986144, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       + OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
     - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
@@ -52,7 +52,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - owner: owner:0xf39F
       - MULTIPLIER: 1000000
       - totalToBeMinted: 0.0
-      - startTime: 1611774425
+      - startTime: 1611986144
       - token: HOPRToken:0xe7f1
       - maxMintAmount: 123.456
       - totalMinted: 0.0
@@ -60,43 +60,43 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - allocations(user0, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
     owner -> hoprDistributor.addSchedule(durations, percents, 'test)
-      + ScheduleAdded(durations: 0,12,20,100, percents: 100000,200000,800000,1000000, name: test)
+      + ScheduleAdded(durations: 1,12,20,100, percents: 100000,200000,300000,400000, name: test)
     owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test)
       + AllocationAdded(account: user0:0x7099, amount: 12300000000000000000, scheduleName: test)
       + AllocationAdded(account: user1:0x3C44, amount: 13400000000000000000, scheduleName: test)
     Time @ 0s
     --- hoprDistributor ---
       - totalMinted: 0.0
-      - getSchedule('test'): [[0,12,20,100],[100000,200000,800000,1000000]]
+      - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
     Time @ 12s
-    waitUntil: 1611774437
+    waitUntil: 1611986156
       + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
       + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
       - totalMinted: 0.0
-      - getSchedule('test'): [[0,12,20,100],[100000,200000,800000,1000000]]
+      - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 13.53
-      - getClaimable(user1, 'test'): 14.74
+      - getClaimable(user0, 'test'): 7.38
+      - getClaimable(user1, 'test'): 8.04
     Time @ 20s
-    waitUntil: 1611774445
+    waitUntil: 1611986164
       + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
       + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
       - totalMinted: 0.0
-      - getSchedule('test'): [[0,12,20,100],[100000,200000,800000,1000000]]
+      - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 13.53
-      - getClaimable(user1, 'test'): 14.74
+      - getClaimable(user0, 'test'): 7.38
+      - getClaimable(user1, 'test'): 8.04
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (19078ms)
+    ✓ TestHoprDistributor - #0 (19659ms)
 
 
   1 passing (21s)
