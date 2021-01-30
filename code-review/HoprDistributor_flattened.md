@@ -1428,9 +1428,11 @@ contract ERC777 is Context, IERC777, IERC20 {
         0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b;
 
     // This isn't ever read from - it's only used to respond to the defaultOperators query.
+    // BK NOTE - `defaultOperators` is not in use as HoprToken.constructor() sets it to empty and there are no public functions to modify it
     address[] private _defaultOperatorsArray;
 
     // Immutable, but accounts may revoke them (tracked in __revokedDefaultOperators).
+    // BK NOTE - `defaultOperators` is not in use as HoprToken.constructor() sets it to empty and there are no public functions to modify it
     mapping(address => bool) private _defaultOperators;
 
     // For each account, a mapping of its operators and revoked default operators.
@@ -1453,6 +1455,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         // BK OK
         _symbol = symbol;
 
+        // BK NOTE - `defaultOperators` is not in use as HoprToken.constructor() sets it to empty and there are no public functions to modify it
         _defaultOperatorsArray = defaultOperators;
         for (uint256 i = 0; i < _defaultOperatorsArray.length; i++) {
             _defaultOperators[_defaultOperatorsArray[i]] = true;

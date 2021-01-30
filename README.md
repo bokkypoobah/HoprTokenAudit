@@ -233,4 +233,5 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 
 ## Notes
 
-`uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
+* `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
+* `defaultOperator` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment

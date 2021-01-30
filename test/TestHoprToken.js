@@ -69,6 +69,7 @@ describe("TestHoprToken", function() {
       console.log("      - hoprToken.getRoleAdmin(minterRole): " + await hoprToken.getRoleAdmin(minterRole));
       console.log("      - hoprToken.hasRole(owner, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, owner));
       console.log("      - hoprToken.hasRole(user1, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, user1));
+      console.log("      - hoprToken.defaultOperators(): " + await hoprToken.defaultOperators());
     }
     console.log("      - totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
     console.log("      - user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
