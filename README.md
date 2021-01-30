@@ -6,7 +6,7 @@
 
 Bok Consulting Pty Ltd has been commissioned to perform an audit on the Ethereum smart contracts.
 
-This audit has been conducted on Hopr's source code as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md).
+This audit has been conducted on Hopr's source code as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md). After an initial review (see recommendations below), the source code was updated in commit [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9) into [https://github.com/hoprnet/hoprnet/tree/release/titlis](https://github.com/hoprnet/hoprnet/tree/release/titlis).
 
 <br />
 
@@ -22,6 +22,10 @@ This audit has been conducted on Hopr's source code as described in [AUDIT.md](h
 <hr />
 
 ## Recommendations
+
+
+### Initial Review Recommendations
+From the initial review of the source as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md):
 
 * [ ] [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) will not allow tokens to be claimed after Jan 19 2038 due to the use of `uint32` variables. Except for non-arrays and structs, it is generally cheaper gas-wise to use the native 256 bit `uint256` (or the `uint` alias) compared to `uint32` and `uint128`. Consider the gas cost operations over the life of the contract - write once, read many. Using `uint256` will also simplify the auditing of these contracts as there are less type conversions in the code.
   * [ ] **MEDIUM IMPORTANCE** Convert all `uint32` to `uint256`, e.g., [contracts/HoprDistributor.sol#L9](contracts/HoprDistributor.sol#L9)
@@ -43,9 +47,9 @@ This audit has been conducted on Hopr's source code as described in [AUDIT.md](h
 
 Imports adjusted to compile with OpenZeppelin from local directory.
 
-* [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol)
-* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol)
-* [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) - [source](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol)
+* [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprToken.sol).
+* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol).
+* [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprDistributor.sol).
 
 <br />
 
@@ -234,4 +238,4 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 ## Notes
 
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
-* `defaultOperator` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment
+* `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment

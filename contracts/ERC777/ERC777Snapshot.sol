@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.6.0;
 
-import "../openzeppelin/math/SafeMath.sol";
-import "../openzeppelin/token/ERC777/ERC777.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 
 /**
  * @dev This contract extends an ERC777 token with a snapshot mechanism. When a snapshot is created, the balances and
