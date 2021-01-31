@@ -38,6 +38,15 @@ From the initial review of the source as described in [AUDIT.md](https://github.
 * [x] **LOW IMPORTANCE** Move the events from [contracts/HoprDistributor.sol#L283-L285](contracts/HoprDistributor.sol#L283-L285) before the constructor - see [style guide](https://docs.soliditylang.org/en/v0.8.0/style-guide.html#order-of-layout). Moved in [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9)
 * [x] **LOW IMPORTANCE** Move the structs from [contracts/HoprDistributor.sol#L23-L37](contracts/HoprDistributor.sol#L23-L37) before the variables - see [style guide](https://docs.soliditylang.org/en/v0.8.0/style-guide.html#order-of-layout). Moved in [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9)
 
+<br />
+
+### Second Review Recommendations
+
+### Second Review Notes
+
+* `_msgSender()` should be used instead of `msg.sender` for consistency with AccessControl's Context with GSN in `HoprToken.constructor()` and `HoprToken.mint(...)`
+* `_msgSender()` should be used instead of `msg.sender` for consistency with Ownable's Context with GSN in `HoprDistributor.claim(...)`
+* Solidity `^0.6.0` specified. Using Solidity 0.6.12 for this review. Please check specific compiler version issues if deploying with a different version
 
 <br />
 
@@ -125,18 +134,18 @@ These have been copied into the following files for code review:
 
 Outline:
 
-* [x] contract Context
+* [ ] contract Context
 * [ ] contract Ownable is Context
 * [ ] library EnumerableSet
-* [x] library Address
+* [ ] library Address
 * [ ] abstract contract AccessControl
   * [ ] using EnumerableSet for EnumerableSet.AddressSet;
   * [ ] using Address for address;
-* [x] interface IERC777
-* [x] interface IERC777Recipient
-* [x] interface IERC777Sender
-* [x] interface IERC20
-* [x] library SafeMath
+* [ ] interface IERC777
+* [ ] interface IERC777Recipient
+* [ ] interface IERC777Sender
+* [ ] interface IERC20
+* [ ] library SafeMath
 * [ ] interface IERC1820Registry
 * [ ] contract ERC777 is Context, IERC777, IERC20
   * [ ] using SafeMath for uint256;

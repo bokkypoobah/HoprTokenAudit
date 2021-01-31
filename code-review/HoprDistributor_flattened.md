@@ -11,6 +11,7 @@ Source file [../flattened/HoprDistributor_flattened.sol](../flattened/HoprDistri
 
 // SPDX-License-Identifier: MIT
 
+// BK NOTE - Using 0.6.12 in the audit testing. Please check specific compiler version issues if deploying with a different version
 pragma solidity ^0.6.0;
 
 /*
@@ -23,15 +24,20 @@ pragma solidity ^0.6.0;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
+// BK OK
 contract Context {
     // Empty internal constructor, to prevent people from mistakenly deploying
     // an instance of this contract, which should be used via inheritance.
+    // BK OK
     constructor () internal { }
 
+    // BK OK - Called by
     function _msgSender() internal view virtual returns (address payable) {
+        // BK OK
         return msg.sender;
     }
 
+    // BK OK - Not used
     function _msgData() internal view virtual returns (bytes memory) {
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
@@ -56,32 +62,44 @@ pragma solidity ^0.6.0;
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
+// BK NOTE - Inherited only by HoprDistributor
 contract Ownable is Context {
+    // BK OK
     address private _owner;
 
+    // BK OK
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
+    // BK OK
     constructor () internal {
+        // BK OK
         address msgSender = _msgSender();
+        // BK OK
         _owner = msgSender;
+        // BK OK
         emit OwnershipTransferred(address(0), msgSender);
     }
 
     /**
      * @dev Returns the address of the current owner.
      */
+    // BK OK
     function owner() public view returns (address) {
+        // BK OK
         return _owner;
     }
 
     /**
      * @dev Throws if called by any account other than the owner.
      */
+    // BK OK - Modifier used by Ownable.renounceOwnership(), Ownable.transferOwnership(...), HoprDistributor.updateStartTime(...), HoprDistributor.revokeAccount(...), HoprDistributor.addSchedule(...), HoprDistributor.addAllocations(...)
     modifier onlyOwner() {
+        // BK OK
         require(_owner == _msgSender(), "Ownable: caller is not the owner");
+        // BK OK
         _;
     }
 
@@ -92,8 +110,11 @@ contract Ownable is Context {
      * NOTE: Renouncing ownership will leave the contract without an owner,
      * thereby removing any functionality that is only available to the owner.
      */
+    // BK OK - Only owner can execute
     function renounceOwnership() public virtual onlyOwner {
+        // BK OK
         emit OwnershipTransferred(_owner, address(0));
+        // BK OK
         _owner = address(0);
     }
 
@@ -101,9 +122,13 @@ contract Ownable is Context {
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
      * Can only be called by the current owner.
      */
+    // BK OK - Only owner can execute
     function transferOwnership(address newOwner) public virtual onlyOwner {
+        // BK OK
         require(newOwner != address(0), "Ownable: new owner is the zero address");
+        // BK OK
         emit OwnershipTransferred(_owner, newOwner);
+        // BK OK
         _owner = newOwner;
     }
 }
@@ -1909,10 +1934,12 @@ pragma solidity ^0.6.0;
 
 
 
+// BK NOTE - Context is inherited via AccessControl and ERC777Snapshot -> ERC777
 contract HoprToken is AccessControl, ERC777Snapshot {
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
+        // BK NOTE - For consistency with AccessControl's Context, should use _msgSender() instead of msg.sender
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -1931,6 +1958,7 @@ contract HoprToken is AccessControl, ERC777Snapshot {
         bytes memory userData,
         bytes memory operatorData
     ) public {
+        // BK NOTE - For consistency with AccessControl's Context, should use _msgSender() instead of msg.sender
         require(hasRole(MINTER_ROLE, msg.sender), "HoprToken: caller does not have minter role");
         _mint(account, amount, userData, operatorData);
     }
@@ -2107,6 +2135,7 @@ contract HoprDistributor is Ownable {
      * @param scheduleName the schedule name
      */
     function claim(string calldata scheduleName) external {
+        // BK NOTE - For consistency with Ownable's Context, should use _msgSender() instead of msg.sender
         return _claim(msg.sender, scheduleName);
     }
 
