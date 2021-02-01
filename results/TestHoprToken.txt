@@ -16,7 +16,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
       Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1611986144, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+    owner -> HoprDistributor.deploy(hoprToken, 1612201596, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       + OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
     - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
@@ -52,7 +52,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - owner: owner:0xf39F
       - MULTIPLIER: 1000000
       - totalToBeMinted: 0.0
-      - startTime: 1611986144
+      - startTime: 1612201596
       - token: HOPRToken:0xe7f1
       - maxMintAmount: 123.456
       - totalMinted: 0.0
@@ -73,7 +73,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
     Time @ 12s
-    waitUntil: 1611986156
+    waitUntil: 1612201608
       + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
       + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
@@ -84,7 +84,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 7.38
       - getClaimable(user1, 'test'): 8.04
     Time @ 20s
-    waitUntil: 1611986164
+    waitUntil: 1612201616
       + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
       + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
     --- hoprDistributor ---
@@ -96,7 +96,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user1, 'test'): 8.04
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (19659ms)
+    ✓ TestHoprDistributor - #0 (19141ms)
 
 
   1 passing (21s)

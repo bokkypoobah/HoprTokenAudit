@@ -326,6 +326,7 @@ library EnumerableSet {
 
     // UintSet
 
+    // BK Not used
     struct UintSet {
         Set _inner;
     }
@@ -336,6 +337,7 @@ library EnumerableSet {
      * Returns true if the value was added to the set, that is if it was not
      * already present.
      */
+    // BK Not used
     function add(UintSet storage set, uint256 value) internal returns (bool) {
         return _add(set._inner, bytes32(value));
     }
@@ -346,6 +348,7 @@ library EnumerableSet {
      * Returns true if the value was removed from the set, that is if it was
      * present.
      */
+    // BK Not used
     function remove(UintSet storage set, uint256 value) internal returns (bool) {
         return _remove(set._inner, bytes32(value));
     }
@@ -353,6 +356,7 @@ library EnumerableSet {
     /**
      * @dev Returns true if the value is in the set. O(1).
      */
+    // BK Not used
     function contains(UintSet storage set, uint256 value) internal view returns (bool) {
         return _contains(set._inner, bytes32(value));
     }
@@ -360,6 +364,7 @@ library EnumerableSet {
     /**
      * @dev Returns the number of values on the set. O(1).
      */
+    // BK Not used
     function length(UintSet storage set) internal view returns (uint256) {
         return _length(set._inner);
     }
@@ -374,6 +379,7 @@ library EnumerableSet {
     *
     * - `index` must be strictly less than {length}.
     */
+    // BK Not used
     function at(UintSet storage set, uint256 index) internal view returns (uint256) {
         return uint256(_at(set._inner, index));
     }
@@ -503,6 +509,7 @@ abstract contract AccessControl is Context {
 
     mapping (bytes32 => RoleData) private _roles;
 
+    // BK OK - From testing, DEFAULT_ADMIN_ROLE: 0x0000000000000000000000000000000000000000000000000000000000000000
     bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
 
     /**
@@ -511,6 +518,7 @@ abstract contract AccessControl is Context {
      * `sender` is the account that originated the contract call, an admin role
      * bearer except when using {_setupRole}.
      */
+    // BK OK - From testing, RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
     event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);
 
     /**
@@ -1359,12 +1367,14 @@ contract ERC777 is Context, IERC777, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 
+    // BK OK - https://eips.ethereum.org/EIPS/eip-1820#deployment-transaction - 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
     IERC1820Registry constant internal _ERC1820_REGISTRY = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
 
     mapping(address => uint256) private _balances;
 
     uint256 private _totalSupply;
 
+    // BK Next 2 Ok
     string private _name;
     string private _symbol;
 
@@ -1400,6 +1410,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         string memory symbol,
         address[] memory defaultOperators
     ) public {
+        // BK Next 2 Ok
         _name = name;
         _symbol = symbol;
 
@@ -1416,14 +1427,20 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-name}.
      */
+    // BK OK - function name() external view returns (string memory);
+    // BK OK - From testing, hoprToken 'HOPR', 'HOPR Token'
     function name() public view override returns (string memory) {
+        // BK OK
         return _name;
     }
 
     /**
      * @dev See {IERC777-symbol}.
      */
+    // BK OK - function symbol() external view returns (string memory);
+    // BK OK - From testing, hoprToken 'HOPR', 'HOPR Token'
     function symbol() public view override returns (string memory) {
+        // BK OK
         return _symbol;
     }
 
@@ -1433,7 +1450,10 @@ contract ERC777 is Context, IERC777, IERC20 {
      * Always returns 18, as per the
      * [ERC777 EIP](https://eips.ethereum.org/EIPS/eip-777#backward-compatibility).
      */
+    // BK OK - Not defined in the ERC-20 and ERC-777 interfaces. Should return 18 according to ERC-777
+    // BK OK - From testing, decimals: 18
     function decimals() public pure returns (uint8) {
+        // BK Ok
         return 18;
     }
 
@@ -1442,6 +1462,8 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * This implementation always returns `1`.
      */
+    // BK OK - function granularity() external view returns (uint256);
+    // BK OK - From testing, granularity: 1
     function granularity() public view override returns (uint256) {
         return 1;
     }
@@ -1449,7 +1471,11 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-totalSupply}.
      */
+    // BK OK - function IERC777.totalSupply() external view returns (uint256);
+    // BK OK - function IERC20.totalSupply() external view returns (uint256);
+    // BK OK - From testing, totalSupply: 123.12345678912345678
     function totalSupply() public view override(IERC20, IERC777) returns (uint256) {
+        // BK OK
         return _totalSupply;
     }
 
@@ -2000,10 +2026,14 @@ pragma solidity ^0.6.0;
 
 // BK NOTE - Context is inherited via AccessControl and ERC777Snapshot -> ERC777
 contract HoprToken is AccessControl, ERC777Snapshot {
+    // BK OK - web3.sha3("MINTER_ROLE") => "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
+    // BK OK - From testing MINTER_ROLE: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
+    // BK NOTE - defaultOperators empty
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
         // BK NOTE - For consistency with AccessControl's Context, should use _msgSender() instead of msg.sender
+        // BK OK - From testing, DEFAULT_ADMIN_ROLE: 0x0000000000000000000000000000000000000000000000000000000000000000
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
