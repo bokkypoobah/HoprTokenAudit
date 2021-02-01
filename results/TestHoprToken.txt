@@ -12,12 +12,12 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
     owner -> HoprToken.deploy() to 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
       + 1820Reg:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
       + 1820Reg:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
-      + RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
+      + 3.2 RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
-      + RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
+      + 4.0 RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
       Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1612203699, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
-      + OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
+    owner -> HoprDistributor.deploy(hoprToken, 1612205489, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+      + 5.0 OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
     - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - decimals: 18
@@ -39,11 +39,11 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - user0.balance: 0.0
       - user1.balance: 0.0
     owner -> hoprToken.mint(user0, 123, '0x00', '0x00')
-      + Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123000000000000000000, data: 0x00, operatorData: 0x00)
-      + Transfer(from: null:0x0000, to: user0:0x7099, value: 123000000000000000000)
+      + 6.0 Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123.0, data: 0x00, operatorData: 0x00)
+      + 6.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 123.0)
     owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')
-      + Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 123456789123456789, data: 0x01, operatorData: 0x02)
-      + Transfer(from: null:0x0000, to: user1:0x3C44, value: 123456789123456789)
+      + 7.0 Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 0.123456789123456789, data: 0x01, operatorData: 0x02)
+      + 7.1 Transfer(from: null:0x0000, to: user1:0x3C44, value: 0.123456789123456789)
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - totalSupply: 123.123456789123456789
         - totalSupplySnapshots(0) - fromBlock: 6, value: 123.0
@@ -56,7 +56,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - owner: owner:0xf39F
       - MULTIPLIER: 1000000
       - totalToBeMinted: 0.0
-      - startTime: 1612203699
+      - startTime: 1612205489
       - token: HOPRToken:0xe7f1
       - maxMintAmount: 123.456
       - totalMinted: 0.0
@@ -64,10 +64,10 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - allocations(user0, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
     owner -> hoprDistributor.addSchedule(durations, percents, 'test)
-      + ScheduleAdded(durations: 1,12,20,100, percents: 100000,200000,300000,400000, name: test)
+      + 8.0 ScheduleAdded(durations: 1,12,20,100, percents: 100000,200000,300000,400000, name: test)
     owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test)
-      + AllocationAdded(account: user0:0x7099, amount: 12300000000000000000, scheduleName: test)
-      + AllocationAdded(account: user1:0x3C44, amount: 13400000000000000000, scheduleName: test)
+      + 9.0 AllocationAdded(account: user0:0x7099, amount: 12.3, scheduleName: test)
+      + 9.1 AllocationAdded(account: user1:0x3C44, amount: 13.4, scheduleName: test)
     Time @ 0s
     --- hoprDistributor ---
       - totalMinted: 0.0
@@ -77,9 +77,9 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
     Time @ 12s
-    waitUntil: 1612203711
-      + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
-      + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
+    waitUntil: 1612205501
+      + 10.0 Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0.0, data: 0x, operatorData: 0x)
+      + 10.1 Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0.0)
     --- hoprDistributor ---
       - totalMinted: 0.0
       - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
@@ -88,9 +88,9 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 7.38
       - getClaimable(user1, 'test'): 8.04
     Time @ 20s
-    waitUntil: 1612203719
-      + Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0, data: 0x, operatorData: 0x)
-      + Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0)
+    waitUntil: 1612205509
+      + 11.0 Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0.0, data: 0x, operatorData: 0x)
+      + 11.1 Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0.0)
     --- hoprDistributor ---
       - totalMinted: 0.0
       - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
@@ -100,7 +100,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user1, 'test'): 8.04
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (19678ms)
+    ✓ TestHoprDistributor - #0 (19734ms)
 
 
   1 passing (21s)

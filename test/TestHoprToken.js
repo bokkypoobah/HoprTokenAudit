@@ -37,13 +37,19 @@ describe("TestHoprToken", function() {
           result = result + separator + a.name + ": ";
           if (a.type == 'address') {
             result = result + getShortAccountName(data.args[a.name].toString());
+          } else if (a.type == 'uint256' || a.type == 'uint128') {
+            if (a.name == 'tokens' || a.name == 'amount' || a.name == 'balance' || a.name == 'value') {
+              result = result + ethers.utils.formatUnits(data.args[a.name], 18);
+            } else {
+              result = result + data.args[a.name].toString();
+            }
           } else {
             result = result + data.args[a.name].toString();
           }
           separator = ", ";
         });
         result = result + ")";
-        console.log("      + " + result);
+        console.log("      + " + log.blockNumber + "." + log.logIndex + " " + result);
       } catch (e) {
         console.log("      + " + getShortAccountName(log.address) + " " + JSON.stringify(log.topics));
       }
