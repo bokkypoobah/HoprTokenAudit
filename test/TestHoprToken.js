@@ -72,8 +72,29 @@ describe("TestHoprToken", function() {
       console.log("      - hoprToken.defaultOperators(): " + await hoprToken.defaultOperators());
     }
     console.log("      - totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
+    try {
+      for (let i = 0; i < 10; i++) {
+        const totalSupplySnapshot = await hoprToken.totalSupplySnapshots(i);
+        console.log("        - totalSupplySnapshots(" + i + ") - fromBlock: " + totalSupplySnapshot[0].toString() + ", value: " + ethers.utils.formatUnits(totalSupplySnapshot[1], 18));
+      }
+    } catch (e) {
+    }
     console.log("      - user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
+    try {
+      for (let i = 0; i < 10; i++) {
+        const accountSnapshot = await hoprToken.accountSnapshots(user0, i);
+        console.log("        - accountSnapshots(user0, " + i + ") - fromBlock: " + accountSnapshot[0].toString() + ", value: " + ethers.utils.formatUnits(accountSnapshot[1], 18));
+      }
+    } catch (e) {
+    }
     console.log("      - user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
+    try {
+      for (let i = 0; i < 10; i++) {
+        const accountSnapshot = await hoprToken.accountSnapshots(user1, i);
+        console.log("        - accountSnapshots(user1, " + i + ") - fromBlock: " + accountSnapshot[0].toString() + ", value: " + ethers.utils.formatUnits(accountSnapshot[1], 18));
+      }
+    } catch (e) {
+    }
   }
 
   async function printHoprDistributorDetails(header = false) {

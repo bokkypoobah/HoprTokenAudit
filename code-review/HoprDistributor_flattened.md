@@ -1575,7 +1575,10 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-defaultOperators}.
      */
+    // BK OK - function IERC777.defaultOperators() external view returns (address[] memory);
+    // BK OK - From testing, hoprToken.defaultOperators(): 
     function defaultOperators() public view override returns (address[] memory) {
+        // BK OK
         return _defaultOperatorsArray;
     }
 
