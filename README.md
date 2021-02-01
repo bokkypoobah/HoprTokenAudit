@@ -168,7 +168,7 @@ Outline:
     * [x] function decimals() - Note that this is not defined in IERC20 and IERC777
     * [x] function granularity()
     * [x] function totalSupply()
-    * [ ] function balanceOf(...)
+    * [x] function balanceOf(...)
     * [ ] function send(...)
     * [ ] function burn(...)
     * [ ] function isOperatorFor(...)

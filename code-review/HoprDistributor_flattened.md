@@ -1471,8 +1471,8 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-totalSupply}.
      */
-    // BK OK - function IERC777.totalSupply() external view returns (uint256);
     // BK OK - function IERC20.totalSupply() external view returns (uint256);
+    // BK OK - function IERC777.totalSupply() external view returns (uint256);
     // BK OK - From testing, totalSupply: 123.12345678912345678
     function totalSupply() public view override(IERC20, IERC777) returns (uint256) {
         // BK OK
@@ -1482,7 +1482,11 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev Returns the amount of tokens owned by an account (`tokenHolder`).
      */
+    // BK OK - function IERC20.balanceOf(address account) external view returns (uint256);
+    // BK OK - function IERC777.function balanceOf(address owner) external view returns (uint256);
+    // BK OK - From testing, user0.balance: 123.0 and user1.balance: 0.123456789123456789
     function balanceOf(address tokenHolder) public view override(IERC20, IERC777) returns (uint256) {
+        // BK OK
         return _balances[tokenHolder];
     }
 
