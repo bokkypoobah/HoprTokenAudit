@@ -146,7 +146,7 @@ Outline:
 * [x] interface IERC777Sender
 * [x] interface IERC20
 * [x] library SafeMath
-* [ ] interface IERC1820Registry
+* [x] interface IERC1820Registry
 * [ ] contract ERC777 is Context, IERC777, IERC20
   * [ ] using SafeMath for uint256;
   * [ ] using Address for address;

@@ -1221,6 +1221,7 @@ pragma solidity ^0.6.0;
  *
  * For an in-depth explanation and source code analysis, see the EIP text.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-1820
 interface IERC1820Registry {
     /**
      * @dev Sets `newManager` as the manager for `account`. A manager of an
@@ -1235,6 +1236,7 @@ interface IERC1820Registry {
      *
      * - the caller must be the current manager for `account`.
      */
+    // BK OK - function setManager(address _addr, address _newManager) external
     function setManager(address account, address newManager) external;
 
     /**
@@ -1242,6 +1244,7 @@ interface IERC1820Registry {
      *
      * See {setManager}.
      */
+    // BK OK - function getManager(address _addr) public view returns(address)
     function getManager(address account) external view returns (address);
 
     /**
@@ -1264,6 +1267,7 @@ interface IERC1820Registry {
      * queried for support, unless `implementer` is the caller. See
      * {IERC1820Implementer-canImplementInterfaceForAddress}.
      */
+    // BK OK - function setInterfaceImplementer(address _addr, bytes32 _interfaceHash, address _implementer) external
     function setInterfaceImplementer(address account, bytes32 interfaceHash, address implementer) external;
 
     /**
@@ -1275,6 +1279,7 @@ interface IERC1820Registry {
      *
      * `account` being the zero address is an alias for the caller's address.
      */
+    // BK OK - function getInterfaceImplementer(address _addr, bytes32 _interfaceHash) external view returns (address)
     function getInterfaceImplementer(address account, bytes32 interfaceHash) external view returns (address);
 
     /**
@@ -1282,6 +1287,7 @@ interface IERC1820Registry {
      * corresponding
      * https://eips.ethereum.org/EIPS/eip-1820#interface-name[section of the EIP].
      */
+    // BK OK - function interfaceHash(string calldata _interfaceName) external pure returns(bytes32)
     function interfaceHash(string calldata interfaceName) external pure returns (bytes32);
 
     /**
@@ -1289,6 +1295,7 @@ interface IERC1820Registry {
      *  @param account Address of the contract for which to update the cache.
      *  @param interfaceId ERC165 interface for which to update the cache.
      */
+    // BK OK - function updateERC165Cache(address _contract, bytes4 _interfaceId) external
     function updateERC165Cache(address account, bytes4 interfaceId) external;
 
     /**
@@ -1300,6 +1307,7 @@ interface IERC1820Registry {
      *  @param interfaceId ERC165 interface to check.
      *  @return True if `account` implements `interfaceId`, false otherwise.
      */
+    // function implementsERC165Interface(address _contract, bytes4 _interfaceId) public view returns (bool)
     function implementsERC165Interface(address account, bytes4 interfaceId) external view returns (bool);
 
     /**
@@ -1308,10 +1316,13 @@ interface IERC1820Registry {
      *  @param interfaceId ERC165 interface to check.
      *  @return True if `account` implements `interfaceId`, false otherwise.
      */
+    // function implementsERC165InterfaceNoCache(address _contract, bytes4 _interfaceId) public view returns (bool)
     function implementsERC165InterfaceNoCache(address account, bytes4 interfaceId) external view returns (bool);
 
+    // BK OK - event InterfaceImplementerSet(address indexed addr, bytes32 indexed interfaceHash, address indexed implementer);
     event InterfaceImplementerSet(address indexed account, bytes32 indexed interfaceHash, address indexed implementer);
 
+    // BK OK - event ManagerChanged(address indexed addr, address indexed newManager);
     event ManagerChanged(address indexed account, address indexed newManager);
 }
 
