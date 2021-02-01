@@ -1576,7 +1576,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      * @dev See {IERC777-defaultOperators}.
      */
     // BK OK - function IERC777.defaultOperators() external view returns (address[] memory);
-    // BK OK - From testing, hoprToken.defaultOperators(): 
+    // BK OK - From testing, hoprToken.defaultOperators():
     function defaultOperators() public view override returns (address[] memory) {
         // BK OK
         return _defaultOperatorsArray;
@@ -1861,6 +1861,8 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
+    // BK NOTE - `tokenId` should be `amount` or `tokens`
+    // BK NOTE - Has been updated in the current version to function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual { }
     function _beforeTokenTransfer(address operator, address from, address to, uint256 tokenId) internal virtual { }
 }
 
@@ -1889,6 +1891,7 @@ abstract contract ERC777Snapshot is ERC777 {
     // Inspired by Jordi Baylina's MiniMeToken to record historical balances:
     // https://github.com/Giveth/minime/blob/ea04d950eea153a04c51fa510b068b9dded390cb/contracts/MiniMeToken.sol
 
+    // BK OK
     using SafeMath for uint256;
 
     /**
@@ -1896,19 +1899,24 @@ abstract contract ERC777Snapshot is ERC777 {
      * given value, the block number attached is the one that last changed the
      * value
      */
+    // BK OK
     struct Snapshot {
         // `fromBlock` is the block number that the value was generated from
+        // BK OK
         uint128 fromBlock;
         // `value` is the amount of tokens at a specific block number
+        // BK OK
         uint128 value;
     }
 
     // `accountSnapshots` is the map that tracks the balance of each address, in this
     //  contract when the balance changes the block number that the change
     //  occurred is also included in the map
+    // BK OK
     mapping (address => Snapshot[]) public accountSnapshots;
 
     // Tracks the history of the `totalSupply` of the token
+    // BK OK
     Snapshot[] public totalSupplySnapshots;
 
     /**
@@ -1946,6 +1954,7 @@ abstract contract ERC777Snapshot is ERC777 {
 
     // Update balance and/or total supply snapshots before the values are modified. This is implemented
     // in the _beforeTokenTransfer hook, which is executed for _mint, _burn, and _transfer operations.
+    // BK NOTE - Overriding function ERC777._beforeTokenTransfer(address operator, address from, address to, uint256 tokenId) internal virtual { }
     function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual override {
         super._beforeTokenTransfer(operator, from, to, amount);
 

@@ -47,6 +47,7 @@ From the initial review of the source as described in [AUDIT.md](https://github.
 * `_msgSender()` should be used instead of `msg.sender` for consistency with AccessControl's Context with GSN in `HoprToken.constructor()` and `HoprToken.mint(...)`
 * `_msgSender()` should be used instead of `msg.sender` for consistency with Ownable's Context with GSN in `HoprDistributor.claim(...)`
 * Solidity `^0.6.0` specified. Using Solidity 0.6.12 for this review. Please check specific compiler version issues if deploying with a different version
+* `tokenId` should be renamed `amount` in `ERC777._beforeTokenTransfer(...)` - This has been fixed in the current OpenZeppelin version of [ERC777.sol](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC777/ERC777.sol)
 
 <br />
 
@@ -174,7 +175,7 @@ Outline:
     * [ ] function isOperatorFor(...)
     * [ ] function authorizeOperator(...)
     * [ ] function revokeOperator(...)
-    * [ ] function defaultOperators()
+    * [x] function defaultOperators() - Note that this is empty for these contracts
     * [ ] function operatorSend(...)
     * [ ] function operatorBurn(...)
     * [ ] event Sent
