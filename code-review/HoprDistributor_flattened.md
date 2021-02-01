@@ -37,7 +37,7 @@ contract Context {
         return msg.sender;
     }
 
-    // BK OK - Not used
+    // BK Not used
     function _msgData() internal view virtual returns (bytes memory) {
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
@@ -438,7 +438,7 @@ library Address {
      * {ReentrancyGuard} or the
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
-    // BK OK - Not used
+    // BK Not used
     function sendValue(address payable recipient, uint256 amount) internal {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
@@ -1060,10 +1060,14 @@ library SafeMath {
      * Requirements:
      * - Addition cannot overflow.
      */
+    // BK OK
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        // BK OK
         uint256 c = a + b;
+        // BK OK
         require(c >= a, "SafeMath: addition overflow");
 
+        // BK OK
         return c;
     }
 
@@ -1076,7 +1080,9 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
+    // BK OK
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        // BK OK
         return sub(a, b, "SafeMath: subtraction overflow");
     }
 
@@ -1089,10 +1095,14 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
+    // BK OK
     function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        // BK OK
         require(b <= a, errorMessage);
+        // BK OK
         uint256 c = a - b;
 
+        // BK OK
         return c;
     }
 
@@ -1105,6 +1115,7 @@ library SafeMath {
      * Requirements:
      * - Multiplication cannot overflow.
      */
+    // BK Not used
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
@@ -1130,6 +1141,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
         return div(a, b, "SafeMath: division by zero");
     }
@@ -1145,6 +1157,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         // Solidity only automatically asserts when dividing by 0
         require(b > 0, errorMessage);
@@ -1165,6 +1178,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
         return mod(a, b, "SafeMath: modulo by zero");
     }
@@ -1180,6 +1194,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b != 0, errorMessage);
         return a % b;
