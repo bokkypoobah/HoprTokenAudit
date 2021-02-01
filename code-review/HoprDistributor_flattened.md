@@ -62,7 +62,7 @@ pragma solidity ^0.6.0;
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
-// BK NOTE - Inherited only by HoprDistributor
+// BK OK - Inherited only by HoprDistributor
 contract Ownable is Context {
     // BK OK
     address private _owner;
@@ -388,6 +388,7 @@ pragma solidity ^0.6.2;
 /**
  * @dev Collection of functions related to the address type
  */
+// BK OK
 library Address {
     /**
      * @dev Returns true if `account` is a contract.
@@ -406,14 +407,18 @@ library Address {
      *  - an address where a contract lived, but was destroyed
      * ====
      */
+    // BK NOTE - Only called by ERC777._callTokensReceived
     function isContract(address account) internal view returns (bool) {
         // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
         // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
         // for accounts without code, i.e. `keccak256('')`
         bytes32 codehash;
+        // BK OK -  web3.sha3('') => "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
         // solhint-disable-next-line no-inline-assembly
+        // BK OK
         assembly { codehash := extcodehash(account) }
+        // BK OK
         return (codehash != accountHash && codehash != 0x0);
     }
 
@@ -433,6 +438,7 @@ library Address {
      * {ReentrancyGuard} or the
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
+    // BK OK - Not used
     function sendValue(address payable recipient, uint256 amount) internal {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
@@ -663,16 +669,19 @@ pragma solidity ^0.6.0;
  * for the associated interfaces in said registry. See {IERC1820Registry} and
  * {ERC1820Implementer}.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-777
 interface IERC777 {
     /**
      * @dev Returns the name of the token.
      */
+    // BK OK - function name() external view returns (string memory);
     function name() external view returns (string memory);
 
     /**
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
+    // BK OK - function symbol() external view returns (string memory);
     function symbol() external view returns (string memory);
 
     /**
@@ -682,16 +691,19 @@ interface IERC777 {
      *
      * For most token contracts, this value will equal 1.
      */
+    // BK OK - function granularity() external view returns (uint256);
     function granularity() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens in existence.
      */
+    // BK OK - function totalSupply() external view returns (uint256);
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by an account (`owner`).
      */
+    // BK OK - function balanceOf(address holder) external view returns (uint256);
     function balanceOf(address owner) external view returns (uint256);
 
     /**
@@ -710,6 +722,7 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+    // BK OK - function send(address to, uint256 amount, bytes calldata data) external;
     function send(address recipient, uint256 amount, bytes calldata data) external;
 
     /**
@@ -725,6 +738,7 @@ interface IERC777 {
      *
      * - the caller must have at least `amount` tokens.
      */
+    // BK OK - function burn(uint256 amount, bytes calldata data) external;
     function burn(uint256 amount, bytes calldata data) external;
 
     /**
@@ -734,6 +748,7 @@ interface IERC777 {
      *
      * See {operatorSend} and {operatorBurn}.
      */
+    // BK OK - function isOperatorFor(address operator, address holder) external view returns (bool);
     function isOperatorFor(address operator, address tokenHolder) external view returns (bool);
 
     /**
@@ -747,6 +762,7 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
+    // BK OK - function authorizeOperator(address operator) external;
     function authorizeOperator(address operator) external;
 
     /**
@@ -760,6 +776,7 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
+    // BK OK - function revokeOperator(address operator) external;
     function revokeOperator(address operator) external;
 
     /**
@@ -770,6 +787,7 @@ interface IERC777 {
      * This list is immutable, but individual holders may revoke these via
      * {revokeOperator}, in which case {isOperatorFor} will return false.
      */
+    // BK OK - function defaultOperators() external view returns (address[] memory);
     function defaultOperators() external view returns (address[] memory);
 
     /**
@@ -791,6 +809,7 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+    // BK OK - function operatorSend(address from, address to, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function operatorSend(
         address sender,
         address recipient,
@@ -814,6 +833,7 @@ interface IERC777 {
      * - `account` must have at least `amount` tokens.
      * - the caller must be an operator for `account`.
      */
+    // BK OK - function operatorBurn(address from, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function operatorBurn(
         address account,
         uint256 amount,
@@ -821,6 +841,7 @@ interface IERC777 {
         bytes calldata operatorData
     ) external;
 
+    // BK OK - event Sent(address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData);
     event Sent(
         address indexed operator,
         address indexed from,
@@ -830,12 +851,16 @@ interface IERC777 {
         bytes operatorData
     );
 
+    // BK OK - event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
     event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
 
+    // BK OK - event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
     event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
 
+    // BK OK - event AuthorizedOperator(address indexed operator, address indexed holder);
     event AuthorizedOperator(address indexed operator, address indexed tokenHolder);
 
+    // BK OK - event RevokedOperator(address indexed operator, address indexed holder);
     event RevokedOperator(address indexed operator, address indexed tokenHolder);
 }
 
@@ -855,6 +880,7 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-777#erc777tokensrecipient-and-the-tokensreceived-hook
 interface IERC777Recipient {
     /**
      * @dev Called by an {IERC777} token contract whenever tokens are being
@@ -866,6 +892,7 @@ interface IERC777Recipient {
      *
      * This function may revert to prevent the operation from being executed.
      */
+    // BK OK - function tokensReceived(address operator, address from, address to, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function tokensReceived(
         address operator,
         address from,
@@ -892,6 +919,7 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-777#erc777tokenssender-and-the-tokenstosend-hook
 interface IERC777Sender {
     /**
      * @dev Called by an {IERC777} token contract whenever a registered holder's
@@ -903,6 +931,7 @@ interface IERC777Sender {
      *
      * This function may revert to prevent the operation from being executed.
      */
+    // BK OK - function tokensToSend(address operator, address from, address to, uint256 amount, bytes calldata userData, bytes calldata operatorData) external;
     function tokensToSend(
         address operator,
         address from,

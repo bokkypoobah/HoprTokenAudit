@@ -134,16 +134,16 @@ These have been copied into the following files for code review:
 
 Outline:
 
-* [ ] contract Context
-* [ ] contract Ownable is Context
+* [x] contract Context
+* [x] contract Ownable is Context
 * [ ] library EnumerableSet
-* [ ] library Address
+* [x] library Address
 * [ ] abstract contract AccessControl
   * [ ] using EnumerableSet for EnumerableSet.AddressSet;
   * [ ] using Address for address;
-* [ ] interface IERC777
-* [ ] interface IERC777Recipient
-* [ ] interface IERC777Sender
+* [x] interface IERC777
+* [x] interface IERC777Recipient
+* [x] interface IERC777Sender
 * [ ] interface IERC20
 * [ ] library SafeMath
 * [ ] interface IERC1820Registry
