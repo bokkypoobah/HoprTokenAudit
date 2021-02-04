@@ -1887,6 +1887,7 @@ pragma solidity ^0.6.0;
  * To get the balance of an account at the time of a snapshot, call the {balanceOfAt} function with a block number
  * and the account address.
  */
+// BK NOTE - Using uint128 to record token balances - max balance = new BigNumber(2).pow(128).sub(1).shift(-18) => 340282366920938463463.374607431768211455
 abstract contract ERC777Snapshot is ERC777 {
     // Inspired by Jordi Baylina's MiniMeToken to record historical balances:
     // https://github.com/Giveth/minime/blob/ea04d950eea153a04c51fa510b068b9dded390cb/contracts/MiniMeToken.sol
@@ -1979,6 +1980,8 @@ abstract contract ERC777Snapshot is ERC777 {
      * @param _block The block number to retrieve the value at
      * @return The number of tokens being queried
      */
+    // BK See https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Arrays.sol and
+    // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20Snapshot.sol
     function _valueAt(
         Snapshot[] storage snapshots,
         uint128 _block

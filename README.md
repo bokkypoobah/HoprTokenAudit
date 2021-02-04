@@ -55,11 +55,20 @@ From the initial review of the source as described in [AUDIT.md](https://github.
 
 ### Source Code
 
-Imports adjusted to compile with OpenZeppelin from a local subdirectory.
+Following are the contracts being audited:
 
-* [contracts/HoprToken.sol](contracts/HoprToken.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprToken.sol).
-* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol).
-* [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprDistributor.sol).
+* [contracts_original/HoprToken.sol](contracts_original/HoprToken.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprToken.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprToken.sol).
+* [contracts_original/ERC777/ERC777Snapshot.sol](contracts_original/ERC777/ERC777Snapshot.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/ERC777/ERC777Snapshot.sol).
+* [contracts_original/HoprDistributor.sol](contracts_original/HoprDistributor.sol) - [source - initial review](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/contracts/HoprDistributor.sol), [source - latest](https://github.com/hoprnet/hoprnet/blob/release/titlis/packages/ethereum/contracts/HoprDistributor.sol).
+
+The original OpenZeppelin dependencies have also been added to [contracts_original/openzeppelin](contracts_original/openzeppelin).
+
+Contracts from above, modified for testing:
+
+* [contracts/HoprToken.sol](contracts/HoprToken.sol)
+* [contracts/ERC777/ERC777Snapshot.sol](contracts/ERC777/ERC777Snapshot.sol)
+* [contracts/HoprDistributor.sol](contracts/HoprDistributor.sol)
+* [contracts/openzeppelin](contracts/openzeppelin)
 
 <br />
 

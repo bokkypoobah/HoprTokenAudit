@@ -11,8 +11,6 @@ import "../../math/SafeMath.sol";
 import "../../utils/Address.sol";
 import "../../introspection/IERC1820Registry.sol";
 
-import "hardhat/console.sol";
-
 /**
  * @dev Implementation of the {IERC777} interface.
  *
@@ -322,7 +320,6 @@ contract ERC777 is Context, IERC777, IERC20 {
     )
     internal virtual
     {
-        console.log("      > ERC777._mint: account %s, amount %s", account, amount);
         require(account != address(0), "ERC777: mint to the zero address");
 
         address operator = _msgSender();
@@ -358,7 +355,6 @@ contract ERC777 is Context, IERC777, IERC20 {
     )
         internal
     {
-        console.log("      > ERC777._send: from %s, to %s, amount %s", from, to, amount);
         require(from != address(0), "ERC777: send from the zero address");
         require(to != address(0), "ERC777: send to the zero address");
 
@@ -386,7 +382,6 @@ contract ERC777 is Context, IERC777, IERC20 {
     )
         internal virtual
     {
-        console.log("      > ERC777._burn: from %s, amount %s", from, amount);
         require(from != address(0), "ERC777: burn from the zero address");
 
         address operator = _msgSender();
@@ -413,7 +408,6 @@ contract ERC777 is Context, IERC777, IERC20 {
     )
         private
     {
-        console.log("      > ERC777._move: operator %s, from %s, to %s", operator, from, to);
         _beforeTokenTransfer(operator, from, to, amount);
 
         _balances[from] = _balances[from].sub(amount, "ERC777: transfer amount exceeds balance");
@@ -455,7 +449,6 @@ contract ERC777 is Context, IERC777, IERC20 {
     )
         private
     {
-        console.log("      > ERC777._callTokensToSend: operator %s, from %s, to %s", operator, from, to);
         address implementer = _ERC1820_REGISTRY.getInterfaceImplementer(from, _TOKENS_SENDER_INTERFACE_HASH);
         if (implementer != address(0)) {
             IERC777Sender(implementer).tokensToSend(operator, from, to, amount, userData, operatorData);
@@ -484,7 +477,6 @@ contract ERC777 is Context, IERC777, IERC20 {
     )
         private
     {
-        console.log("      > ERC777._callTokensReceived: operator %s, from %s, to %s", operator, from, to);
         address implementer = _ERC1820_REGISTRY.getInterfaceImplementer(to, _TOKENS_RECIPIENT_INTERFACE_HASH);
         if (implementer != address(0)) {
             IERC777Recipient(implementer).tokensReceived(operator, from, to, amount, userData, operatorData);

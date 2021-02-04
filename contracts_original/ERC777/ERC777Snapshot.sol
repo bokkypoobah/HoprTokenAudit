@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.6.0;
 
-import "../openzeppelin/math/SafeMath.sol";
-import "../openzeppelin/token/ERC777/ERC777.sol";
-
-import "hardhat/console.sol";
+import "@openzeppelin/contracts/math/SafeMath.sol";
+import "@openzeppelin/contracts/token/ERC777/ERC777.sol";
 
 /**
  * @dev This contract extends an ERC777 token with a snapshot mechanism. When a snapshot is created, the balances and
@@ -82,7 +80,6 @@ abstract contract ERC777Snapshot is ERC777 {
     // Update balance and/or total supply snapshots before the values are modified. This is implemented
     // in the _beforeTokenTransfer hook, which is executed for _mint, _burn, and _transfer operations.
     function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual override {
-        console.log("      > ERC777Snapshot._beforeTokenTransfer: from %s, to %s, amount %s", from, to, amount);
         super._beforeTokenTransfer(operator, from, to, amount);
 
         if (from == address(0)) {
@@ -140,7 +137,6 @@ abstract contract ERC777Snapshot is ERC777 {
      * @param snapshots The history of data being updated
      * @param _value The new number of tokens
      */
-    // BK NOTE - Only called by _beforeTokenTransfer(...)
     function updateValueAtNow(Snapshot[] storage snapshots, uint256 _value) internal {
         require(_value <= uint128(-1), "casting overflow");
 

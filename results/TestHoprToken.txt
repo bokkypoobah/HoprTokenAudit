@@ -1,4 +1,6 @@
 $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results/TestHoprToken.txt
+Compiling 4 files with 0.6.12
+Compilation finished successfully
 
 
   TestHoprToken
@@ -16,7 +18,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       + 4.0 RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
       Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1612205489, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+    owner -> HoprDistributor.deploy(hoprToken, 1612477318, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       + 5.0 OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
     - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
@@ -39,9 +41,15 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - user0.balance: 0.0
       - user1.balance: 0.0
     owner -> hoprToken.mint(user0, 123, '0x00', '0x00')
+      > ERC777._mint: account 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 123000000000000000000
+      > ERC777Snapshot._beforeTokenTransfer: from 0x0000000000000000000000000000000000000000, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 123000000000000000000
+      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0x0000000000000000000000000000000000000000, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
       + 6.0 Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123.0, data: 0x00, operatorData: 0x00)
       + 6.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 123.0)
     owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')
+      > ERC777._mint: account 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc, amount 123456789123456789
+      > ERC777Snapshot._beforeTokenTransfer: from 0x0000000000000000000000000000000000000000, to 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc, amount 123456789123456789
+      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0x0000000000000000000000000000000000000000, to 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc
       + 7.0 Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 0.123456789123456789, data: 0x01, operatorData: 0x02)
       + 7.1 Transfer(from: null:0x0000, to: user1:0x3C44, value: 0.123456789123456789)
     --- hoprToken 'HOPR', 'HOPR Token' ---
@@ -56,7 +64,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - owner: owner:0xf39F
       - MULTIPLIER: 1000000
       - totalToBeMinted: 0.0
-      - startTime: 1612205489
+      - startTime: 1612477318
       - token: HOPRToken:0xe7f1
       - maxMintAmount: 123.456
       - totalMinted: 0.0
@@ -77,7 +85,11 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
     Time @ 12s
-    waitUntil: 1612205501
+    waitUntil: 1612477330
+      > ERC777._callTokensToSend: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+      > ERC777._move: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+      > ERC777Snapshot._beforeTokenTransfer: from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 0
+      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
       + 10.0 Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0.0, data: 0x, operatorData: 0x)
       + 10.1 Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0.0)
     --- hoprDistributor ---
@@ -88,7 +100,11 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user0, 'test'): 7.38
       - getClaimable(user1, 'test'): 8.04
     Time @ 20s
-    waitUntil: 1612205509
+    waitUntil: 1612477338
+      > ERC777._callTokensToSend: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+      > ERC777._move: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+      > ERC777Snapshot._beforeTokenTransfer: from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 0
+      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
       + 11.0 Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0.0, data: 0x, operatorData: 0x)
       + 11.1 Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0.0)
     --- hoprDistributor ---
@@ -100,7 +116,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - getClaimable(user1, 'test'): 8.04
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (19734ms)
+    ✓ TestHoprDistributor - #0 (19213ms)
 
 
   1 passing (21s)
