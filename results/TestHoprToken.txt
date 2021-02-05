@@ -1,6 +1,4 @@
 $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results/TestHoprToken.txt
-Compiling 4 files with 0.6.12
-Compilation finished successfully
 
 
   TestHoprToken
@@ -9,18 +7,21 @@ Compilation finished successfully
       Mapping 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 => owner:0xf39F
       Mapping 0x70997970C51812dc3A010C7d01b50e0d17dc79C8 => user0:0x7099
       Mapping 0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC => user1:0x3C44
-      Mapping 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 => 1820Reg:0x1820
+      Mapping 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24 => ERC1820Registry:0x1820
       Mapping 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 => HOPRToken:0xe7f1
-    owner -> HoprToken.deploy() to 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-      + 1820Reg:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
-      + 1820Reg:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
+    owner -> HoprToken.deploy()-ed to 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
+      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xac7fbab5f54a3ca8194167523c6753bfeb96a445279294b6125b68cce2177054","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
+      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512","0xaea199e31a596269b42cdafd93407f14436db6e4cad65417994c2eb37381e05a","0x000000000000000000000000e7f1725e7734ce288f8367e1bb143e90bb3f0512"]
       + 3.2 RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       + 4.0 RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
       Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1612477318, 123.456) to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+    owner -> HoprDistributor.deploy(hoprToken, 1612501576, 123.456)-ed to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       + 5.0 OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
-    - TestHoprToken - #0
+      Mapping 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 => ERC777Wallet:0xDc64
+    owner -> ERC777Wallet.deploy(hoprToken)-ed to 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9","0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9"]
+      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9","0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9"]
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - decimals: 18
       - granularity: 1
@@ -38,87 +39,42 @@ Compilation finished successfully
       - hoprToken.hasRole(user1, MINTER_ROLE): false
       - hoprToken.defaultOperators(): 
       - totalSupply: 0.0
-      - user0.balance: 0.0
-      - user1.balance: 0.0
+      - owner:0xf39Fuser0.balance: 0.0
+      - user0:0x7099user0.balance: 0.0
+      - user1:0x3C44user0.balance: 0.0
+      - ERC777Wallet:0xDc64user0.balance: 0.0
     owner -> hoprToken.mint(user0, 123, '0x00', '0x00')
       > ERC777._mint: account 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 123000000000000000000
       > ERC777Snapshot._beforeTokenTransfer: from 0x0000000000000000000000000000000000000000, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 123000000000000000000
       > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0x0000000000000000000000000000000000000000, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      + 6.0 Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123.0, data: 0x00, operatorData: 0x00)
-      + 6.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 123.0)
-    owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')
-      > ERC777._mint: account 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc, amount 123456789123456789
-      > ERC777Snapshot._beforeTokenTransfer: from 0x0000000000000000000000000000000000000000, to 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc, amount 123456789123456789
-      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0x0000000000000000000000000000000000000000, to 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc
-      + 7.0 Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 0.123456789123456789, data: 0x01, operatorData: 0x02)
-      + 7.1 Transfer(from: null:0x0000, to: user1:0x3C44, value: 0.123456789123456789)
+        to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, hash -35050735901709401846926806449422499789573591386021029871886258173058026781381, implementer 0x0000000000000000000000000000000000000000
+      + 7.0 Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123.0, data: 0x00, operatorData: 0x00)
+      + 7.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 123.0)
+    owner -> hoprToken.mint(erc777Wallet, 0.123456789123456789, '0x01', '0x02')
+      > ERC777._mint: account 0xdc64a140aa3e981100a9beca4e685f962f0cf6c9, amount 123456789123456789
+      > ERC777Snapshot._beforeTokenTransfer: from 0x0000000000000000000000000000000000000000, to 0xdc64a140aa3e981100a9beca4e685f962f0cf6c9, amount 123456789123456789
+      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0x0000000000000000000000000000000000000000, to 0xdc64a140aa3e981100a9beca4e685f962f0cf6c9
+        to 0xdc64a140aa3e981100a9beca4e685f962f0cf6c9, hash -35050735901709401846926806449422499789573591386021029871886258173058026781381, implementer 0xdc64a140aa3e981100a9beca4e685f962f0cf6c9
+      > ERC777Wallet.tokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0x0000000000000000000000000000000000000000, to 0xdc64a140aa3e981100a9beca4e685f962f0cf6c9,
+        amount 123456789123456789
+      + 8.0 Minted(operator: owner:0xf39F, to: ERC777Wallet:0xDc64, amount: 0.123456789123456789, data: 0x01, operatorData: 0x02)
+      + 8.1 Transfer(from: null:0x0000, to: ERC777Wallet:0xDc64, value: 0.123456789123456789)
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - totalSupply: 123.123456789123456789
-        - totalSupplySnapshots(0) - fromBlock: 6, value: 123.0
-        - totalSupplySnapshots(1) - fromBlock: 7, value: 123.123456789123456789
-      - user0.balance: 123.0
-        - accountSnapshots(user0, 0) - fromBlock: 6, value: 123.0
-      - user1.balance: 0.123456789123456789
-        - accountSnapshots(user1, 0) - fromBlock: 7, value: 0.123456789123456789
-    --- hoprDistributor ---
-      - owner: owner:0xf39F
-      - MULTIPLIER: 1000000
-      - totalToBeMinted: 0.0
-      - startTime: 1612477318
-      - token: HOPRToken:0xe7f1
-      - maxMintAmount: 123.456
-      - totalMinted: 0.0
-      - getSchedule('test'): [[],[]]
-      - allocations(user0, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
-      - allocations(user1, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
-    owner -> hoprDistributor.addSchedule(durations, percents, 'test)
-      + 8.0 ScheduleAdded(durations: 1,12,20,100, percents: 100000,200000,300000,400000, name: test)
-    owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test)
-      + 9.0 AllocationAdded(account: user0:0x7099, amount: 12.3, scheduleName: test)
-      + 9.1 AllocationAdded(account: user1:0x3C44, amount: 13.4, scheduleName: test)
-    Time @ 0s
-    --- hoprDistributor ---
-      - totalMinted: 0.0
-      - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 1.23
-      - getClaimable(user1, 'test'): 1.34
-    Time @ 12s
-    waitUntil: 1612477330
-      > ERC777._callTokensToSend: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      > ERC777._move: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      > ERC777Snapshot._beforeTokenTransfer: from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 0
-      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      + 10.0 Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0.0, data: 0x, operatorData: 0x)
-      + 10.1 Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0.0)
-    --- hoprDistributor ---
-      - totalMinted: 0.0
-      - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 7.38
-      - getClaimable(user1, 'test'): 8.04
-    Time @ 20s
-    waitUntil: 1612477338
-      > ERC777._callTokensToSend: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      > ERC777._move: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      > ERC777Snapshot._beforeTokenTransfer: from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8, amount 0
-      > ERC777._callTokensReceived: operator 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, from 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266, to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
-      + 11.0 Sent(operator: owner:0xf39F, from: owner:0xf39F, to: user0:0x7099, amount: 0.0, data: 0x, operatorData: 0x)
-      + 11.1 Transfer(from: owner:0xf39F, to: user0:0x7099, value: 0.0)
-    --- hoprDistributor ---
-      - totalMinted: 0.0
-      - getSchedule('test'): [[{"type":"BigNumber","hex":"0x01"},{"type":"BigNumber","hex":"0x0c"},{"type":"BigNumber","hex":"0x14"},{"type":"BigNumber","hex":"0x64"}],[{"type":"BigNumber","hex":"0x0186a0"},{"type":"BigNumber","hex":"0x030d40"},{"type":"BigNumber","hex":"0x0493e0"},{"type":"BigNumber","hex":"0x061a80"}]]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 7.38
-      - getClaimable(user1, 'test'): 8.04
+        - totalSupplySnapshots(0) - fromBlock: 7, value: 123.0
+        - totalSupplySnapshots(1) - fromBlock: 8, value: 123.123456789123456789
+      - owner:0xf39Fuser0.balance: 0.0
+      - user0:0x7099user0.balance: 123.0
+        - accountSnapshots(user0:0x7099, 0) - fromBlock: 7, value: 123.0
+      - user1:0x3C44user0.balance: 0.0
+      - ERC777Wallet:0xDc64user0.balance: 0.123456789123456789
+        - accountSnapshots(ERC777Wallet:0xDc64, 0) - fromBlock: 8, value: 0.123456789123456789
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (19213ms)
+    ✓ TestHoprToken - #0 (837ms)
+    - TestHoprDistributor - #0
 
 
-  1 passing (21s)
+  1 passing (4s)
   1 pending
 

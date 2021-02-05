@@ -486,6 +486,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     {
         console.log("      > ERC777._callTokensReceived: operator %s, from %s, to %s", operator, from, to);
         address implementer = _ERC1820_REGISTRY.getInterfaceImplementer(to, _TOKENS_RECIPIENT_INTERFACE_HASH);
+        console.log("        to %s, hash %s, implementer %s", to, uint(_TOKENS_RECIPIENT_INTERFACE_HASH), implementer);
         if (implementer != address(0)) {
             IERC777Recipient(implementer).tokensReceived(operator, from, to, amount, userData, operatorData);
         } else if (requireReceptionAck) {

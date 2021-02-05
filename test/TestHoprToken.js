@@ -6,7 +6,7 @@ const util = require('util');
 let InterestUtils;
 
 describe("TestHoprToken", function() {
-  let owner, user0, user1, hoprToken, hoprDistributor, startTime;
+  let owner, user0, user1, ownerSigner, user0Signer, user1Signer, erc1820Registry, hoprToken, hoprDistributor, erc777Wallet, startTime;
   const accounts = [];
   const accountNames = {};
 
@@ -85,21 +85,16 @@ describe("TestHoprToken", function() {
       }
     } catch (e) {
     }
-    console.log("      - user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user0), 18));
-    try {
-      for (let i = 0; i < 10; i++) {
-        const accountSnapshot = await hoprToken.accountSnapshots(user0, i);
-        console.log("        - accountSnapshots(user0, " + i + ") - fromBlock: " + accountSnapshot[0].toString() + ", value: " + ethers.utils.formatUnits(accountSnapshot[1], 18));
+    var checkAccounts = [owner, user0, user1, erc777Wallet.address];
+    for (let i = 0; i < checkAccounts.length; i++) {
+      console.log("      - " + getShortAccountName(checkAccounts[i]) + "user0.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(checkAccounts[i]), 18));
+      try {
+        for (let j = 0; j < 10; j++) {
+          const accountSnapshot = await hoprToken.accountSnapshots(checkAccounts[i], j);
+          console.log("        - accountSnapshots(" + getShortAccountName(checkAccounts[i]) + ", " + j + ") - fromBlock: " + accountSnapshot[0].toString() + ", value: " + ethers.utils.formatUnits(accountSnapshot[1], 18));
+        }
+      } catch (e) {
       }
-    } catch (e) {
-    }
-    console.log("      - user1.balance: " + ethers.utils.formatUnits(await hoprToken.balanceOf(user1), 18));
-    try {
-      for (let i = 0; i < 10; i++) {
-        const accountSnapshot = await hoprToken.accountSnapshots(user1, i);
-        console.log("        - accountSnapshots(user1, " + i + ") - fromBlock: " + accountSnapshot[0].toString() + ", value: " + ethers.utils.formatUnits(accountSnapshot[1], 18));
-      }
-    } catch (e) {
     }
   }
 
@@ -128,6 +123,7 @@ describe("TestHoprToken", function() {
 
   before(async function () {
     [owner, user0, user1] = await web3.eth.getAccounts();
+    [ownerSigner, user0Signer, user1Signer] = await ethers.getSigners();
 
     console.log("    --- Setup ---");
     addAccount("0x0000000000000000000000000000000000000000", "null");
@@ -135,38 +131,66 @@ describe("TestHoprToken", function() {
     addAccount(user0, "user0");
     addAccount(user1, "user1");
 
-    const registry = await singletons.ERC1820Registry(owner);
-    addAccount(registry.address, "1820Reg");
+    erc1820Registry = await singletons.ERC1820Registry(owner);
+    addAccount(erc1820Registry.address, "ERC1820Registry");
 
     HoprToken = await ethers.getContractFactory("HoprToken");
-    HoprDistributor = await ethers.getContractFactory("HoprDistributor");
     hoprToken = await HoprToken.deploy();
     addAccount(hoprToken.address, "HOPRToken");
     const deployHoprTokenTransactionReceipt = await hoprToken.deployTransaction.wait();
-    console.log("    owner -> HoprToken.deploy() to " + hoprToken.address);
+    console.log("    owner -> HoprToken.deploy()-ed to " + hoprToken.address);
     printEvents(hoprToken, deployHoprTokenTransactionReceipt);
+
     console.log("    owner -> hoprToken.grantRole(MINTER_ROLE, owner)");
     const grantRole1 = await hoprToken.grantRole(await hoprToken.MINTER_ROLE(), owner);
     printEvents(hoprToken, await grantRole1.wait());
 
+    HoprDistributor = await ethers.getContractFactory("HoprDistributor");
     startTime = parseInt(new Date() / 1000);
     const maxMintAmount = ethers.utils.parseUnits("123.456", 18);
     hoprDistributor = await HoprDistributor.deploy(hoprToken.address, startTime, maxMintAmount);
     addAccount(hoprDistributor.address, "HOPRDistributor");
-    console.log("    owner -> HoprDistributor.deploy(hoprToken, " + startTime + ", " + ethers.utils.formatUnits(maxMintAmount, 18) + ") to " + hoprDistributor.address);
+    console.log("    owner -> HoprDistributor.deploy(hoprToken, " + startTime + ", " + ethers.utils.formatUnits(maxMintAmount, 18) + ")-ed to " + hoprDistributor.address);
     printEvents(hoprDistributor, await hoprDistributor.deployTransaction.wait());
+
+    // const ERC777Sender = await ethers.getContractFactory("ERC777Sender");
+    // erc777Sender = await ERC777Sender.connect(ownerSigner).deploy();
+    // addAccount(erc777Sender.address, "ERC777Sender");
+    // console.log("    owner -> ERC777Sender.deploy()-ed to " + erc777Sender.address);
+    // printEvents(erc777Sender, await erc777Sender.deployTransaction.wait());
+    //
+    // // const hash = web3.utils.soliditySha3('ERC777TokensSender');
+    // // console.log("    hash " + hash);
+    // //
+    // // console.log("    owner -> 1820Reg.setInterfaceImplementer()");
+    // // console.log("    erc1820Registry: " + util.inspect(erc1820Registry));
+    // // const registerSender = await erc1820Registry.setInterfaceImplementer(user0, web3.utils.soliditySha3('ERC777TokensSender'), erc777Sender.address, { from: user0 });
+    // // printEvents(erc1820Registry, await registerSender.wait());
+    //
+    // const ERC777Recipient = await ethers.getContractFactory("ERC777Recipient");
+    // erc777Recipient = await ERC777Recipient.connect(user0Signer).deploy();
+    // addAccount(erc777Recipient.address, "ERC777Recipient");
+    // console.log("    user0 -> ERC777Recipient.deploy()-ed to " + erc777Recipient.address);
+    // printEvents(erc777Recipient, await erc777Recipient.deployTransaction.wait());
+
+    const ERC777Wallet = await ethers.getContractFactory("ERC777Wallet");
+    erc777Wallet = await ERC777Wallet.connect(ownerSigner).deploy(hoprToken.address);
+    addAccount(erc777Wallet.address, "ERC777Wallet");
+    console.log("    owner -> ERC777Wallet.deploy(hoprToken)-ed to " + erc777Wallet.address);
+    printEvents(erc777Wallet, await erc777Wallet.deployTransaction.wait());
+
   })
 
 
-  it.skip("TestHoprToken - #0", async function() {
+  it("TestHoprToken - #0", async function() {
     await printHoprTokenDetails(true);
 
     console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");
     const mint1 = await hoprToken.mint(user0, ethers.utils.parseUnits("123", 18), '0x00', '0x00');
     printEvents(hoprToken, await mint1.wait());
 
-    console.log("    owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')");
-    const mint2 = await hoprToken.mint(user1, ethers.utils.parseUnits("0.123456789123456789", 18), '0x01', '0x02');
+    console.log("    owner -> hoprToken.mint(erc777Wallet, 0.123456789123456789, '0x01', '0x02')");
+    const mint2 = await hoprToken.mint(erc777Wallet.address, ethers.utils.parseUnits("0.123456789123456789", 18), '0x01', '0x02');
     printEvents(hoprToken, await mint2.wait());
     await printHoprTokenDetails();
 
@@ -175,7 +199,7 @@ describe("TestHoprToken", function() {
   });
 
 
-  it("TestHoprDistributor - #0", async function() {
+  it.skip("TestHoprDistributor - #0", async function() {
     await printHoprTokenDetails(true);
 
     console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");
@@ -204,23 +228,23 @@ describe("TestHoprToken", function() {
     console.log("    Time @ 0s");
     await printHoprDistributorDetails();
 
-    console.log("    Time @ 12s");
-    let waitUntil = startTime + 12;
-    console.log("    waitUntil: " + waitUntil);
-    while ((new Date()).getTime() <= waitUntil * 1000) {
-    }
-    const transfer1 = await hoprToken.transfer(user0, 0);
-    printEvents(hoprToken, await transfer1.wait());
-    await printHoprDistributorDetails();
-
-    console.log("    Time @ 20s");
-    waitUntil = startTime + 20;
-    console.log("    waitUntil: " + waitUntil);
-    while ((new Date()).getTime() <= waitUntil * 1000) {
-    }
-    const transfer2 = await hoprToken.transfer(user0, 0);
-    printEvents(hoprToken, await transfer2.wait());
-    await printHoprDistributorDetails();
+    // console.log("    Time @ 12s");
+    // let waitUntil = startTime + 12;
+    // console.log("    waitUntil: " + waitUntil);
+    // while ((new Date()).getTime() <= waitUntil * 1000) {
+    // }
+    // const transfer1 = await hoprToken.transfer(user0, 0);
+    // printEvents(hoprToken, await transfer1.wait());
+    // await printHoprDistributorDetails();
+    //
+    // console.log("    Time @ 20s");
+    // waitUntil = startTime + 20;
+    // console.log("    waitUntil: " + waitUntil);
+    // while ((new Date()).getTime() <= waitUntil * 1000) {
+    // }
+    // const transfer2 = await hoprToken.transfer(user0, 0);
+    // printEvents(hoprToken, await transfer2.wait());
+    // await printHoprDistributorDetails();
 
     console.log("        --- Test Completed ---");
     console.log("");
