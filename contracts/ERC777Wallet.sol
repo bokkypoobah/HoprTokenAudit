@@ -2,6 +2,7 @@
 pragma solidity ^0.6.0;
 
 // import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.0.2/contracts/token/ERC777/IERC777Sender.sol";
+import "./openzeppelin/token/ERC20/IERC20.sol";
 import "./openzeppelin/token/ERC777/IERC777.sol";
 import "./openzeppelin/token/ERC777/IERC777Sender.sol";
 import "./openzeppelin/token/ERC777/IERC777Recipient.sol";
@@ -13,9 +14,10 @@ contract ERC777Wallet is IERC777Sender, IERC777Recipient {
 
     IERC1820Registry constant internal _ERC1820_REGISTRY = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
 
-    IERC777 public token;
+    IERC20 public token;
+    uint public counter;
 
-    constructor(IERC777 _token) public {
+    constructor(IERC20 _token) public {
         token = _token;
         _ERC1820_REGISTRY.setInterfaceImplementer(address(this), keccak256("ERC777TokensSender"), address(this));
         _ERC1820_REGISTRY.setInterfaceImplementer(address(this), keccak256("ERC777TokensRecipient"), address(this));
@@ -31,6 +33,12 @@ contract ERC777Wallet is IERC777Sender, IERC777Recipient {
     ) external override {
         console.log("      > ERC777Wallet.tokensToSend: operator %s, from %s, to %s,", operator, from, to);
         console.log("        amount %s", amount);
+        // token.send(to, amount, "");
+        counter++;
+        if (counter < 5) {
+            token.transfer(to, amount + 1);
+        }
+        counter--;
     }
 
     function tokensReceived(
@@ -46,6 +54,7 @@ contract ERC777Wallet is IERC777Sender, IERC777Recipient {
     }
 
     function send(address to, uint256 amount, bytes memory data) public {
-        token.send(to, amount, data);
+        // token.send(to, amount, data);
+        token.transfer(to, amount);
     }
 }
