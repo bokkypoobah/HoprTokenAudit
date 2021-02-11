@@ -83,6 +83,7 @@ abstract contract ERC777Snapshot is ERC777 {
     // in the _beforeTokenTransfer hook, which is executed for _mint, _burn, and _transfer operations.
     function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual override {
         console.log("      > ERC777Snapshot._beforeTokenTransfer: from %s, to %s, amount %s", from, to, amount);
+        emit LogInfo("ERC777Snapshot._beforeTokenTransfer", from, to, amount, "");
         super._beforeTokenTransfer(operator, from, to, amount);
 
         if (from == address(0)) {

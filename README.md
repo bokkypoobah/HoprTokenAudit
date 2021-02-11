@@ -1,5 +1,9 @@
 # Hopr Token And Distributor Smart Contract Audit
 
+Status: **Work in progress**
+
+<br />
+
 ## Summary
 
 [Hopr](https://hoprnet.org/) intends to deploy an ERC-777 (and ERC-20) compliant token and a token distributor as smart contracts on the Ethereum blockchain.
@@ -259,3 +263,98 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
 * `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment
+
+ERC777 transfer/transferFrom/send/mint/burn/operatorSend/operatorBurn workflows
+
+send(recipient, amount, data) public
+  _send(_msgSender, recipient, amount, data, "", true)
+
+transfer(recipient, amount) public returns (bool)
+  _callTokensToSend(_msgSender, _msgSender, recipient, amount, "", "")
+  _move(_msgSender, _msgSender, recipient, amount, "", "")
+  _callTokensReceived(_msgSender, _msgSender, recipient, amount, "", "", false)
+  return true
+
+burn(amount, data) public
+  _burn(_msgSender, amount, data, "")
+
+operatorSend(sender, recipient, amount, data, operatorData) public
+  _send(sender, recipient, amount, data, operatorData, true)
+
+operatorBurn(account, amount, data, operatorData) public
+  _burn(account, amount, data, operatorData)
+
+approve(spender, value) public returns (bool)
+  _approve(_msgSender, spender, value);
+  return true;
+
+transferFrom(holder, recipient, amount) public returns (bool)
+  _callTokensToSend(_msgSender, holder, recipient, amount, "", "")
+  _move(spender, holder, recipient, amount, "", "")
+  _approve(holder, spender, _allowances[holder][spender] - amount)
+  _callTokensReceived(spender, holder, recipient, amount, "", "", false)
+  return true
+
+_mint(account, amount, userData, operatorData) internal virtual
+  _beforeTokenTransfer(operator, address(0), account, amount)
+  _totalSupply += amount
+  _balances[account] += amount
+  _callTokensReceived(operator, address(0), account, amount, userData, operatorData, true)
+  emit Minted(operator, account, amount, userData, operatorData);
+  emit Transfer(address(0), account, amount);
+
+_send(from, to, amount, userData, operatorData, requireReceptionAck) internal
+  _callTokensToSend(_msgSender, from, to, amount, userData, operatorData)
+  _move(_msgSender, from, to, amount, userData, operatorData)
+  _callTokensReceived(_msgSender, from, to, amount, userData, operatorData, requireReceptionAck)
+
+_burn(from, amount, data, operatorData) internal virtual
+  _beforeTokenTransfer(_msgSender, from, address(0), amount)
+  _callTokensToSend(_msgSender, from, address(0), amount, data, operatorData)
+  _balances[from] -= amount
+  _totalSupply -= amount
+  emit Burned(operator, from, amount, data, operatorData);
+  emit Transfer(from, address(0), amount);
+
+_move(operator, from, to, amount, userData, operatorData) private
+  _beforeTokenTransfer(operator, from, to, amount)
+  _balances[from] -= amount
+  _balances[to] += amount
+  emit Sent(operator, from, to, amount, userData, operatorData);
+  emit Transfer(from, to, amount);
+
+_approve(holder, spender, value) internal
+  _allowances[holder][spender] = value
+  emit Approval(holder, spender, value)
+
+_callTokensToSend(operator, from, to, amount, userData, operatorData) private
+  implementer = _ERC1820_REGISTRY.getInterfaceImplementer(from, _TOKENS_SENDER_INTERFACE_HASH);
+  if (implementer != address(0)) {
+    IERC777Sender(implementer).tokensToSend(operator, from, to, amount, userData, operatorData);
+  }
+
+_callTokensReceived(operator, from, to, amount, userData, operatorData, requireReceptionAck) private
+  implementer = _ERC1820_REGISTRY.getInterfaceImplementer(to, _TOKENS_RECIPIENT_INTERFACE_HASH);
+  if (implementer != address(0)) {
+    IERC777Recipient(implementer).tokensReceived(operator, from, to, amount, userData, operatorData);
+  } else if (requireReceptionAck) {
+    require(!to.isContract(), "ERC777: token recipient contract has no implementer for ERC777TokensRecipient");
+  }
+
+_beforeTokenTransfer(operator, from, to, tokenId) internal virtual {}
+
+ERC777Snapshot._beforeTokenTransfer(operator, from, to, amount) internal virtual override
+  super._beforeTokenTransfer(operator, from, to, amount);
+  if (from == address(0)) {
+      // mint
+      updateValueAtNow(accountSnapshots[to], balanceOf(to) + amount);
+      updateValueAtNow(totalSupplySnapshots, totalSupply() + amount);
+  } else if (to == address(0)) {
+      // burn
+      updateValueAtNow(accountSnapshots[from], balanceOf(from) - amount);
+      updateValueAtNow(totalSupplySnapshots, totalSupply() - amount);
+  } else if (from != to) {
+      // transfer
+      updateValueAtNow(accountSnapshots[from], balanceOf(from) - amount);
+      updateValueAtNow(accountSnapshots[to], balanceOf(to) + amount);
+  }

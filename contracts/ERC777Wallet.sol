@@ -35,7 +35,7 @@ contract ERC777Wallet is IERC777Sender, IERC777Recipient {
         console.log("        amount %s", amount);
         // token.send(to, amount, "");
         counter++;
-        if (counter < 5) {
+        if (counter < 2) {
             token.transfer(to, amount + 1);
         }
         counter--;

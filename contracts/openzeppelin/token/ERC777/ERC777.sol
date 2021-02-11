@@ -65,6 +65,8 @@ contract ERC777 is Context, IERC777, IERC20 {
     // ERC20-allowances
     mapping (address => mapping (address => uint256)) private _allowances;
 
+    event LogInfo(string text, address addr1, address addr2, uint amount, bytes bytes_);
+
     /**
      * @dev `defaultOperators` may be an empty array.
      */
@@ -323,6 +325,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     internal virtual
     {
         console.log("      > ERC777._mint: account %s, amount %s", account, amount);
+        emit LogInfo("ERC777._mint", account, address(0), amount, "");
         require(account != address(0), "ERC777: mint to the zero address");
 
         address operator = _msgSender();
@@ -359,6 +362,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         internal
     {
         console.log("      > ERC777._send: from %s, to %s, amount %s", from, to, amount);
+        emit LogInfo("ERC777._send", from, to, amount, "");
         require(from != address(0), "ERC777: send from the zero address");
         require(to != address(0), "ERC777: send to the zero address");
 
@@ -387,6 +391,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         internal virtual
     {
         console.log("      > ERC777._burn: from %s, amount %s", from, amount);
+        emit LogInfo("ERC777._burn", from, address(0), amount, "");
         require(from != address(0), "ERC777: burn from the zero address");
 
         address operator = _msgSender();
@@ -414,6 +419,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         private
     {
         console.log("      > ERC777._move: operator %s, from %s, to %s", operator, from, to);
+        emit LogInfo("ERC777._move", from, to, amount, "");
         _beforeTokenTransfer(operator, from, to, amount);
 
         _balances[from] = _balances[from].sub(amount, "ERC777: transfer amount exceeds balance");
@@ -456,6 +462,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         private
     {
         console.log("      > ERC777._callTokensToSend: operator %s, from %s, to %s", operator, from, to);
+        emit LogInfo("ERC777._callTokensToSend", from, to, amount, "");
         address implementer = _ERC1820_REGISTRY.getInterfaceImplementer(from, _TOKENS_SENDER_INTERFACE_HASH);
         if (implementer != address(0)) {
             IERC777Sender(implementer).tokensToSend(operator, from, to, amount, userData, operatorData);
@@ -485,6 +492,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         private
     {
         console.log("      > ERC777._callTokensReceived: operator %s, from %s, to %s", operator, from, to);
+        emit LogInfo("ERC777._callTokensReceived", from, to, amount, "");
         address implementer = _ERC1820_REGISTRY.getInterfaceImplementer(to, _TOKENS_RECIPIENT_INTERFACE_HASH);
         console.log("        to %s, hash %s, implementer %s", to, uint(_TOKENS_RECIPIENT_INTERFACE_HASH), implementer);
         if (implementer != address(0)) {
