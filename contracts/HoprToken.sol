@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.6.0;
 
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "./openzeppelin/access/AccessControl.sol";
 import "./openzeppelin-contracts/ERC777.sol";
 import "./ERC777/ERC777Snapshot.sol";
 
