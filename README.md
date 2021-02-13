@@ -268,6 +268,7 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 
 ERC777 transfer/transferFrom/send/mint/burn/operatorSend/operatorBurn workflows
 
+```javascript
 send(recipient, amount, data) public
   _send(_msgSender, recipient, amount, data, "", true)
 
@@ -360,3 +361,4 @@ ERC777Snapshot._beforeTokenTransfer(operator, from, to, amount) internal virtual
       updateValueAtNow(accountSnapshots[from], balanceOf(from) - amount);
       updateValueAtNow(accountSnapshots[to], balanceOf(to) + amount);
   }
+```
