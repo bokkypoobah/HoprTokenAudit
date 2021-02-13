@@ -28,6 +28,7 @@ describe("TestHoprToken", function() {
   }
 
   function printEvents(contract, receipt) {
+    console.log("      Gas used: " + receipt.gasUsed);
     receipt.logs.forEach((log) => {
       try {
         var data = contract.interface.parseLog(log);

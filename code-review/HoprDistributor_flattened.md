@@ -2045,7 +2045,7 @@ contract HoprDistributor is Ownable {
      * in case there are unforeseen issues in the long schedule.
      * @param _startTime the new timestamp to start counting
      */
-    // BK CHECK - What happens if startTime is overwritten midway?
+    // BK OK - NOTE: The owner can update `startTime` at any time in the future, and this will interfere with the `_getClaimable(...)` calculations. Ideally this variable should be locked down, once set properly
     function updateStartTime(uint128 _startTime) external onlyOwner {
         require(startTime > _currentBlockTimestamp(), "Previous start time must not be reached");
         startTime = _startTime;
@@ -2124,26 +2124,36 @@ contract HoprDistributor is Ownable {
      * @param amounts total amount to be allocated
      * @param scheduleName the schedule name
      */
+    // BK OK - Only owner can add allocations
     function addAllocations(
         address[] calldata accounts,
         uint128[] calldata amounts,
         string calldata scheduleName
     ) external onlyOwner {
+        // BK OK
         require(schedules[scheduleName].durations.length != 0, "Schedule must exist");
+        // BK OK
         require(accounts.length == amounts.length, "Accounts and amounts must have equal length");
 
         // gas optimization
+        // BK OK
         uint128 _totalToBeMinted = totalToBeMinted;
 
         for (uint256 i = 0; i < accounts.length; i++) {
+            // BK OK
             require(allocations[accounts[i]][scheduleName].amount == 0, "Allocation must not exist");
+            // BK OK
             allocations[accounts[i]][scheduleName].amount = amounts[i];
+            // BK OK
             _totalToBeMinted = _addUint128(_totalToBeMinted, amounts[i]);
+            // BK OK. NOTE the following check can be moved after this for loop
             assert(_totalToBeMinted <= maxMintAmount);
 
+            // BK OK
             emit AllocationAdded(accounts[i], amounts[i], scheduleName);
         }
 
+        // BK OK
         totalToBeMinted = _totalToBeMinted;
     }
 
