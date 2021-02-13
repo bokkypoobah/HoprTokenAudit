@@ -182,7 +182,7 @@ describe("TestHoprToken", function() {
   })
 
 
-  it.only("TestHoprToken - #0", async function() {
+  it.skip("TestHoprToken - #0", async function() {
     await printHoprTokenDetails(true);
 
     // console.log("    owner -> hoprToken.mint(user0, 123, '0x00', '0x00')");

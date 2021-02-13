@@ -11,6 +11,7 @@ Source file [../flattened/HoprDistributor_flattened.sol](../flattened/HoprDistri
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.0;
 
 /*
@@ -23,15 +24,20 @@ pragma solidity ^0.6.0;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
+// BK OK - Inherited by ERC777 and HoprDistributor -> Ownable
 contract Context {
     // Empty internal constructor, to prevent people from mistakenly deploying
     // an instance of this contract, which should be used via inheritance.
+    // BK OK
     constructor () internal { }
 
+    // BK OK
     function _msgSender() internal view virtual returns (address payable) {
+        // BK OK
         return msg.sender;
     }
 
+    // BK Not used
     function _msgData() internal view virtual returns (bytes memory) {
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
@@ -42,6 +48,7 @@ contract Context {
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.0;
 
 /**
@@ -56,32 +63,44 @@ pragma solidity ^0.6.0;
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
+// BK OK - Inherited by HoprDistributor
 contract Ownable is Context {
+    // BK OK
     address private _owner;
 
+    // BK OK
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
+    // BK OK - Constructor
     constructor () internal {
+        // BK OK
         address msgSender = _msgSender();
+        // BK OK
         _owner = msgSender;
+        // BK OK
         emit OwnershipTransferred(address(0), msgSender);
     }
 
     /**
      * @dev Returns the address of the current owner.
      */
+    // BK OK - Public view
     function owner() public view returns (address) {
+        // BK OK
         return _owner;
     }
 
     /**
      * @dev Throws if called by any account other than the owner.
      */
+    // BK OK - Modifier used by Ownable.{renounceOwnership|transferOwnership}, HoprDistributor.{updateStartTime|revokeAccount|addSchedule|addAllocations}
     modifier onlyOwner() {
+        // BK OK
         require(_owner == _msgSender(), "Ownable: caller is not the owner");
+        // BK OK
         _;
     }
 
@@ -92,8 +111,11 @@ contract Ownable is Context {
      * NOTE: Renouncing ownership will leave the contract without an owner,
      * thereby removing any functionality that is only available to the owner.
      */
+    // BK OK - Only owner can execute
     function renounceOwnership() public virtual onlyOwner {
+        // BK OK
         emit OwnershipTransferred(_owner, address(0));
+        // BK OK
         _owner = address(0);
     }
 
@@ -101,9 +123,13 @@ contract Ownable is Context {
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
      * Can only be called by the current owner.
      */
+    // BK OK - Only owner can execute
     function transferOwnership(address newOwner) public virtual onlyOwner {
+        // BK OK
         require(newOwner != address(0), "Ownable: new owner is the zero address");
+        // BK OK
         emit OwnershipTransferred(_owner, newOwner);
+        // BK OK
         _owner = newOwner;
     }
 }
@@ -112,6 +138,7 @@ contract Ownable is Context {
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.0;
 
 /**
@@ -2013,6 +2040,7 @@ contract HoprDistributor is Ownable {
      * in case there are unforeseen issues in the long schedule.
      * @param _startTime the new timestamp to start counting
      */
+    // BK CHECK - What happens if startTime is overwritten midway?
     function updateStartTime(uint128 _startTime) external onlyOwner {
         require(startTime > _currentBlockTimestamp(), "Previous start time must not be reached");
         startTime = _startTime;
