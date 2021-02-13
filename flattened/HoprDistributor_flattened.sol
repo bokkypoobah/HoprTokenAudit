@@ -1228,11 +1228,11 @@ interface IERC1820Registry {
     event ManagerChanged(address indexed account, address indexed newManager);
 }
 
-// File: contracts/openzeppelin/token/ERC777/ERC777.sol
+// File: contracts/openzeppelin-contracts/ERC777.sol
 
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.0;
+pragma solidity >=0.6.0 <0.8.0;
 
 
 
@@ -1298,14 +1298,16 @@ contract ERC777 is Context, IERC777, IERC20 {
      * @dev `defaultOperators` may be an empty array.
      */
     constructor(
-        string memory name,
-        string memory symbol,
-        address[] memory defaultOperators
-    ) public {
-        _name = name;
-        _symbol = symbol;
+        string memory name_,
+        string memory symbol_,
+        address[] memory defaultOperators_
+    )
+        public
+    {
+        _name = name_;
+        _symbol = symbol_;
 
-        _defaultOperatorsArray = defaultOperators;
+        _defaultOperatorsArray = defaultOperators_;
         for (uint256 i = 0; i < _defaultOperatorsArray.length; i++) {
             _defaultOperators[_defaultOperatorsArray[i]] = true;
         }
@@ -1367,7 +1369,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {IERC20-Transfer} event for ERC20 compatibility.
      */
-    function send(address recipient, uint256 amount, bytes memory data) public override  {
+    function send(address recipient, uint256 amount, bytes memory data) public virtual override  {
         _send(_msgSender(), recipient, amount, data, "", true);
     }
 
@@ -1379,7 +1381,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {Sent} event.
      */
-    function transfer(address recipient, uint256 amount) public override returns (bool) {
+    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
         require(recipient != address(0), "ERC777: transfer to the zero address");
 
         address from = _msgSender();
@@ -1398,17 +1400,14 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {IERC20-Transfer} event for ERC20 compatibility.
      */
-    function burn(uint256 amount, bytes memory data) public override  {
+    function burn(uint256 amount, bytes memory data) public virtual override  {
         _burn(_msgSender(), amount, data, "");
     }
 
     /**
      * @dev See {IERC777-isOperatorFor}.
      */
-    function isOperatorFor(
-        address operator,
-        address tokenHolder
-    ) public view override returns (bool) {
+    function isOperatorFor(address operator, address tokenHolder) public view override returns (bool) {
         return operator == tokenHolder ||
             (_defaultOperators[operator] && !_revokedDefaultOperators[tokenHolder][operator]) ||
             _operators[tokenHolder][operator];
@@ -1417,7 +1416,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-authorizeOperator}.
      */
-    function authorizeOperator(address operator) public override  {
+    function authorizeOperator(address operator) public virtual override  {
         require(_msgSender() != operator, "ERC777: authorizing self as operator");
 
         if (_defaultOperators[operator]) {
@@ -1432,7 +1431,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-revokeOperator}.
      */
-    function revokeOperator(address operator) public override  {
+    function revokeOperator(address operator) public virtual override  {
         require(operator != _msgSender(), "ERC777: revoking self as operator");
 
         if (_defaultOperators[operator]) {
@@ -1463,7 +1462,9 @@ contract ERC777 is Context, IERC777, IERC20 {
         bytes memory data,
         bytes memory operatorData
     )
-    public override
+        public
+        virtual
+        override
     {
         require(isOperatorFor(_msgSender(), sender), "ERC777: caller is not an operator for holder");
         _send(sender, recipient, amount, data, operatorData, true);
@@ -1474,7 +1475,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Emits {Burned} and {IERC20-Transfer} events.
      */
-    function operatorBurn(address account, uint256 amount, bytes memory data, bytes memory operatorData) public override {
+    function operatorBurn(address account, uint256 amount, bytes memory data, bytes memory operatorData) public virtual override {
         require(isOperatorFor(_msgSender(), account), "ERC777: caller is not an operator for holder");
         _burn(account, amount, data, operatorData);
     }
@@ -1495,7 +1496,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Note that accounts cannot have allowance issued by their operators.
      */
-    function approve(address spender, uint256 value) public override returns (bool) {
+    function approve(address spender, uint256 value) public virtual override returns (bool) {
         address holder = _msgSender();
         _approve(holder, spender, value);
         return true;
@@ -1510,7 +1511,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     *
     * Emits {Sent}, {IERC20-Transfer} and {IERC20-Approval} events.
     */
-    function transferFrom(address holder, address recipient, uint256 amount) public override returns (bool) {
+    function transferFrom(address holder, address recipient, uint256 amount) public virtual override returns (bool) {
         require(recipient != address(0), "ERC777: transfer to the zero address");
         require(holder != address(0), "ERC777: transfer from the zero address");
 
@@ -1549,7 +1550,8 @@ contract ERC777 is Context, IERC777, IERC20 {
         bytes memory userData,
         bytes memory operatorData
     )
-    internal virtual
+        internal
+        virtual
     {
         require(account != address(0), "ERC777: mint to the zero address");
 
@@ -1585,6 +1587,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         bool requireReceptionAck
     )
         internal
+        virtual
     {
         require(from != address(0), "ERC777: send from the zero address");
         require(to != address(0), "ERC777: send to the zero address");
@@ -1611,15 +1614,16 @@ contract ERC777 is Context, IERC777, IERC20 {
         bytes memory data,
         bytes memory operatorData
     )
-        internal virtual
+        internal
+        virtual
     {
         require(from != address(0), "ERC777: burn from the zero address");
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, from, address(0), amount);
-
         _callTokensToSend(operator, from, address(0), amount, data, operatorData);
+
+        _beforeTokenTransfer(operator, from, address(0), amount);
 
         // Update state variables
         _balances[from] = _balances[from].sub(amount, "ERC777: burn amount exceeds balance");
@@ -1722,15 +1726,15 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Calling conditions:
      *
-     * - when `from` and `to` are both non-zero, ``from``'s `tokenId` will be
-     * transferred to `to`.
-     * - when `from` is zero, `tokenId` will be minted for `to`.
-     * - when `to` is zero, ``from``'s `tokenId` will be burned.
+     * - when `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+     * will be to transferred to `to`.
+     * - when `from` is zero, `amount` tokens will be minted for `to`.
+     * - when `to` is zero, `amount` of ``from``'s tokens will be burned.
      * - `from` and `to` are never both zero.
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    function _beforeTokenTransfer(address operator, address from, address to, uint256 tokenId) internal virtual { }
+    function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual { }
 }
 
 // File: contracts/ERC777/ERC777Snapshot.sol
@@ -1787,14 +1791,7 @@ abstract contract ERC777Snapshot is ERC777 {
      * @return The balance at `_blockNumber`
      */
     function balanceOfAt(address _owner, uint128 _blockNumber) external view returns (uint256) {
-        if (
-            (accountSnapshots[_owner].length == 0) ||
-            (accountSnapshots[_owner][0].fromBlock > _blockNumber)
-        ) {
-            return 0;
-        } else {
-            return _valueAt(accountSnapshots[_owner], _blockNumber);
-        }
+        return _valueAt(accountSnapshots[_owner], _blockNumber);
     }
 
     /**
@@ -1803,21 +1800,12 @@ abstract contract ERC777Snapshot is ERC777 {
      * @return The total amount of tokens at `_blockNumber`
      */
     function totalSupplyAt(uint128 _blockNumber) external view returns(uint256) {
-        if (
-            (totalSupplySnapshots.length == 0) ||
-            (totalSupplySnapshots[0].fromBlock > _blockNumber)
-        ) {
-            return 0;
-        } else {
-            return _valueAt(totalSupplySnapshots, _blockNumber);
-        }
+        return _valueAt(totalSupplySnapshots, _blockNumber);
     }
 
     // Update balance and/or total supply snapshots before the values are modified. This is implemented
     // in the _beforeTokenTransfer hook, which is executed for _mint, _burn, and _transfer operations.
     function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual override {
-        super._beforeTokenTransfer(operator, from, to, amount);
-
         if (from == address(0)) {
             // mint
             updateValueAtNow(accountSnapshots[to], balanceOf(to).add(amount));
@@ -1843,11 +1831,12 @@ abstract contract ERC777Snapshot is ERC777 {
         Snapshot[] storage snapshots,
         uint128 _block
     ) view internal returns (uint256) {
-        if (snapshots.length == 0) return 0;
+        uint256 lenSnapshots = snapshots.length;
+        if (lenSnapshots == 0) return 0;
 
         // Shortcut for the actual value
-        if (_block >= snapshots[snapshots.length - 1].fromBlock) {
-            return snapshots[snapshots.length - 1].value;
+        if (_block >= snapshots[lenSnapshots - 1].fromBlock) {
+            return snapshots[lenSnapshots - 1].value;
         }
         if (_block < snapshots[0].fromBlock) {
             return 0;
@@ -1855,15 +1844,20 @@ abstract contract ERC777Snapshot is ERC777 {
 
         // Binary search of the value in the array
         uint256 min = 0;
-        uint256 max = snapshots.length - 1;
+        uint256 max = lenSnapshots - 1;
         while (max > min) {
             uint256 mid = (max + min + 1) / 2;
-            if (snapshots[mid].fromBlock <= _block) {
+
+            uint256 midSnapshotFrom = snapshots[mid].fromBlock;
+            if (midSnapshotFrom == _block) {
+                return snapshots[mid].value;
+            } else if (midSnapshotFrom < _block) {
                 min = mid;
             } else {
                 max = mid - 1;
             }
         }
+
         return snapshots[min].value;
     }
 
@@ -1875,10 +1869,11 @@ abstract contract ERC777Snapshot is ERC777 {
      */
     function updateValueAtNow(Snapshot[] storage snapshots, uint256 _value) internal {
         require(_value <= uint128(-1), "casting overflow");
+        uint256 lenSnapshots = snapshots.length;
 
         if (
-            (snapshots.length == 0) ||
-            (snapshots[snapshots.length - 1].fromBlock < block.number)
+            (lenSnapshots == 0) ||
+            (snapshots[lenSnapshots - 1].fromBlock < block.number)
         ) {
             snapshots.push(
                 Snapshot(
@@ -1887,7 +1882,7 @@ abstract contract ERC777Snapshot is ERC777 {
                 )
             );
         } else {
-            snapshots[snapshots.length - 1].value = uint128(_value);
+            snapshots[lenSnapshots - 1].value = uint128(_value);
         }
     }
 }
@@ -2083,14 +2078,19 @@ contract HoprDistributor is Ownable {
         require(schedules[scheduleName].durations.length != 0, "Schedule must exist");
         require(accounts.length == amounts.length, "Accounts and amounts must have equal length");
 
+        // gas optimization
+        uint128 _totalToBeMinted = totalToBeMinted;
+
         for (uint256 i = 0; i < accounts.length; i++) {
             require(allocations[accounts[i]][scheduleName].amount == 0, "Allocation must not exist");
             allocations[accounts[i]][scheduleName].amount = amounts[i];
-            totalToBeMinted = _addUint128(totalToBeMinted, amounts[i]);
-            assert(totalToBeMinted <= maxMintAmount);
+            _totalToBeMinted = _addUint128(_totalToBeMinted, amounts[i]);
+            assert(_totalToBeMinted <= maxMintAmount);
 
             emit AllocationAdded(accounts[i], amounts[i], scheduleName);
         }
+
+        totalToBeMinted = _totalToBeMinted;
     }
 
     /**
@@ -2137,7 +2137,7 @@ contract HoprDistributor is Ownable {
 
         uint128 newClaimed = _addUint128(allocation.claimed, claimable);
         // Trying to claim more than allocated
-        assert(claimable <= newClaimed);
+        assert(newClaimed <= allocation.amount);
 
         uint128 newTotalMinted = _addUint128(totalMinted, claimable);
         // Total amount minted should be less or equal than specified
@@ -2183,7 +2183,7 @@ contract HoprDistributor is Ownable {
             // schedule deadline not passed, exiting
             if (scheduleDeadline > _currentBlockTimestamp()) break;
             // already claimed during this period, skipping
-            if (allocation.lastClaim > scheduleDeadline) continue;
+            if (allocation.lastClaim >= scheduleDeadline) continue;
 
             claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
         }
@@ -2193,7 +2193,7 @@ contract HoprDistributor is Ownable {
 
     function _currentBlockTimestamp() internal view returns (uint128) {
         // solhint-disable-next-line
-        return uint128(block.timestamp % 2 ** 128);
+        return uint128(block.timestamp);
     }
 
     // SafeMath variations

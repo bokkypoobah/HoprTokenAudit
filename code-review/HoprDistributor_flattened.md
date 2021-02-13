@@ -11,7 +11,6 @@ Source file [../flattened/HoprDistributor_flattened.sol](../flattened/HoprDistri
 
 // SPDX-License-Identifier: MIT
 
-// BK NOTE - Using 0.6.12 in the audit testing. Please check specific compiler version issues if deploying with a different version
 pragma solidity ^0.6.0;
 
 /*
@@ -24,20 +23,15 @@ pragma solidity ^0.6.0;
  *
  * This contract is only required for intermediate, library-like contracts.
  */
-// BK OK
 contract Context {
     // Empty internal constructor, to prevent people from mistakenly deploying
     // an instance of this contract, which should be used via inheritance.
-    // BK OK
     constructor () internal { }
 
-    // BK OK - Called by
     function _msgSender() internal view virtual returns (address payable) {
-        // BK OK
         return msg.sender;
     }
 
-    // BK Not used
     function _msgData() internal view virtual returns (bytes memory) {
         this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
         return msg.data;
@@ -62,44 +56,32 @@ pragma solidity ^0.6.0;
  * `onlyOwner`, which can be applied to your functions to restrict their use to
  * the owner.
  */
-// BK OK - Inherited only by HoprDistributor
 contract Ownable is Context {
-    // BK OK
     address private _owner;
 
-    // BK OK
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     /**
      * @dev Initializes the contract setting the deployer as the initial owner.
      */
-    // BK OK
     constructor () internal {
-        // BK OK
         address msgSender = _msgSender();
-        // BK OK
         _owner = msgSender;
-        // BK OK
         emit OwnershipTransferred(address(0), msgSender);
     }
 
     /**
      * @dev Returns the address of the current owner.
      */
-    // BK OK
     function owner() public view returns (address) {
-        // BK OK
         return _owner;
     }
 
     /**
      * @dev Throws if called by any account other than the owner.
      */
-    // BK OK - Modifier used by Ownable.renounceOwnership(), Ownable.transferOwnership(...), HoprDistributor.updateStartTime(...), HoprDistributor.revokeAccount(...), HoprDistributor.addSchedule(...), HoprDistributor.addAllocations(...)
     modifier onlyOwner() {
-        // BK OK
         require(_owner == _msgSender(), "Ownable: caller is not the owner");
-        // BK OK
         _;
     }
 
@@ -110,11 +92,8 @@ contract Ownable is Context {
      * NOTE: Renouncing ownership will leave the contract without an owner,
      * thereby removing any functionality that is only available to the owner.
      */
-    // BK OK - Only owner can execute
     function renounceOwnership() public virtual onlyOwner {
-        // BK OK
         emit OwnershipTransferred(_owner, address(0));
-        // BK OK
         _owner = address(0);
     }
 
@@ -122,13 +101,9 @@ contract Ownable is Context {
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
      * Can only be called by the current owner.
      */
-    // BK OK - Only owner can execute
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        // BK OK
         require(newOwner != address(0), "Ownable: new owner is the zero address");
-        // BK OK
         emit OwnershipTransferred(_owner, newOwner);
-        // BK OK
         _owner = newOwner;
     }
 }
@@ -326,7 +301,6 @@ library EnumerableSet {
 
     // UintSet
 
-    // BK Not used
     struct UintSet {
         Set _inner;
     }
@@ -337,7 +311,6 @@ library EnumerableSet {
      * Returns true if the value was added to the set, that is if it was not
      * already present.
      */
-    // BK Not used
     function add(UintSet storage set, uint256 value) internal returns (bool) {
         return _add(set._inner, bytes32(value));
     }
@@ -348,7 +321,6 @@ library EnumerableSet {
      * Returns true if the value was removed from the set, that is if it was
      * present.
      */
-    // BK Not used
     function remove(UintSet storage set, uint256 value) internal returns (bool) {
         return _remove(set._inner, bytes32(value));
     }
@@ -356,7 +328,6 @@ library EnumerableSet {
     /**
      * @dev Returns true if the value is in the set. O(1).
      */
-    // BK Not used
     function contains(UintSet storage set, uint256 value) internal view returns (bool) {
         return _contains(set._inner, bytes32(value));
     }
@@ -364,7 +335,6 @@ library EnumerableSet {
     /**
      * @dev Returns the number of values on the set. O(1).
      */
-    // BK Not used
     function length(UintSet storage set) internal view returns (uint256) {
         return _length(set._inner);
     }
@@ -379,7 +349,6 @@ library EnumerableSet {
     *
     * - `index` must be strictly less than {length}.
     */
-    // BK Not used
     function at(UintSet storage set, uint256 index) internal view returns (uint256) {
         return uint256(_at(set._inner, index));
     }
@@ -394,7 +363,6 @@ pragma solidity ^0.6.2;
 /**
  * @dev Collection of functions related to the address type
  */
-// BK OK
 library Address {
     /**
      * @dev Returns true if `account` is a contract.
@@ -413,18 +381,14 @@ library Address {
      *  - an address where a contract lived, but was destroyed
      * ====
      */
-    // BK NOTE - Only called by ERC777._callTokensReceived
     function isContract(address account) internal view returns (bool) {
         // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
         // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
         // for accounts without code, i.e. `keccak256('')`
         bytes32 codehash;
-        // BK OK -  web3.sha3('') => "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
         // solhint-disable-next-line no-inline-assembly
-        // BK OK
         assembly { codehash := extcodehash(account) }
-        // BK OK
         return (codehash != accountHash && codehash != 0x0);
     }
 
@@ -444,7 +408,6 @@ library Address {
      * {ReentrancyGuard} or the
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
-    // BK Not used
     function sendValue(address payable recipient, uint256 amount) internal {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
@@ -509,7 +472,6 @@ abstract contract AccessControl is Context {
 
     mapping (bytes32 => RoleData) private _roles;
 
-    // BK OK - From testing, DEFAULT_ADMIN_ROLE: 0x0000000000000000000000000000000000000000000000000000000000000000
     bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
 
     /**
@@ -518,7 +480,6 @@ abstract contract AccessControl is Context {
      * `sender` is the account that originated the contract call, an admin role
      * bearer except when using {_setupRole}.
      */
-    // BK OK - From testing, RoleGranted(role: 0x0000000000000000000000000000000000000000000000000000000000000000, account: owner:0xf39F, sender: owner:0xf39F)
     event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);
 
     /**
@@ -677,19 +638,16 @@ pragma solidity ^0.6.0;
  * for the associated interfaces in said registry. See {IERC1820Registry} and
  * {ERC1820Implementer}.
  */
-// BK OK - https://eips.ethereum.org/EIPS/eip-777
 interface IERC777 {
     /**
      * @dev Returns the name of the token.
      */
-    // BK OK - function name() external view returns (string memory);
     function name() external view returns (string memory);
 
     /**
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
-    // BK OK - function symbol() external view returns (string memory);
     function symbol() external view returns (string memory);
 
     /**
@@ -699,19 +657,16 @@ interface IERC777 {
      *
      * For most token contracts, this value will equal 1.
      */
-    // BK OK - function granularity() external view returns (uint256);
     function granularity() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens in existence.
      */
-    // BK OK - function totalSupply() external view returns (uint256);
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by an account (`owner`).
      */
-    // BK OK - function balanceOf(address holder) external view returns (uint256);
     function balanceOf(address owner) external view returns (uint256);
 
     /**
@@ -730,7 +685,6 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
-    // BK OK - function send(address to, uint256 amount, bytes calldata data) external;
     function send(address recipient, uint256 amount, bytes calldata data) external;
 
     /**
@@ -746,7 +700,6 @@ interface IERC777 {
      *
      * - the caller must have at least `amount` tokens.
      */
-    // BK OK - function burn(uint256 amount, bytes calldata data) external;
     function burn(uint256 amount, bytes calldata data) external;
 
     /**
@@ -756,7 +709,6 @@ interface IERC777 {
      *
      * See {operatorSend} and {operatorBurn}.
      */
-    // BK OK - function isOperatorFor(address operator, address holder) external view returns (bool);
     function isOperatorFor(address operator, address tokenHolder) external view returns (bool);
 
     /**
@@ -770,7 +722,6 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
-    // BK OK - function authorizeOperator(address operator) external;
     function authorizeOperator(address operator) external;
 
     /**
@@ -784,7 +735,6 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
-    // BK OK - function revokeOperator(address operator) external;
     function revokeOperator(address operator) external;
 
     /**
@@ -795,7 +745,6 @@ interface IERC777 {
      * This list is immutable, but individual holders may revoke these via
      * {revokeOperator}, in which case {isOperatorFor} will return false.
      */
-    // BK OK - function defaultOperators() external view returns (address[] memory);
     function defaultOperators() external view returns (address[] memory);
 
     /**
@@ -817,7 +766,6 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
-    // BK OK - function operatorSend(address from, address to, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function operatorSend(
         address sender,
         address recipient,
@@ -841,7 +789,6 @@ interface IERC777 {
      * - `account` must have at least `amount` tokens.
      * - the caller must be an operator for `account`.
      */
-    // BK OK - function operatorBurn(address from, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function operatorBurn(
         address account,
         uint256 amount,
@@ -849,7 +796,6 @@ interface IERC777 {
         bytes calldata operatorData
     ) external;
 
-    // BK OK - event Sent(address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData);
     event Sent(
         address indexed operator,
         address indexed from,
@@ -859,16 +805,12 @@ interface IERC777 {
         bytes operatorData
     );
 
-    // BK OK - event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
     event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
 
-    // BK OK - event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
     event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
 
-    // BK OK - event AuthorizedOperator(address indexed operator, address indexed holder);
     event AuthorizedOperator(address indexed operator, address indexed tokenHolder);
 
-    // BK OK - event RevokedOperator(address indexed operator, address indexed holder);
     event RevokedOperator(address indexed operator, address indexed tokenHolder);
 }
 
@@ -888,7 +830,6 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
-// BK OK - https://eips.ethereum.org/EIPS/eip-777#erc777tokensrecipient-and-the-tokensreceived-hook
 interface IERC777Recipient {
     /**
      * @dev Called by an {IERC777} token contract whenever tokens are being
@@ -900,7 +841,6 @@ interface IERC777Recipient {
      *
      * This function may revert to prevent the operation from being executed.
      */
-    // BK OK - function tokensReceived(address operator, address from, address to, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function tokensReceived(
         address operator,
         address from,
@@ -927,7 +867,6 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
-// BK OK - https://eips.ethereum.org/EIPS/eip-777#erc777tokenssender-and-the-tokenstosend-hook
 interface IERC777Sender {
     /**
      * @dev Called by an {IERC777} token contract whenever a registered holder's
@@ -939,7 +878,6 @@ interface IERC777Sender {
      *
      * This function may revert to prevent the operation from being executed.
      */
-    // BK OK - function tokensToSend(address operator, address from, address to, uint256 amount, bytes calldata userData, bytes calldata operatorData) external;
     function tokensToSend(
         address operator,
         address from,
@@ -959,18 +897,15 @@ pragma solidity ^0.6.0;
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
  */
-// BK OK - https://eips.ethereum.org/EIPS/eip-20 . name(), symbol() and decimals() are optional
 interface IERC20 {
     /**
      * @dev Returns the amount of tokens in existence.
      */
-    // BK OK - function totalSupply() public view returns (uint256)
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by `account`.
      */
-    // BK OK - function balanceOf(address _owner) public view returns (uint256 balance)
     function balanceOf(address account) external view returns (uint256);
 
     /**
@@ -980,7 +915,6 @@ interface IERC20 {
      *
      * Emits a {Transfer} event.
      */
-    // BK OK - function transfer(address _to, uint256 _value) public returns (bool success)
     function transfer(address recipient, uint256 amount) external returns (bool);
 
     /**
@@ -990,7 +924,6 @@ interface IERC20 {
      *
      * This value changes when {approve} or {transferFrom} are called.
      */
-    // BK OK - function allowance(address _owner, address _spender) public view returns (uint256 remaining)
     function allowance(address owner, address spender) external view returns (uint256);
 
     /**
@@ -1007,7 +940,6 @@ interface IERC20 {
      *
      * Emits an {Approval} event.
      */
-    // BK OK - function approve(address _spender, uint256 _value) public returns (bool success)
     function approve(address spender, uint256 amount) external returns (bool);
 
     /**
@@ -1019,7 +951,6 @@ interface IERC20 {
      *
      * Emits a {Transfer} event.
      */
-    // BK OK - function transferFrom(address _from, address _to, uint256 _value) public returns (bool success)
     function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
 
     /**
@@ -1028,14 +959,12 @@ interface IERC20 {
      *
      * Note that `value` may be zero.
      */
-    // BK OK - event Transfer(address indexed _from, address indexed _to, uint256 _value)
     event Transfer(address indexed from, address indexed to, uint256 value);
 
     /**
      * @dev Emitted when the allowance of a `spender` for an `owner` is set by
      * a call to {approve}. `value` is the new allowance.
      */
-    // BK OK - event Approval(address indexed _owner, address indexed _spender, uint256 _value)
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
@@ -1068,14 +997,10 @@ library SafeMath {
      * Requirements:
      * - Addition cannot overflow.
      */
-    // BK OK
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
-        // BK OK
         uint256 c = a + b;
-        // BK OK
         require(c >= a, "SafeMath: addition overflow");
 
-        // BK OK
         return c;
     }
 
@@ -1088,9 +1013,7 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
-    // BK OK
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        // BK OK
         return sub(a, b, "SafeMath: subtraction overflow");
     }
 
@@ -1103,14 +1026,10 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
-    // BK OK
     function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        // BK OK
         require(b <= a, errorMessage);
-        // BK OK
         uint256 c = a - b;
 
-        // BK OK
         return c;
     }
 
@@ -1123,7 +1042,6 @@ library SafeMath {
      * Requirements:
      * - Multiplication cannot overflow.
      */
-    // BK Not used
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
@@ -1149,7 +1067,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Not used
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
         return div(a, b, "SafeMath: division by zero");
     }
@@ -1165,7 +1082,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Not used
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         // Solidity only automatically asserts when dividing by 0
         require(b > 0, errorMessage);
@@ -1186,7 +1102,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Not used
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
         return mod(a, b, "SafeMath: modulo by zero");
     }
@@ -1202,7 +1117,6 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
-    // BK Not used
     function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b != 0, errorMessage);
         return a % b;
@@ -1229,7 +1143,6 @@ pragma solidity ^0.6.0;
  *
  * For an in-depth explanation and source code analysis, see the EIP text.
  */
-// BK OK - https://eips.ethereum.org/EIPS/eip-1820
 interface IERC1820Registry {
     /**
      * @dev Sets `newManager` as the manager for `account`. A manager of an
@@ -1244,7 +1157,6 @@ interface IERC1820Registry {
      *
      * - the caller must be the current manager for `account`.
      */
-    // BK OK - function setManager(address _addr, address _newManager) external
     function setManager(address account, address newManager) external;
 
     /**
@@ -1252,7 +1164,6 @@ interface IERC1820Registry {
      *
      * See {setManager}.
      */
-    // BK OK - function getManager(address _addr) public view returns(address)
     function getManager(address account) external view returns (address);
 
     /**
@@ -1275,7 +1186,6 @@ interface IERC1820Registry {
      * queried for support, unless `implementer` is the caller. See
      * {IERC1820Implementer-canImplementInterfaceForAddress}.
      */
-    // BK OK - function setInterfaceImplementer(address _addr, bytes32 _interfaceHash, address _implementer) external
     function setInterfaceImplementer(address account, bytes32 interfaceHash, address implementer) external;
 
     /**
@@ -1287,7 +1197,6 @@ interface IERC1820Registry {
      *
      * `account` being the zero address is an alias for the caller's address.
      */
-    // BK OK - function getInterfaceImplementer(address _addr, bytes32 _interfaceHash) external view returns (address)
     function getInterfaceImplementer(address account, bytes32 interfaceHash) external view returns (address);
 
     /**
@@ -1295,7 +1204,6 @@ interface IERC1820Registry {
      * corresponding
      * https://eips.ethereum.org/EIPS/eip-1820#interface-name[section of the EIP].
      */
-    // BK OK - function interfaceHash(string calldata _interfaceName) external pure returns(bytes32)
     function interfaceHash(string calldata interfaceName) external pure returns (bytes32);
 
     /**
@@ -1303,7 +1211,6 @@ interface IERC1820Registry {
      *  @param account Address of the contract for which to update the cache.
      *  @param interfaceId ERC165 interface for which to update the cache.
      */
-    // BK OK - function updateERC165Cache(address _contract, bytes4 _interfaceId) external
     function updateERC165Cache(address account, bytes4 interfaceId) external;
 
     /**
@@ -1315,7 +1222,6 @@ interface IERC1820Registry {
      *  @param interfaceId ERC165 interface to check.
      *  @return True if `account` implements `interfaceId`, false otherwise.
      */
-    // function implementsERC165Interface(address _contract, bytes4 _interfaceId) public view returns (bool)
     function implementsERC165Interface(address account, bytes4 interfaceId) external view returns (bool);
 
     /**
@@ -1324,21 +1230,18 @@ interface IERC1820Registry {
      *  @param interfaceId ERC165 interface to check.
      *  @return True if `account` implements `interfaceId`, false otherwise.
      */
-    // function implementsERC165InterfaceNoCache(address _contract, bytes4 _interfaceId) public view returns (bool)
     function implementsERC165InterfaceNoCache(address account, bytes4 interfaceId) external view returns (bool);
 
-    // BK OK - event InterfaceImplementerSet(address indexed addr, bytes32 indexed interfaceHash, address indexed implementer);
     event InterfaceImplementerSet(address indexed account, bytes32 indexed interfaceHash, address indexed implementer);
 
-    // BK OK - event ManagerChanged(address indexed addr, address indexed newManager);
     event ManagerChanged(address indexed account, address indexed newManager);
 }
 
-// File: contracts/openzeppelin/token/ERC777/ERC777.sol
+// File: contracts/openzeppelin-contracts/ERC777.sol
 
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.6.0;
+pragma solidity >=0.6.0 <0.8.0;
 
 
 
@@ -1367,14 +1270,12 @@ contract ERC777 is Context, IERC777, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 
-    // BK OK - https://eips.ethereum.org/EIPS/eip-1820#deployment-transaction - 0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24
     IERC1820Registry constant internal _ERC1820_REGISTRY = IERC1820Registry(0x1820a4B7618BdE71Dce8cdc73aAB6C95905faD24);
 
     mapping(address => uint256) private _balances;
 
     uint256 private _totalSupply;
 
-    // BK Next 2 Ok
     string private _name;
     string private _symbol;
 
@@ -1406,15 +1307,16 @@ contract ERC777 is Context, IERC777, IERC20 {
      * @dev `defaultOperators` may be an empty array.
      */
     constructor(
-        string memory name,
-        string memory symbol,
-        address[] memory defaultOperators
-    ) public {
-        // BK Next 2 Ok
-        _name = name;
-        _symbol = symbol;
+        string memory name_,
+        string memory symbol_,
+        address[] memory defaultOperators_
+    )
+        public
+    {
+        _name = name_;
+        _symbol = symbol_;
 
-        _defaultOperatorsArray = defaultOperators;
+        _defaultOperatorsArray = defaultOperators_;
         for (uint256 i = 0; i < _defaultOperatorsArray.length; i++) {
             _defaultOperators[_defaultOperatorsArray[i]] = true;
         }
@@ -1427,20 +1329,14 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-name}.
      */
-    // BK OK - function name() external view returns (string memory);
-    // BK OK - From testing, hoprToken 'HOPR', 'HOPR Token'
     function name() public view override returns (string memory) {
-        // BK OK
         return _name;
     }
 
     /**
      * @dev See {IERC777-symbol}.
      */
-    // BK OK - function symbol() external view returns (string memory);
-    // BK OK - From testing, hoprToken 'HOPR', 'HOPR Token'
     function symbol() public view override returns (string memory) {
-        // BK OK
         return _symbol;
     }
 
@@ -1450,10 +1346,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      * Always returns 18, as per the
      * [ERC777 EIP](https://eips.ethereum.org/EIPS/eip-777#backward-compatibility).
      */
-    // BK OK - Not defined in the ERC-20 and ERC-777 interfaces. Should return 18 according to ERC-777
-    // BK OK - From testing, decimals: 18
     function decimals() public pure returns (uint8) {
-        // BK Ok
         return 18;
     }
 
@@ -1462,8 +1355,6 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * This implementation always returns `1`.
      */
-    // BK OK - function granularity() external view returns (uint256);
-    // BK OK - From testing, granularity: 1
     function granularity() public view override returns (uint256) {
         return 1;
     }
@@ -1471,22 +1362,14 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-totalSupply}.
      */
-    // BK OK - function IERC20.totalSupply() external view returns (uint256);
-    // BK OK - function IERC777.totalSupply() external view returns (uint256);
-    // BK OK - From testing, totalSupply: 123.12345678912345678
     function totalSupply() public view override(IERC20, IERC777) returns (uint256) {
-        // BK OK
         return _totalSupply;
     }
 
     /**
      * @dev Returns the amount of tokens owned by an account (`tokenHolder`).
      */
-    // BK OK - function IERC20.balanceOf(address account) external view returns (uint256);
-    // BK OK - function IERC777.function balanceOf(address owner) external view returns (uint256);
-    // BK OK - From testing, user0.balance: 123.0 and user1.balance: 0.123456789123456789
     function balanceOf(address tokenHolder) public view override(IERC20, IERC777) returns (uint256) {
-        // BK OK
         return _balances[tokenHolder];
     }
 
@@ -1495,7 +1378,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {IERC20-Transfer} event for ERC20 compatibility.
      */
-    function send(address recipient, uint256 amount, bytes memory data) public override  {
+    function send(address recipient, uint256 amount, bytes memory data) public virtual override  {
         _send(_msgSender(), recipient, amount, data, "", true);
     }
 
@@ -1507,7 +1390,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {Sent} event.
      */
-    function transfer(address recipient, uint256 amount) public override returns (bool) {
+    function transfer(address recipient, uint256 amount) public virtual override returns (bool) {
         require(recipient != address(0), "ERC777: transfer to the zero address");
 
         address from = _msgSender();
@@ -1526,17 +1409,14 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Also emits a {IERC20-Transfer} event for ERC20 compatibility.
      */
-    function burn(uint256 amount, bytes memory data) public override  {
+    function burn(uint256 amount, bytes memory data) public virtual override  {
         _burn(_msgSender(), amount, data, "");
     }
 
     /**
      * @dev See {IERC777-isOperatorFor}.
      */
-    function isOperatorFor(
-        address operator,
-        address tokenHolder
-    ) public view override returns (bool) {
+    function isOperatorFor(address operator, address tokenHolder) public view override returns (bool) {
         return operator == tokenHolder ||
             (_defaultOperators[operator] && !_revokedDefaultOperators[tokenHolder][operator]) ||
             _operators[tokenHolder][operator];
@@ -1545,7 +1425,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-authorizeOperator}.
      */
-    function authorizeOperator(address operator) public override  {
+    function authorizeOperator(address operator) public virtual override  {
         require(_msgSender() != operator, "ERC777: authorizing self as operator");
 
         if (_defaultOperators[operator]) {
@@ -1560,7 +1440,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-revokeOperator}.
      */
-    function revokeOperator(address operator) public override  {
+    function revokeOperator(address operator) public virtual override  {
         require(operator != _msgSender(), "ERC777: revoking self as operator");
 
         if (_defaultOperators[operator]) {
@@ -1575,10 +1455,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     /**
      * @dev See {IERC777-defaultOperators}.
      */
-    // BK OK - function IERC777.defaultOperators() external view returns (address[] memory);
-    // BK OK - From testing, hoprToken.defaultOperators():
     function defaultOperators() public view override returns (address[] memory) {
-        // BK OK
         return _defaultOperatorsArray;
     }
 
@@ -1594,7 +1471,9 @@ contract ERC777 is Context, IERC777, IERC20 {
         bytes memory data,
         bytes memory operatorData
     )
-    public override
+        public
+        virtual
+        override
     {
         require(isOperatorFor(_msgSender(), sender), "ERC777: caller is not an operator for holder");
         _send(sender, recipient, amount, data, operatorData, true);
@@ -1605,7 +1484,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Emits {Burned} and {IERC20-Transfer} events.
      */
-    function operatorBurn(address account, uint256 amount, bytes memory data, bytes memory operatorData) public override {
+    function operatorBurn(address account, uint256 amount, bytes memory data, bytes memory operatorData) public virtual override {
         require(isOperatorFor(_msgSender(), account), "ERC777: caller is not an operator for holder");
         _burn(account, amount, data, operatorData);
     }
@@ -1626,7 +1505,7 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Note that accounts cannot have allowance issued by their operators.
      */
-    function approve(address spender, uint256 value) public override returns (bool) {
+    function approve(address spender, uint256 value) public virtual override returns (bool) {
         address holder = _msgSender();
         _approve(holder, spender, value);
         return true;
@@ -1641,7 +1520,7 @@ contract ERC777 is Context, IERC777, IERC20 {
     *
     * Emits {Sent}, {IERC20-Transfer} and {IERC20-Approval} events.
     */
-    function transferFrom(address holder, address recipient, uint256 amount) public override returns (bool) {
+    function transferFrom(address holder, address recipient, uint256 amount) public virtual override returns (bool) {
         require(recipient != address(0), "ERC777: transfer to the zero address");
         require(holder != address(0), "ERC777: transfer from the zero address");
 
@@ -1680,7 +1559,8 @@ contract ERC777 is Context, IERC777, IERC20 {
         bytes memory userData,
         bytes memory operatorData
     )
-    internal virtual
+        internal
+        virtual
     {
         require(account != address(0), "ERC777: mint to the zero address");
 
@@ -1716,6 +1596,7 @@ contract ERC777 is Context, IERC777, IERC20 {
         bool requireReceptionAck
     )
         internal
+        virtual
     {
         require(from != address(0), "ERC777: send from the zero address");
         require(to != address(0), "ERC777: send to the zero address");
@@ -1742,15 +1623,16 @@ contract ERC777 is Context, IERC777, IERC20 {
         bytes memory data,
         bytes memory operatorData
     )
-        internal virtual
+        internal
+        virtual
     {
         require(from != address(0), "ERC777: burn from the zero address");
 
         address operator = _msgSender();
 
-        _beforeTokenTransfer(operator, from, address(0), amount);
-
         _callTokensToSend(operator, from, address(0), amount, data, operatorData);
+
+        _beforeTokenTransfer(operator, from, address(0), amount);
 
         // Update state variables
         _balances[from] = _balances[from].sub(amount, "ERC777: burn amount exceeds balance");
@@ -1853,17 +1735,15 @@ contract ERC777 is Context, IERC777, IERC20 {
      *
      * Calling conditions:
      *
-     * - when `from` and `to` are both non-zero, ``from``'s `tokenId` will be
-     * transferred to `to`.
-     * - when `from` is zero, `tokenId` will be minted for `to`.
-     * - when `to` is zero, ``from``'s `tokenId` will be burned.
+     * - when `from` and `to` are both non-zero, `amount` of ``from``'s tokens
+     * will be to transferred to `to`.
+     * - when `from` is zero, `amount` tokens will be minted for `to`.
+     * - when `to` is zero, `amount` of ``from``'s tokens will be burned.
      * - `from` and `to` are never both zero.
      *
      * To learn more about hooks, head to xref:ROOT:extending-contracts.adoc#using-hooks[Using Hooks].
      */
-    // BK NOTE - `tokenId` should be `amount` or `tokens`
-    // BK NOTE - Has been updated in the current version to function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual { }
-    function _beforeTokenTransfer(address operator, address from, address to, uint256 tokenId) internal virtual { }
+    function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual { }
 }
 
 // File: contracts/ERC777/ERC777Snapshot.sol
@@ -1887,12 +1767,10 @@ pragma solidity ^0.6.0;
  * To get the balance of an account at the time of a snapshot, call the {balanceOfAt} function with a block number
  * and the account address.
  */
-// BK NOTE - Using uint128 to record token balances - max balance = new BigNumber(2).pow(128).sub(1).shift(-18) => 340282366920938463463.374607431768211455
 abstract contract ERC777Snapshot is ERC777 {
     // Inspired by Jordi Baylina's MiniMeToken to record historical balances:
     // https://github.com/Giveth/minime/blob/ea04d950eea153a04c51fa510b068b9dded390cb/contracts/MiniMeToken.sol
 
-    // BK OK
     using SafeMath for uint256;
 
     /**
@@ -1900,24 +1778,19 @@ abstract contract ERC777Snapshot is ERC777 {
      * given value, the block number attached is the one that last changed the
      * value
      */
-    // BK OK
     struct Snapshot {
         // `fromBlock` is the block number that the value was generated from
-        // BK OK
         uint128 fromBlock;
         // `value` is the amount of tokens at a specific block number
-        // BK OK
         uint128 value;
     }
 
     // `accountSnapshots` is the map that tracks the balance of each address, in this
     //  contract when the balance changes the block number that the change
     //  occurred is also included in the map
-    // BK OK
     mapping (address => Snapshot[]) public accountSnapshots;
 
     // Tracks the history of the `totalSupply` of the token
-    // BK OK
     Snapshot[] public totalSupplySnapshots;
 
     /**
@@ -1927,14 +1800,7 @@ abstract contract ERC777Snapshot is ERC777 {
      * @return The balance at `_blockNumber`
      */
     function balanceOfAt(address _owner, uint128 _blockNumber) external view returns (uint256) {
-        if (
-            (accountSnapshots[_owner].length == 0) ||
-            (accountSnapshots[_owner][0].fromBlock > _blockNumber)
-        ) {
-            return 0;
-        } else {
-            return _valueAt(accountSnapshots[_owner], _blockNumber);
-        }
+        return _valueAt(accountSnapshots[_owner], _blockNumber);
     }
 
     /**
@@ -1943,22 +1809,12 @@ abstract contract ERC777Snapshot is ERC777 {
      * @return The total amount of tokens at `_blockNumber`
      */
     function totalSupplyAt(uint128 _blockNumber) external view returns(uint256) {
-        if (
-            (totalSupplySnapshots.length == 0) ||
-            (totalSupplySnapshots[0].fromBlock > _blockNumber)
-        ) {
-            return 0;
-        } else {
-            return _valueAt(totalSupplySnapshots, _blockNumber);
-        }
+        return _valueAt(totalSupplySnapshots, _blockNumber);
     }
 
     // Update balance and/or total supply snapshots before the values are modified. This is implemented
     // in the _beforeTokenTransfer hook, which is executed for _mint, _burn, and _transfer operations.
-    // BK NOTE - Overriding function ERC777._beforeTokenTransfer(address operator, address from, address to, uint256 tokenId) internal virtual { }
     function _beforeTokenTransfer(address operator, address from, address to, uint256 amount) internal virtual override {
-        super._beforeTokenTransfer(operator, from, to, amount);
-
         if (from == address(0)) {
             // mint
             updateValueAtNow(accountSnapshots[to], balanceOf(to).add(amount));
@@ -1980,17 +1836,16 @@ abstract contract ERC777Snapshot is ERC777 {
      * @param _block The block number to retrieve the value at
      * @return The number of tokens being queried
      */
-    // BK See https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/Arrays.sol and
-    // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/ERC20Snapshot.sol
     function _valueAt(
         Snapshot[] storage snapshots,
         uint128 _block
     ) view internal returns (uint256) {
-        if (snapshots.length == 0) return 0;
+        uint256 lenSnapshots = snapshots.length;
+        if (lenSnapshots == 0) return 0;
 
         // Shortcut for the actual value
-        if (_block >= snapshots[snapshots.length - 1].fromBlock) {
-            return snapshots[snapshots.length - 1].value;
+        if (_block >= snapshots[lenSnapshots - 1].fromBlock) {
+            return snapshots[lenSnapshots - 1].value;
         }
         if (_block < snapshots[0].fromBlock) {
             return 0;
@@ -1998,15 +1853,20 @@ abstract contract ERC777Snapshot is ERC777 {
 
         // Binary search of the value in the array
         uint256 min = 0;
-        uint256 max = snapshots.length - 1;
+        uint256 max = lenSnapshots - 1;
         while (max > min) {
             uint256 mid = (max + min + 1) / 2;
-            if (snapshots[mid].fromBlock <= _block) {
+
+            uint256 midSnapshotFrom = snapshots[mid].fromBlock;
+            if (midSnapshotFrom == _block) {
+                return snapshots[mid].value;
+            } else if (midSnapshotFrom < _block) {
                 min = mid;
             } else {
                 max = mid - 1;
             }
         }
+
         return snapshots[min].value;
     }
 
@@ -2018,10 +1878,11 @@ abstract contract ERC777Snapshot is ERC777 {
      */
     function updateValueAtNow(Snapshot[] storage snapshots, uint256 _value) internal {
         require(_value <= uint128(-1), "casting overflow");
+        uint256 lenSnapshots = snapshots.length;
 
         if (
-            (snapshots.length == 0) ||
-            (snapshots[snapshots.length - 1].fromBlock < block.number)
+            (lenSnapshots == 0) ||
+            (snapshots[lenSnapshots - 1].fromBlock < block.number)
         ) {
             snapshots.push(
                 Snapshot(
@@ -2030,7 +1891,7 @@ abstract contract ERC777Snapshot is ERC777 {
                 )
             );
         } else {
-            snapshots[snapshots.length - 1].value = uint128(_value);
+            snapshots[lenSnapshots - 1].value = uint128(_value);
         }
     }
 }
@@ -2043,16 +1904,10 @@ pragma solidity ^0.6.0;
 
 
 
-// BK NOTE - Context is inherited via AccessControl and ERC777Snapshot -> ERC777
 contract HoprToken is AccessControl, ERC777Snapshot {
-    // BK OK - web3.sha3("MINTER_ROLE") => "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6"
-    // BK OK - From testing MINTER_ROLE: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
-    // BK NOTE - defaultOperators empty
     constructor() public ERC777("HOPR Token", "HOPR", new address[](0)) {
-        // BK NOTE - For consistency with AccessControl's Context, should use _msgSender() instead of msg.sender
-        // BK OK - From testing, DEFAULT_ADMIN_ROLE: 0x0000000000000000000000000000000000000000000000000000000000000000
         _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     }
 
@@ -2071,7 +1926,6 @@ contract HoprToken is AccessControl, ERC777Snapshot {
         bytes memory userData,
         bytes memory operatorData
     ) public {
-        // BK NOTE - For consistency with AccessControl's Context, should use _msgSender() instead of msg.sender
         require(hasRole(MINTER_ROLE, msg.sender), "HoprToken: caller does not have minter role");
         _mint(account, amount, userData, operatorData);
     }
@@ -2233,14 +2087,19 @@ contract HoprDistributor is Ownable {
         require(schedules[scheduleName].durations.length != 0, "Schedule must exist");
         require(accounts.length == amounts.length, "Accounts and amounts must have equal length");
 
+        // gas optimization
+        uint128 _totalToBeMinted = totalToBeMinted;
+
         for (uint256 i = 0; i < accounts.length; i++) {
             require(allocations[accounts[i]][scheduleName].amount == 0, "Allocation must not exist");
             allocations[accounts[i]][scheduleName].amount = amounts[i];
-            totalToBeMinted = _addUint128(totalToBeMinted, amounts[i]);
-            assert(totalToBeMinted <= maxMintAmount);
+            _totalToBeMinted = _addUint128(_totalToBeMinted, amounts[i]);
+            assert(_totalToBeMinted <= maxMintAmount);
 
             emit AllocationAdded(accounts[i], amounts[i], scheduleName);
         }
+
+        totalToBeMinted = _totalToBeMinted;
     }
 
     /**
@@ -2248,7 +2107,6 @@ contract HoprDistributor is Ownable {
      * @param scheduleName the schedule name
      */
     function claim(string calldata scheduleName) external {
-        // BK NOTE - For consistency with Ownable's Context, should use _msgSender() instead of msg.sender
         return _claim(msg.sender, scheduleName);
     }
 
@@ -2288,7 +2146,7 @@ contract HoprDistributor is Ownable {
 
         uint128 newClaimed = _addUint128(allocation.claimed, claimable);
         // Trying to claim more than allocated
-        assert(claimable <= newClaimed);
+        assert(newClaimed <= allocation.amount);
 
         uint128 newTotalMinted = _addUint128(totalMinted, claimable);
         // Total amount minted should be less or equal than specified
@@ -2334,7 +2192,7 @@ contract HoprDistributor is Ownable {
             // schedule deadline not passed, exiting
             if (scheduleDeadline > _currentBlockTimestamp()) break;
             // already claimed during this period, skipping
-            if (allocation.lastClaim > scheduleDeadline) continue;
+            if (allocation.lastClaim >= scheduleDeadline) continue;
 
             claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
         }
@@ -2344,7 +2202,7 @@ contract HoprDistributor is Ownable {
 
     function _currentBlockTimestamp() internal view returns (uint128) {
         // solhint-disable-next-line
-        return uint128(block.timestamp % 2 ** 128);
+        return uint128(block.timestamp);
     }
 
     // SafeMath variations
