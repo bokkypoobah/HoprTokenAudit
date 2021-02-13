@@ -1971,6 +1971,7 @@ contract HoprDistributor is Ownable {
     // The primary reason we decided to use uint128 is because the allocation
     // may be used potentially thousands of times, this helps us reduce
     // casting thus lower gas costs.
+    // BK Next 4 OK
     struct Schedule {
         uint128[] durations;
         uint128[] percents;
@@ -1981,6 +1982,7 @@ contract HoprDistributor is Ownable {
     // The primary reason we decided to use uint128 is so we can reduce
     // our gas costs, since this struct will be stored potentially
     // thousands of times.
+    // BK Next 6 OK
     struct Allocation {
         uint128 amount;
         uint128 claimed;
@@ -1989,6 +1991,7 @@ contract HoprDistributor is Ownable {
     }
 
     // helps us create more accurate calculations
+    // BK OK
     uint128 public constant MULTIPLIER = 10 ** 6;
 
     // total amount minted
@@ -2004,12 +2007,14 @@ contract HoprDistributor is Ownable {
     uint128 public maxMintAmount;
 
     // schedule name -> Schedule
+    // BK OK
     mapping(string => Schedule) internal schedules;
 
     // account -> schedule name -> Allocation
     // allows for an account to have more than one type of Schedule
     mapping(address => mapping(string => Allocation)) public allocations;
 
+    // BK OK
     event ScheduleAdded(uint128[] durations, uint128[] percents, string name);
     event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
     event Claimed(address indexed account, uint128 amount, string scheduleName);
@@ -2073,29 +2078,41 @@ contract HoprDistributor is Ownable {
      * instead of using 100 we scale the value up to {MULTIPLIER} so we can have more accurate
      * "percentages".
      */
+    // BK OK - Only owner can add schedules
     function addSchedule(
         uint128[] calldata durations,
         uint128[] calldata percents,
         string calldata name
     ) external onlyOwner {
+        // BK OK - Can only add new schedules
         require(schedules[name].durations.length == 0, "Schedule must not exist");
+        // BK OK
         require(durations.length == percents.length, "Durations and percents must have equal length");
 
+        // BK Next 2 OK
         uint128 lastDuration = 0;
         uint128 totalPercent = 0;
 
+        // BK OK
         for (uint256 i = 0; i < durations.length; i++) {
+            // BK OK
             require(lastDuration < durations[i], "Durations must be added in ascending order");
+            // BK OK
             lastDuration = durations[i];
 
+            // BK OK
             require(percents[i] <= MULTIPLIER, "Percent provided must be smaller or equal to MULTIPLIER");
+            // BK OK
             totalPercent = _addUint128(totalPercent, percents[i]);
         }
 
+        // BK OK - Prevents addition of empty schedules, and checks non-empty schedule totals to 100%
         require(totalPercent == MULTIPLIER, "Percents must sum to MULTIPLIER amount");
 
+        // BK OK
         schedules[name] = Schedule(durations, percents);
 
+        // BK OK
         emit ScheduleAdded(durations, percents, name);
     }
 
@@ -2234,10 +2251,14 @@ contract HoprDistributor is Ownable {
     }
 
     // SafeMath variations
+    // BK OK - Internal
     function _addUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         uint128 c = a + b;
+        // BK OK
         require(c >= a, "uint128 addition overflow");
 
+        // BK OK
         return c;
     }
 
