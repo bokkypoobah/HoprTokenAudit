@@ -2064,10 +2064,14 @@ contract HoprDistributor is Ownable {
         address account,
         string calldata scheduleName
     ) external onlyOwner {
+        // BK OK
         Allocation storage allocation = allocations[account][scheduleName];
+        // BK NOTE - Should add a check that the allocation has not already been revoked
         require(allocation.amount != 0, "Allocation must exist");
 
+        // BK OK
         allocation.revoked = true;
+        // BK OK - NOTE - This variable could cause an underflow if revoking an already revoked account
         totalToBeMinted = _subUint128(totalToBeMinted, _subUint128(allocation.amount, allocation.claimed));
     }
 
