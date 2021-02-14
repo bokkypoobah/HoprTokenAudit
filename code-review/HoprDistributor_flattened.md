@@ -2045,9 +2045,11 @@ contract HoprDistributor is Ownable {
      * in case there are unforeseen issues in the long schedule.
      * @param _startTime the new timestamp to start counting
      */
-    // BK OK - NOTE: The owner can update `startTime` at any time in the future, and this will interfere with the `_getClaimable(...)` calculations. Ideally this variable should be locked down, once set properly
+    // BK OK - WARNING - The owner can execute `updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
     function updateStartTime(uint128 _startTime) external onlyOwner {
+        // BK OK
         require(startTime > _currentBlockTimestamp(), "Previous start time must not be reached");
+        // BK OK
         startTime = _startTime;
     }
 
