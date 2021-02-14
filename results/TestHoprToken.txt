@@ -1,6 +1,4 @@
 $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results/TestHoprToken.txt
-Compiling 1 file with 0.6.12
-Compilation finished successfully
 
 
   TestHoprToken
@@ -19,15 +17,18 @@ Compilation finished successfully
     owner -> hoprToken.grantRole(MINTER_ROLE, owner)
       Gas used: 89442
       + 4.0 RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
-      Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HOPRDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1613259060, 123.456)-ed to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
-      Gas used: 2835477
+      Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HoprDistributor:0xCf7E
+    owner -> HoprDistributor.deploy(hoprToken, 1613261910, 123.456)-ed to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+      Gas used: 2835489
       + 5.0 OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
-      Mapping 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 => ERC777Wallet:0xDc64
-    owner -> ERC777Wallet.deploy(hoprToken)-ed to 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9
+    owner -> hoprToken.grantRole(MINTER_ROLE, HoprDistributor)
+      Gas used: 74442
+      + 6.0 RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: HoprDistributor:0xCf7E, sender: owner:0xf39F)
+      Mapping 0x5FC8d32690cc91D4c39d9d3abcBD16989F875707 => ERC777Wallet:0x5FC8
+    owner -> ERC777Wallet.deploy(hoprToken)-ed to 0x5FC8d32690cc91D4c39d9d3abcBD16989F875707
       Gas used: 693205
-      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9","0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9"]
-      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9","0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b","0x000000000000000000000000dc64a140aa3e981100a9beca4e685f962f0cf6c9"]
+      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x0000000000000000000000005fc8d32690cc91d4c39d9d3abcbd16989f875707","0x29ddb589b1fb5fc7cf394961c1adf5f8c6454761adf795e67fe149f658abe895","0x0000000000000000000000005fc8d32690cc91d4c39d9d3abcbd16989f875707"]
+      + ERC1820Registry:0x1820 ["0x93baa6efbd2244243bfee6ce4cfdd1d04fc4c0e9a786abd3a41313bd352db153","0x0000000000000000000000005fc8d32690cc91d4c39d9d3abcbd16989f875707","0xb281fc8c12954d22544db45de3159a39272895b169a852b314f9cc762e44c53b","0x0000000000000000000000005fc8d32690cc91d4c39d9d3abcbd16989f875707"]
     - TestHoprToken - #0
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - decimals: 18
@@ -39,66 +40,127 @@ Compilation finished successfully
       - hoprToken.hasRole(owner, DEFAULT_ADMIN_ROLE): true
       - hoprToken.hasRole(user1, DEFAULT_ADMIN_ROLE): false
       - MINTER_ROLE: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6
-      - hoprToken.getRoleMemberCount(minterRole): 1
+      - hoprToken.getRoleMemberCount(minterRole): 2
       - hoprToken.getRoleMember(minterRole, 0): owner:0xf39F
       - hoprToken.getRoleAdmin(minterRole): 0x0000000000000000000000000000000000000000000000000000000000000000
       - hoprToken.hasRole(owner, MINTER_ROLE): true
       - hoprToken.hasRole(user1, MINTER_ROLE): false
+      - hoprToken.hasRole(HoprDistributor, MINTER_ROLE): true
       - hoprToken.defaultOperators(): 
       - totalSupply: 0.0
       - owner:0xf39F.balance: 0.0
       - user0:0x7099.balance: 0.0
       - user1:0x3C44.balance: 0.0
-      - ERC777Wallet:0xDc64.balance: 0.0
+      - ERC777Wallet:0x5FC8.balance: 0.0
     owner -> hoprToken.mint(user0, 123, '0x00', '0x00')
       Gas used: 168308
-      + 7.0 Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123.0, data: 0x00, operatorData: 0x00)
-      + 7.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 123.0)
+      + 8.0 Minted(operator: owner:0xf39F, to: user0:0x7099, amount: 123.0, data: 0x00, operatorData: 0x00)
+      + 8.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 123.0)
     owner -> hoprToken.mint(user1, 0.123456789123456789, '0x01', '0x02')
       Gas used: 140076
-      + 8.0 Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 0.123456789123456789, data: 0x01, operatorData: 0x02)
-      + 8.1 Transfer(from: null:0x0000, to: user1:0x3C44, value: 0.123456789123456789)
+      + 9.0 Minted(operator: owner:0xf39F, to: user1:0x3C44, amount: 0.123456789123456789, data: 0x01, operatorData: 0x02)
+      + 9.1 Transfer(from: null:0x0000, to: user1:0x3C44, value: 0.123456789123456789)
     --- hoprToken 'HOPR', 'HOPR Token' ---
       - totalSupply: 123.123456789123456789
-        - totalSupplySnapshots(0) - fromBlock: 7, value: 123.0
-        - totalSupplySnapshots(1) - fromBlock: 8, value: 123.123456789123456789
+        - totalSupplySnapshots(0) - fromBlock: 8, value: 123.0
+        - totalSupplySnapshots(1) - fromBlock: 9, value: 123.123456789123456789
       - owner:0xf39F.balance: 0.0
       - user0:0x7099.balance: 123.0
-        - accountSnapshots(user0:0x7099, 0) - fromBlock: 7, value: 123.0
+        - accountSnapshots(user0:0x7099, 0) - fromBlock: 8, value: 123.0
       - user1:0x3C44.balance: 0.123456789123456789
-        - accountSnapshots(user1:0x3C44, 0) - fromBlock: 8, value: 0.123456789123456789
-      - ERC777Wallet:0xDc64.balance: 0.0
+        - accountSnapshots(user1:0x3C44, 0) - fromBlock: 9, value: 0.123456789123456789
+      - ERC777Wallet:0x5FC8.balance: 0.0
     --- hoprDistributor ---
       - owner: owner:0xf39F
       - MULTIPLIER: 1000000
-      - totalToBeMinted: 0.0
-      - startTime: 1613259060
       - token: HOPRToken:0xe7f1
       - maxMintAmount: 123.456
+      - totalToBeMinted: 0.0
       - totalMinted: 0.0
+      - startTime: 1613261910
       - getSchedule('test'): ["",""]
       - allocations(user0, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
     owner -> hoprDistributor.addSchedule(durations, percents, 'test)
       Gas used: 167056
-      + 9.0 ScheduleAdded(durations: 1,12,20,100, percents: 100000,200000,300000,400000, name: test)
+      + 10.0 ScheduleAdded(durations: 1,12,20,100, percents: 100000,200000,300000,400000, name: test)
     owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test)
-      Gas used: 98790
-      + 10.0 AllocationAdded(account: user0:0x7099, amount: 12.3, scheduleName: test)
-      + 10.1 AllocationAdded(account: user1:0x3C44, amount: 13.4, scheduleName: test)
-    Time @ 0s
+      Gas used: 99664
+      + 11.0 AllocationAdded(account: user0:0x7099, amount: 12.3, scheduleName: test)
+      + 11.1 AllocationAdded(account: user1:0x3C44, amount: 13.4, scheduleName: test)
     --- hoprDistributor ---
+      - totalToBeMinted: 25.7
       - totalMinted: 0.0
+      - startTime: 1613261910
       - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
+    Time @ 12s
+    waitUntil: 1613261922
+      Gas used: 188436
+      + 12.0 Minted(operator: HoprDistributor:0xCf7E, to: user0:0x7099, amount: 7.38, data: 0x, operatorData: 0x)
+      + 12.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 7.38)
+      + HoprDistributor:0xCf7E ["0xd6d52022b5ae5ce877753d56a79a1299605b05220771f26b0817599cabd2b6b4","0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8"]
+    --- hoprDistributor ---
+      - totalToBeMinted: 25.7
+      - totalMinted: 7.38
+      - startTime: 1613261910
+      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
+      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613261932, revoked: false
+      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
+      - getClaimable(user0, 'test'): 0.0
+      - getClaimable(user1, 'test'): 8.04
+    owner -> hoprDistributor.revokeAccount(user0, 'test)
+      Gas used: 39021
+    --- hoprDistributor ---
+      - totalToBeMinted: 20.78
+      - totalMinted: 7.38
+      - startTime: 1613261910
+      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
+      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613261932, revoked: true
+      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
+      - getClaimable(user0, 'test'): 0.0
+      - getClaimable(user1, 'test'): 8.04
+    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time
+      Gas used: 34821
+    --- hoprDistributor ---
+      - totalToBeMinted: 15.86
+      - totalMinted: 7.38
+      - startTime: 1613261910
+      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
+      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613261932, revoked: true
+      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
+      - getClaimable(user0, 'test'): 0.0
+      - getClaimable(user1, 'test'): 8.04
+    owner -> hoprDistributor.revokeAccount(user0, 'test) Third time
+      Gas used: 34821
+    --- hoprDistributor ---
+      - totalToBeMinted: 10.94
+      - totalMinted: 7.38
+      - startTime: 1613261910
+      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
+      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613261932, revoked: true
+      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
+      - getClaimable(user0, 'test'): 0.0
+      - getClaimable(user1, 'test'): 8.04
+    owner -> hoprDistributor.revokeAccount(user0, 'test) Fourth time
+      Gas used: 34821
+    --- hoprDistributor ---
+      - totalToBeMinted: 6.02
+      - totalMinted: 7.38
+      - startTime: 1613261910
+      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
+      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613261932, revoked: true
+      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
+      - getClaimable(user0, 'test'): 0.0
+      - getClaimable(user1, 'test'): 8.04
         --- Test Completed ---
 
-    ✓ TestHoprDistributor - #0 (1281ms)
+    ✓ TestHoprDistributor - #0 (12284ms)
 
 
-  1 passing (4s)
+  1 passing (14s)
   1 pending
 

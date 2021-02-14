@@ -2059,6 +2059,7 @@ contract HoprDistributor is Ownable {
      * @param account the account to crevoke
      * @param scheduleName the schedule name
      */
+    // BK OK - WARNING - The owner can execute `revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked
     function revokeAccount(
         address account,
         string calldata scheduleName
@@ -2193,6 +2194,7 @@ contract HoprDistributor is Ownable {
     function _claim(address account, string memory scheduleName) internal {
         Allocation storage allocation = allocations[account][scheduleName];
         require(allocation.amount > 0, "There is nothing to claim");
+        // BK OK
         require(!allocation.revoked, "Account is revoked");
 
         Schedule storage schedule = schedules[scheduleName];

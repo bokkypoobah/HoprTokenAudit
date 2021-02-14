@@ -76,6 +76,7 @@ describe("TestHoprToken", function() {
       console.log("      - hoprToken.getRoleAdmin(minterRole): " + await hoprToken.getRoleAdmin(minterRole));
       console.log("      - hoprToken.hasRole(owner, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, owner));
       console.log("      - hoprToken.hasRole(user1, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, user1));
+      console.log("      - hoprToken.hasRole(HoprDistributor, MINTER_ROLE): " + await hoprToken.hasRole(minterRole, hoprDistributor.address));
       console.log("      - hoprToken.defaultOperators(): " + await hoprToken.defaultOperators());
     }
     console.log("      - totalSupply: " + ethers.utils.formatUnits(await hoprToken.totalSupply(), 18));
@@ -104,12 +105,12 @@ describe("TestHoprToken", function() {
     if (header) {
       console.log("      - owner: " + getShortAccountName(await hoprDistributor.owner()));
       console.log("      - MULTIPLIER: " + await hoprDistributor.MULTIPLIER());
-      console.log("      - totalToBeMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalToBeMinted(), 18));
-      console.log("      - startTime: " + await hoprDistributor.startTime());
       console.log("      - token: " + getShortAccountName(await hoprDistributor.token()));
       console.log("      - maxMintAmount: " + ethers.utils.formatUnits(await hoprDistributor.maxMintAmount(), 18));
     }
+    console.log("      - totalToBeMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalToBeMinted(), 18));
     console.log("      - totalMinted: " + ethers.utils.formatUnits(await hoprDistributor.totalMinted(), 18));
+    console.log("      - startTime: " + await hoprDistributor.startTime());
     console.log("      - getSchedule('test'): " + JSON.stringify((await hoprDistributor.getSchedule('test')).map((x) => { return x.toString(); })));
     const allocation0 = await hoprDistributor.allocations(user0, 'test');
     console.log("      - allocations(user0, 'test') - amount: " + ethers.utils.formatUnits(allocation0.amount, 18) + ", claimed: " + ethers.utils.formatUnits(allocation0.claimed, 18) + ", lastClaim: " + allocation0.lastClaim + ", revoked: " + allocation0.revoked);
@@ -150,9 +151,13 @@ describe("TestHoprToken", function() {
     startTime = parseInt(new Date() / 1000);
     const maxMintAmount = ethers.utils.parseUnits("123.456", 18);
     hoprDistributor = await HoprDistributor.deploy(hoprToken.address, startTime, maxMintAmount);
-    addAccount(hoprDistributor.address, "HOPRDistributor");
+    addAccount(hoprDistributor.address, "HoprDistributor");
     console.log("    owner -> HoprDistributor.deploy(hoprToken, " + startTime + ", " + ethers.utils.formatUnits(maxMintAmount, 18) + ")-ed to " + hoprDistributor.address);
     printEvents(hoprDistributor, await hoprDistributor.deployTransaction.wait());
+
+    console.log("    owner -> hoprToken.grantRole(MINTER_ROLE, HoprDistributor)");
+    const grantRole2 = await hoprToken.grantRole(await hoprToken.MINTER_ROLE(), hoprDistributor.address);
+    printEvents(hoprToken, await grantRole2.wait());
 
     // const ERC777Sender = await ethers.getContractFactory("ERC777Sender");
     // erc777Sender = await ERC777Sender.connect(ownerSigner).deploy();
@@ -230,19 +235,40 @@ describe("TestHoprToken", function() {
     const amounts = [ethers.utils.parseUnits("12.3", 18), ethers.utils.parseUnits("13.4", 18)];
     const addAllocations1 = await hoprDistributor.addAllocations(accounts, amounts, 'test');
     printEvents(hoprDistributor, await addAllocations1.wait());
-
-    console.log("    Time @ 0s");
+    // console.log("    Time @ 0s");
     await printHoprDistributorDetails();
 
-    // console.log("    Time @ 12s");
-    // let waitUntil = startTime + 12;
-    // console.log("    waitUntil: " + waitUntil);
-    // while ((new Date()).getTime() <= waitUntil * 1000) {
-    // }
+    console.log("    Time @ 12s");
+    let waitUntil = startTime + 12;
+    console.log("    waitUntil: " + waitUntil);
+    while ((new Date()).getTime() <= waitUntil * 1000) {
+    }
     // const transfer1 = await hoprToken.transfer(user0, 0);
     // printEvents(hoprToken, await transfer1.wait());
-    // await printHoprDistributorDetails();
-    //
+    const claim1 = await hoprDistributor.connect(user0Signer).claim('test');
+    printEvents(hoprToken, await claim1.wait());
+    await printHoprDistributorDetails();
+
+    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test)");
+    const revokeAccount1 = await hoprDistributor.revokeAccount(user0, 'test');
+    printEvents(hoprDistributor, await revokeAccount1.wait());
+    await printHoprDistributorDetails();
+
+    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time");
+    const revokeAccount2 = await hoprDistributor.revokeAccount(user0, 'test');
+    printEvents(hoprDistributor, await revokeAccount2.wait());
+    await printHoprDistributorDetails();
+
+    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Third time");
+    const revokeAccount3 = await hoprDistributor.revokeAccount(user0, 'test');
+    printEvents(hoprDistributor, await revokeAccount3.wait());
+    await printHoprDistributorDetails();
+
+    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Fourth time");
+    const revokeAccount4 = await hoprDistributor.revokeAccount(user0, 'test');
+    printEvents(hoprDistributor, await revokeAccount4.wait());
+    await printHoprDistributorDetails();
+
     // console.log("    Time @ 20s");
     // waitUntil = startTime + 20;
     // console.log("    waitUntil: " + waitUntil);
