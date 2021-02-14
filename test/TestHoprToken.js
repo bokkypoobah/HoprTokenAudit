@@ -269,6 +269,16 @@ describe("TestHoprToken", function() {
     printEvents(hoprDistributor, await revokeAccount4.wait());
     await printHoprDistributorDetails();
 
+    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Fifth time");
+    const revokeAccount5 = await hoprDistributor.revokeAccount(user0, 'test');
+    printEvents(hoprDistributor, await revokeAccount5.wait());
+    await printHoprDistributorDetails();
+
+    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Sixth time");
+    const revokeAccount6 = await hoprDistributor.revokeAccount(user0, 'test');
+    printEvents(hoprDistributor, await revokeAccount6.wait());
+    await printHoprDistributorDetails();
+
     // console.log("    Time @ 20s");
     // waitUntil = startTime + 20;
     // console.log("    waitUntil: " + waitUntil);
