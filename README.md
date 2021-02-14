@@ -263,10 +263,7 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 
 * NOTE - `assert(_totalToBeMinted <= maxMintAmount);` in `HoprDistributor.addAllocations(...)` can be moved after the `for (...)` loop to save a bit more gas
 * WARNING - The owner can execute `HoprDistributor.updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
-* WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked
-// BK OK - WARNING - The owner can execute `revokeAccount(...)` for the same account and schedule multiple times and this will result in an incorrect `totalToBeMinted` indicator variable. Consider adding a check to only allow the revocation of accounts that have not been revoked
-
-
+* WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked. See [`revokeAccount(...)` underflow testing results](https://github.com/bokkypoobah/HoprTokenAudit/blob/8eefbb8bccfca153342f769b1420256342ded7d4/results/TestHoprToken.txt#L159-L180)
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
 * `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment
 
