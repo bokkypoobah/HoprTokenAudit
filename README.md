@@ -151,16 +151,16 @@ Outline:
 * [x] contract Context
 * [x] contract Ownable is Context
 * [ ] library EnumerableSet
-* [x] library Address
+* [ ] library Address
 * [ ] abstract contract AccessControl
   * [ ] using EnumerableSet for EnumerableSet.AddressSet;
   * [ ] using Address for address;
-* [x] interface IERC777
-* [x] interface IERC777Recipient
-* [x] interface IERC777Sender
-* [x] interface IERC20
-* [x] library SafeMath
-* [x] interface IERC1820Registry
+* [ ] interface IERC777
+* [ ] interface IERC777Recipient
+* [ ] interface IERC777Sender
+* [ ] interface IERC20
+* [ ] library SafeMath
+* [ ] interface IERC1820Registry
 * [ ] contract ERC777 is Context, IERC777, IERC20
   * [ ] using SafeMath for uint256;
   * [ ] using Address for address;
@@ -177,18 +177,18 @@ Outline:
     * [ ] event Transfer
     * [ ] event Approval
   * [ ] ERC777
-    * [x] function name()
-    * [x] function symbol()
-    * [x] function decimals() - Note that this is not defined in IERC20 and IERC777
-    * [x] function granularity()
-    * [x] function totalSupply()
-    * [x] function balanceOf(...)
+    * [ ] function name()
+    * [ ] function symbol()
+    * [ ] function decimals() - Note that this is not defined in IERC20 and IERC777
+    * [ ] function granularity()
+    * [ ] function totalSupply()
+    * [ ] function balanceOf(...)
     * [ ] function send(...)
     * [ ] function burn(...)
     * [ ] function isOperatorFor(...)
     * [ ] function authorizeOperator(...)
     * [ ] function revokeOperator(...)
-    * [x] function defaultOperators() - Note that this is empty for these contracts
+    * [ ] function defaultOperators() - Note that this is empty for these contracts
     * [ ] function operatorSend(...)
     * [ ] function operatorBurn(...)
     * [ ] event Sent
@@ -216,10 +216,10 @@ Outline:
     * [ ] event RoleGranted
     * [ ] event RoleRevoked
 * [ ] contract HoprDistributor is Ownable
-  * [ ] uint32 constant MULTIPLIER
-  * [ ] uint128 totalMinted
-  * [ ] uint128 totalToBeMinted
-  * [ ] uint32 startTime
+  * [x] uint128 constant MULTIPLIER
+  * [x] uint128 totalMinted
+  * [x] uint128 totalToBeMinted - NOTE - See issues with `revokeAccount(...)`
+  * [ ] uint128 startTime - NOTE - See warnings on `updateStartTime(...)`
   * [ ] HoprToken token
   * [ ] uint128 maxMintAmount
   * [ ] mapping(address, Allocation) allocations
@@ -264,6 +264,7 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 * NOTE - `assert(_totalToBeMinted <= maxMintAmount);` in `HoprDistributor.addAllocations(...)` can be moved after the `for (...)` loop to save a bit more gas
 * WARNING - The owner can execute `HoprDistributor.updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
 * WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked. See [`revokeAccount(...)` underflow testing results](https://github.com/bokkypoobah/HoprTokenAudit/blob/8eefbb8bccfca153342f769b1420256342ded7d4/results/TestHoprToken.txt#L159-L180)
+* NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded. See [Solidity `assert` and `require`](https://docs.soliditylang.org/en/v0.6.12/control-structures.html#id4)
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
 * `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment
 

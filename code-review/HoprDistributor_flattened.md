@@ -1964,7 +1964,7 @@ contract HoprToken is AccessControl, ERC777Snapshot {
 pragma solidity ^0.6.0;
 
 
-
+// BK NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded.
 contract HoprDistributor is Ownable {
     // A {Schedule} that defined when and how much will be claimed
     // from an {Allocation}.
@@ -1997,9 +1997,11 @@ contract HoprDistributor is Ownable {
     // total amount minted
     uint128 public totalMinted = 0;
     // how many tokens will be minted (the sum of all allocations)
+    // BK OK - NOTE - See warnings on `revokeAccount(...)`
     uint128 public totalToBeMinted = 0;
 
     // time where the contract will consider as starting time
+    // BK OK - NOTE - See warnings on `updateStartTime(...)`
     uint128 public startTime;
     // token which will be used
     HoprToken public token;
