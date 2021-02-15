@@ -215,29 +215,34 @@ Outline:
     * [ ] function mint(...) MINTER_ROLE
     * [ ] event RoleGranted
     * [ ] event RoleRevoked
-* [ ] contract HoprDistributor is Ownable
+* [ ] contract HoprDistributor is Ownable -  NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded
+  * [x] struct Schedule
+  * [x] struct Allocation
   * [x] uint128 constant MULTIPLIER
   * [x] uint128 totalMinted
   * [x] uint128 totalToBeMinted - NOTE - See issues with `revokeAccount(...)`
-  * [ ] uint128 startTime - NOTE - See warnings on `updateStartTime(...)`
-  * [ ] HoprToken token
-  * [ ] uint128 maxMintAmount
-  * [ ] mapping(address, Allocation) allocations
-  * [ ] constructor(...)
-  * [ ] function owner() view
-  * [ ] function renounceOwnership() onlyOwner
-  * [ ] function transferOwnership(...) onlyOwner
-  * [ ] function getSchedule(...) view
-  * [ ] function revokeAccount(...) onlyOwner
-  * [ ] function addSchedule(...) onlyOwner
-  * [ ] function addAllocations(...) onlyOwner
-  * [ ] function claim(...)
-  * [ ] function claimFor(...)
-  * [ ] function getClaimable(...) view
-  * [ ] event OwnershipTransferred
-  * [ ] event ScheduleAdded
-  * [ ] event AllocationAdded
-  * [ ] event Claimed
+  * [x] uint128 startTime - NOTE - See warnings on `updateStartTime(...)`
+  * [x] HoprToken token
+  * [x] uint128 maxMintAmount
+  * [x] mapping(string => Schedule) schedules
+  * [x] mapping(address => string => Allocation) allocations
+  * [x] event Ownable.OwnershipTransferred
+  * [x] event ScheduleAdded
+  * [x] event AllocationAdded
+  * [x] event Claimed
+  * [x] constructor(...) -> Ownable.constructor(...)
+  * [x] function Ownable.owner() view
+  * [x] function Ownable.renounceOwnership() onlyOwner
+  * [x] function Ownable.transferOwnership(...) onlyOwner
+  * [x] function getSchedule(...) view
+  * [x] function revokeAccount(...) onlyOwner - WARNING - The owner can execute `revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked
+  * [x] function addSchedule(...) onlyOwner
+  * [x] function addAllocations(...) onlyOwner - NOTE - `assert(_totalToBeMinted <= maxMintAmount);` in `HoprDistributor.addAllocations(...)` can be moved after the `for (...)` loop to save a bit more gas
+  * [x] function claim(...)
+  * [x] function claimFor(...)
+  * [x] function getClaimable(...) view
+  * [ ] function _claim(...) internal
+  * [x] function _getClaimable(...) internal
 
 <br />
 
@@ -263,7 +268,9 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 
 * NOTE - `assert(_totalToBeMinted <= maxMintAmount);` in `HoprDistributor.addAllocations(...)` can be moved after the `for (...)` loop to save a bit more gas
 * WARNING - The owner can execute `HoprDistributor.updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
+* NOTE - `HoprDistributor.updateStartTime(...)` should ideally emit an event
 * WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked. See [`revokeAccount(...)` underflow testing results](https://github.com/bokkypoobah/HoprTokenAudit/blob/8eefbb8bccfca153342f769b1420256342ded7d4/results/TestHoprToken.txt#L159-L180)
+* NOTE - `HoprDistributor.revokeAccount(...)` should ideally emit an event
 * NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded. See [Solidity `assert` and `require`](https://docs.soliditylang.org/en/v0.6.12/control-structures.html#id4)
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
 * `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment

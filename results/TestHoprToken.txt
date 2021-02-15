@@ -18,7 +18,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       Gas used: 89442
       + 4.0 RoleGranted(role: 0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6, account: owner:0xf39F, sender: owner:0xf39F)
       Mapping 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9 => HoprDistributor:0xCf7E
-    owner -> HoprDistributor.deploy(hoprToken, 1613262521, 123.456)-ed to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
+    owner -> HoprDistributor.deploy(hoprToken, 1613276008, 123.456)-ed to 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
       Gas used: 2835489
       + 5.0 OwnershipTransferred(previousOwner: null:0x0000, newOwner: owner:0xf39F)
     owner -> hoprToken.grantRole(MINTER_ROLE, HoprDistributor)
@@ -77,7 +77,7 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
       - maxMintAmount: 123.456
       - totalToBeMinted: 0.0
       - totalMinted: 0.0
-      - startTime: 1613262521
+      - startTime: 1613276008
       - getSchedule('test'): ["",""]
       - allocations(user0, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 0.0, claimed: 0.0, lastClaim: 0, revoked: false
@@ -91,100 +91,36 @@ $ npx hardhat --verbose --show-stack-traces test test/TestHoprToken.js > results
     --- hoprDistributor ---
       - totalToBeMinted: 25.7
       - totalMinted: 0.0
-      - startTime: 1613262521
+      - startTime: 1613276008
       - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
       - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
       - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
       - getClaimable(user0, 'test'): 1.23
       - getClaimable(user1, 'test'): 1.34
     Time @ 12s
-    waitUntil: 1613262533
-      Gas used: 188436
-      + 12.0 Minted(operator: HoprDistributor:0xCf7E, to: user0:0x7099, amount: 7.38, data: 0x, operatorData: 0x)
-      + 12.1 Transfer(from: null:0x0000, to: user0:0x7099, value: 7.38)
-      + HoprDistributor:0xCf7E ["0xd6d52022b5ae5ce877753d56a79a1299605b05220771f26b0817599cabd2b6b4","0x00000000000000000000000070997970c51812dc3a010c7d01b50e0d17dc79c8"]
+    waitUntil: 1613276020
+      Gas used: 188784
+      + 12.0 Minted(operator: HoprDistributor:0xCf7E, to: user1:0x3C44, amount: 8.04, data: 0x, operatorData: 0x)
+      + 12.1 Transfer(from: null:0x0000, to: user1:0x3C44, value: 8.04)
+      + HoprDistributor:0xCf7E ["0xd6d52022b5ae5ce877753d56a79a1299605b05220771f26b0817599cabd2b6b4","0x0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc"]
+      Gas used: 188784
+      + HOPRToken:0xe7f1 ["0x2fe5be0146f74c5bce36c0b80911af6c7d86ff27e89d5cfa61fc681327954e5d","0x000000000000000000000000cf7ed3acca5a467e9e704c703e8d87f634fb0fc9","0x0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc"]
+      + HOPRToken:0xe7f1 ["0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef","0x0000000000000000000000000000000000000000000000000000000000000000","0x0000000000000000000000003c44cdddb6a900fa2b585dd299e03d12fa4293bc"]
+      + 12.2 Claimed(account: user1:0x3C44, amount: 8.04, scheduleName: test)
     --- hoprDistributor ---
       - totalToBeMinted: 25.7
-      - totalMinted: 7.38
-      - startTime: 1613262521
+      - totalMinted: 8.04
+      - startTime: 1613276008
       - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613262543, revoked: false
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 0.0
-      - getClaimable(user1, 'test'): 8.04
-    owner -> hoprDistributor.revokeAccount(user0, 'test)
-      Gas used: 39021
-    --- hoprDistributor ---
-      - totalToBeMinted: 20.78
-      - totalMinted: 7.38
-      - startTime: 1613262521
-      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613262543, revoked: true
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 0.0
-      - getClaimable(user1, 'test'): 8.04
-    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time
-      Gas used: 34821
-    --- hoprDistributor ---
-      - totalToBeMinted: 15.86
-      - totalMinted: 7.38
-      - startTime: 1613262521
-      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613262543, revoked: true
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 0.0
-      - getClaimable(user1, 'test'): 8.04
-    owner -> hoprDistributor.revokeAccount(user0, 'test) Third time
-      Gas used: 34821
-    --- hoprDistributor ---
-      - totalToBeMinted: 10.94
-      - totalMinted: 7.38
-      - startTime: 1613262521
-      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613262543, revoked: true
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 0.0
-      - getClaimable(user1, 'test'): 8.04
-    owner -> hoprDistributor.revokeAccount(user0, 'test) Fourth time
-      Gas used: 34821
-    --- hoprDistributor ---
-      - totalToBeMinted: 6.02
-      - totalMinted: 7.38
-      - startTime: 1613262521
-      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613262543, revoked: true
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 0.0
-      - getClaimable(user1, 'test'): 8.04
-    owner -> hoprDistributor.revokeAccount(user0, 'test) Fifth time
-      Gas used: 34821
-    --- hoprDistributor ---
-      - totalToBeMinted: 1.1
-      - totalMinted: 7.38
-      - startTime: 1613262521
-      - getSchedule('test'): ["1,12,20,100","100000,200000,300000,400000"]
-      - allocations(user0, 'test') - amount: 12.3, claimed: 7.38, lastClaim: 1613262543, revoked: true
-      - allocations(user1, 'test') - amount: 13.4, claimed: 0.0, lastClaim: 0, revoked: false
-      - getClaimable(user0, 'test'): 0.0
-      - getClaimable(user1, 'test'): 8.04
-    owner -> hoprDistributor.revokeAccount(user0, 'test) Sixth time
-    1) TestHoprDistributor - #0
+      - allocations(user0, 'test') - amount: 12.3, claimed: 0.0, lastClaim: 0, revoked: false
+      - allocations(user1, 'test') - amount: 13.4, claimed: 8.04, lastClaim: 1613276030, revoked: false
+      - getClaimable(user0, 'test'): 7.38
+      - getClaimable(user1, 'test'): 0.0
+        --- Test Completed ---
+
+    ✓ TestHoprDistributor - #0 (11143ms)
 
 
-  0 passing (15s)
+  1 passing (13s)
   1 pending
-  1 failing
-
-  1) TestHoprToken
-       TestHoprDistributor - #0:
-     Error: VM Exception while processing transaction: revert uint128 subtraction overflow
-      at HoprDistributor._subUint128 (contracts/HoprDistributor.sol:283)
-      at HoprDistributor.revokeAccount (contracts/HoprDistributor.sol:101)
-      at runMicrotasks (<anonymous>)
-      at processTicksAndRejections (internal/process/task_queues.js:97:5)
-      at EthModule._sendTransactionAndReturnHash (node_modules/hardhat/src/internal/hardhat-network/provider/modules/eth.ts:1303:9)
-      at HardhatNetworkProvider.request (node_modules/hardhat/src/internal/hardhat-network/provider/provider.ts:102:18)
-      at EthersProviderWrapper.send (node_modules/@nomiclabs/hardhat-ethers/src/ethers-provider-wrapper.ts:13:20)
-
-
 

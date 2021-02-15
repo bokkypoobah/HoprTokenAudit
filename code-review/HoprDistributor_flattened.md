@@ -2004,8 +2004,10 @@ contract HoprDistributor is Ownable {
     // BK OK - NOTE - See warnings on `updateStartTime(...)`
     uint128 public startTime;
     // token which will be used
+    // BK OK
     HoprToken public token;
     // maximum tokens allowed to be minted
+    // BK OK
     uint128 public maxMintAmount;
 
     // schedule name -> Schedule
@@ -2018,14 +2020,18 @@ contract HoprDistributor is Ownable {
 
     // BK OK
     event ScheduleAdded(uint128[] durations, uint128[] percents, string name);
+    // BK OK
     event AllocationAdded(address indexed account, uint128 amount, string scheduleName);
+    // BK OK
     event Claimed(address indexed account, uint128 amount, string scheduleName);
 
     /**
      * @param _startTime the timestamp to start counting
      * @param _token the token which we will mint
      */
+    // BK OK - Constructor
     constructor(HoprToken _token, uint128 _startTime, uint128 _maxMintAmount) public {
+        // BK Next 3 OK
         startTime = _startTime;
         token = _token;
         maxMintAmount = _maxMintAmount;
@@ -2035,7 +2041,9 @@ contract HoprDistributor is Ownable {
      * @param name the schedule name
      * @return the schedule
      */
+    // BK OK - View
     function getSchedule(string calldata name) external view returns (uint128[] memory, uint128[] memory) {
+        // BK OK
         return (
             schedules[name].durations,
             schedules[name].percents
@@ -2048,6 +2056,7 @@ contract HoprDistributor is Ownable {
      * @param _startTime the new timestamp to start counting
      */
     // BK OK - WARNING - The owner can execute `updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
+    // BK NOTE - Ideally should emit an event
     function updateStartTime(uint128 _startTime) external onlyOwner {
         // BK OK
         require(startTime > _currentBlockTimestamp(), "Previous start time must not be reached");
@@ -2062,6 +2071,7 @@ contract HoprDistributor is Ownable {
      * @param scheduleName the schedule name
      */
     // BK OK - WARNING - The owner can execute `revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked
+    // BK NOTE - Ideally should emit an event
     function revokeAccount(
         address account,
         string calldata scheduleName
@@ -2148,6 +2158,7 @@ contract HoprDistributor is Ownable {
         // BK OK
         uint128 _totalToBeMinted = totalToBeMinted;
 
+        // BK OK
         for (uint256 i = 0; i < accounts.length; i++) {
             // BK OK
             require(allocations[accounts[i]][scheduleName].amount == 0, "Allocation must not exist");
@@ -2170,7 +2181,9 @@ contract HoprDistributor is Ownable {
      * @dev Claim tokens by specified a schedule.
      * @param scheduleName the schedule name
      */
+    // BK OK
     function claim(string calldata scheduleName) external {
+        // BK OK
         return _claim(msg.sender, scheduleName);
     }
 
@@ -2179,7 +2192,9 @@ contract HoprDistributor is Ownable {
      * @param account the account to claim for
      * @param scheduleName the schedule name
      */
+    // BK OK - Claim on behalf of another account
     function claimFor(address account, string calldata scheduleName) external {
+        // BK OK
         return _claim(account, scheduleName);
     }
 
@@ -2188,7 +2203,9 @@ contract HoprDistributor is Ownable {
      * @param scheduleName the schedule name
      * @return claimable amount
      */
+    // BK OK - View
     function getClaimable(address account, string calldata scheduleName) external view returns (uint128) {
+        // BK OK
         return _getClaimable(schedules[scheduleName], allocations[account][scheduleName]);
     }
 
@@ -2224,8 +2241,10 @@ contract HoprDistributor is Ownable {
         allocation.lastClaim = _currentBlockTimestamp();
 
         // mint tokens
+        // BK OK - NOTE - Potential reentrancy here, state variables allocation.{claimed|lastClaim} already updated consistently
         token.mint(account, claimable, "", "");
 
+        // BK OK
         emit Claimed(account, claimable, scheduleName);
     }
 
@@ -2234,39 +2253,55 @@ contract HoprDistributor is Ownable {
      * This function expects that the owner has added the schedule
      * periods in ascending order.
      */
+    // BK OK - Internal view
     function _getClaimable(
         Schedule storage schedule,
         Allocation storage allocation
     ) internal view returns (uint128) {
         // first unlock hasn't passed yet
+        // BK OK - startTime + schedule.durations[0] > now
         if (_addUint128(startTime, schedule.durations[0]) > _currentBlockTimestamp()) {
+            // BK OK
             return 0;
         }
 
         // last unlock has passed
+        // BK OK - startTime + schedule.durations[last] < now
         if (_addUint128(startTime, schedule.durations[schedule.durations.length - 1]) < _currentBlockTimestamp()) {
             // make sure to exclude already claimed amount
+            // BK OK - return allocation.amount - allocation.claimed
             return _subUint128(allocation.amount, allocation.claimed);
         }
 
+        // BK OK
         uint128 claimable = 0;
 
+        // BK OK
         for (uint256 i = 0; i < schedule.durations.length; i++) {
+            // BK OK - scheduleDeadline = startTime + schedule.durations[i]
             uint128 scheduleDeadline = _addUint128(startTime, schedule.durations[i]);
 
             // schedule deadline not passed, exiting
             if (scheduleDeadline > _currentBlockTimestamp()) break;
             // already claimed during this period, skipping
+            // BK OK - NOTE - Next two LOCs could be written a bit clearers as:
+            // BK  if (allocation.lastClaim < scheduleDeadline) {
+            // BK      claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
+            // BK  }
             if (allocation.lastClaim >= scheduleDeadline) continue;
 
+            // BK OK - claimable += allocation.amount * schedule.percents[i] / MULTIPLIER
             claimable = _addUint128(claimable, _divUint128(_mulUint128(allocation.amount, schedule.percents[i]), MULTIPLIER));
         }
 
+        // BK OK
         return claimable;
     }
 
+    // BK OK
     function _currentBlockTimestamp() internal view returns (uint128) {
         // solhint-disable-next-line
+        // BK OK
         return uint128(block.timestamp);
     }
 
@@ -2282,28 +2317,42 @@ contract HoprDistributor is Ownable {
         return c;
     }
 
+    // BK OK - Internal
     function _subUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         require(b <= a, "uint128 subtraction overflow");
+        // BK OK
         uint128 c = a - b;
 
+        // BK OK
         return c;
     }
 
+    // BK OK - Internal
     function _mulUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         if (a == 0) {
+            // BK OK
             return 0;
         }
 
+        // BK OK
         uint128 c = a * b;
+        // BK OK
         require(c / a == b, "uint128 multiplication overflow");
 
+        // BK OK
         return c;
     }
 
+    // BK OK - Internal
     function _divUint128(uint128 a, uint128 b) internal pure returns (uint128) {
+        // BK OK
         require(b > 0, "uint128 division by zero");
+        // BK OK
         uint128 c = a / b;
 
+        // BK OK
         return c;
     }
 }

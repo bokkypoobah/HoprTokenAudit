@@ -245,39 +245,47 @@ describe("TestHoprToken", function() {
     }
     // const transfer1 = await hoprToken.transfer(user0, 0);
     // printEvents(hoprToken, await transfer1.wait());
-    const claim1 = await hoprDistributor.connect(user0Signer).claim('test');
-    printEvents(hoprToken, await claim1.wait());
+    const claim1 = await hoprDistributor.connect(user0Signer).claimFor(user1, 'test');
+    const claimTx1 = await claim1.wait();
+    printEvents(hoprToken, claimTx1);
+    printEvents(hoprDistributor, claimTx1);
     await printHoprDistributorDetails();
 
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test)");
-    const revokeAccount1 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount1.wait());
-    await printHoprDistributorDetails();
+    // const claim2 = await hoprDistributor.connect(user0Signer).claim('test');
+    // const claimTx2 = await claim2.wait();
+    // printEvents(hoprToken, claimTx2);
+    // printEvents(hoprDistributor, claimTx2);
+    // await printHoprDistributorDetails();
 
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time");
-    const revokeAccount2 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount2.wait());
-    await printHoprDistributorDetails();
-
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Third time");
-    const revokeAccount3 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount3.wait());
-    await printHoprDistributorDetails();
-
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Fourth time");
-    const revokeAccount4 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount4.wait());
-    await printHoprDistributorDetails();
-
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Fifth time");
-    const revokeAccount5 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount5.wait());
-    await printHoprDistributorDetails();
-
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Sixth time");
-    const revokeAccount6 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount6.wait());
-    await printHoprDistributorDetails();
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test)");
+    // const revokeAccount1 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount1.wait());
+    // await printHoprDistributorDetails();
+    //
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time");
+    // const revokeAccount2 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount2.wait());
+    // await printHoprDistributorDetails();
+    //
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Third time");
+    // const revokeAccount3 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount3.wait());
+    // await printHoprDistributorDetails();
+    //
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Fourth time");
+    // const revokeAccount4 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount4.wait());
+    // await printHoprDistributorDetails();
+    //
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Fifth time");
+    // const revokeAccount5 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount5.wait());
+    // await printHoprDistributorDetails();
+    //
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Sixth time");
+    // const revokeAccount6 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount6.wait());
+    // await printHoprDistributorDetails();
 
     // console.log("    Time @ 20s");
     // waitUntil = startTime + 20;
