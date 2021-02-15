@@ -230,7 +230,7 @@ describe("TestHoprToken", function() {
     const addSchedule1 = await hoprDistributor.addSchedule(durations, percents, 'test');
     printEvents(hoprDistributor, await addSchedule1.wait());
 
-    console.log("    owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test)");
+    console.log("    owner -> hoprDistributor.addAllocations([user0, user1], [12.3, 13.4], 'test')");
     const accounts = [user0, user1];
     const amounts = [ethers.utils.parseUnits("12.3", 18), ethers.utils.parseUnits("13.4", 18)];
     const addAllocations1 = await hoprDistributor.addAllocations(accounts, amounts, 'test');
@@ -245,17 +245,19 @@ describe("TestHoprToken", function() {
     }
     // const transfer1 = await hoprToken.transfer(user0, 0);
     // printEvents(hoprToken, await transfer1.wait());
-    const claim1 = await hoprDistributor.connect(user0Signer).claimFor(user1, 'test');
+    console.log("    user0 -> hoprDistributor.claimFor(user0, 'test')");
+    const claim1 = await hoprDistributor.connect(user0Signer).claimFor(user0, 'test');
     const claimTx1 = await claim1.wait();
     printEvents(hoprToken, claimTx1);
     printEvents(hoprDistributor, claimTx1);
     await printHoprDistributorDetails();
 
-    // const claim2 = await hoprDistributor.connect(user0Signer).claim('test');
-    // const claimTx2 = await claim2.wait();
-    // printEvents(hoprToken, claimTx2);
-    // printEvents(hoprDistributor, claimTx2);
-    // await printHoprDistributorDetails();
+    console.log("    user0 -> hoprDistributor.claim('test')");
+    const claim2 = await hoprDistributor.connect(user0Signer).claim('test');
+    const claimTx2 = await claim2.wait();
+    printEvents(hoprToken, claimTx2);
+    printEvents(hoprDistributor, claimTx2);
+    await printHoprDistributorDetails();
 
     // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test)");
     // const revokeAccount1 = await hoprDistributor.revokeAccount(user0, 'test');

@@ -2215,25 +2215,34 @@ contract HoprDistributor is Ownable {
      * @param scheduleName the schedule name
      */
     function _claim(address account, string memory scheduleName) internal {
+        // BK OK
         Allocation storage allocation = allocations[account][scheduleName];
+        // BK OK
         require(allocation.amount > 0, "There is nothing to claim");
         // BK OK
         require(!allocation.revoked, "Account is revoked");
 
+        // BK OK
         Schedule storage schedule = schedules[scheduleName];
 
+        // BK OK
         uint128 claimable = _getClaimable(schedule, allocation);
         // Trying to claim more than allocated
+        // BK OK
         assert(claimable <= allocation.amount);
 
+        // BK OK
         uint128 newClaimed = _addUint128(allocation.claimed, claimable);
         // Trying to claim more than allocated
+        // BK OK
         assert(newClaimed <= allocation.amount);
 
+        // BK OK
         uint128 newTotalMinted = _addUint128(totalMinted, claimable);
         // Total amount minted should be less or equal than specified
         // we only check this when a user claims, not when allocations
         // are added
+        // BK OK
         assert(newTotalMinted <= maxMintAmount);
 
         totalMinted = newTotalMinted;
@@ -2241,6 +2250,7 @@ contract HoprDistributor is Ownable {
         allocation.lastClaim = _currentBlockTimestamp();
 
         // mint tokens
+        // BK NOTE - Consider adding a check to only mint tokens if `claimable > 0` - this will reduce the gas cost if an account claims more than once per period
         // BK OK - NOTE - Potential reentrancy here, state variables allocation.{claimed|lastClaim} already updated consistently
         token.mint(account, claimable, "", "");
 

@@ -272,6 +272,7 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 * WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked. See [`revokeAccount(...)` underflow testing results](https://github.com/bokkypoobah/HoprTokenAudit/blob/8eefbb8bccfca153342f769b1420256342ded7d4/results/TestHoprToken.txt#L159-L180)
 * NOTE - `HoprDistributor.revokeAccount(...)` should ideally emit an event
 * NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded. See [Solidity `assert` and `require`](https://docs.soliditylang.org/en/v0.6.12/control-structures.html#id4)
+* NOTE - Consider adding a check to `HoprDistributor._claim(...)` to only mint tokens if `claimable > 0` - this will reduce the gas cost if an account claims more than once per period
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
 * `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment
 
