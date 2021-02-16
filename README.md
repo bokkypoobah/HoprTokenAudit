@@ -10,7 +10,7 @@ Status: **Work in progress**
 
 Bok Consulting Pty Ltd has been commissioned to perform an audit on the Ethereum smart contracts.
 
-This audit has been conducted on Hopr's source code as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md). After an initial review (see recommendations below), the source code was updated in commit [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9) into [https://github.com/hoprnet/hoprnet/tree/release/titlis](https://github.com/hoprnet/hoprnet/tree/release/titlis).
+This audit has been conducted on Hopr's source code as described in [AUDIT.md](https://github.com/hoprnet/hoprnet/blob/f38c4afd707b150f48095140fbaa6285d22efe5f/packages/ethereum/AUDIT.md). After an initial review (see recommendations below), the source code was updated in commit [663ed42](https://github.com/hoprnet/hoprnet/pull/969/commits/663ed4292cabe218923322133d3058d8cdae86a9) into [https://github.com/hoprnet/hoprnet/tree/release/titlis](https://github.com/hoprnet/hoprnet/tree/release/titlis). After the second review, the source code was updated in [PR #1265](https://github.com/hoprnet/hoprnet/pull/1265).
 
 <br />
 
@@ -266,13 +266,19 @@ Run [20_testHoprToken.sh](20_testHoprToken.sh) to execute the script [test/TestH
 
 ## Notes
 
-* NOTE - `assert(_totalToBeMinted <= maxMintAmount);` in `HoprDistributor.addAllocations(...)` can be moved after the `for (...)` loop to save a bit more gas
-* WARNING - The owner can execute `HoprDistributor.updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
-* NOTE - `HoprDistributor.updateStartTime(...)` should ideally emit an event
-* WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked. See [`revokeAccount(...)` underflow testing results](https://github.com/bokkypoobah/HoprTokenAudit/blob/8eefbb8bccfca153342f769b1420256342ded7d4/results/TestHoprToken.txt#L159-L180)
+* [x] NOTE - `assert(_totalToBeMinted <= maxMintAmount);` in `HoprDistributor.addAllocations(...)` can be moved after the `for (...)` loop to save a bit more gas
+  * [x] Developer acknowledged, no changes
+* [x] WARNING - The owner can execute `HoprDistributor.updateStartTime(...)` as long as the current `startTime` is in the future. The new `startTime` has no boundary checks so be careful when executing this function
+  * [x] Developer acknowledged, with risk accepted
+* [x] NOTE - `HoprDistributor.updateStartTime(...)` should ideally emit an event
+  * [x] Developer acknowledged, no changes
+* [x] WARNING - The owner can execute `HoprDistributor.revokeAccount(...)` for the same account and schedule name multiple times. This will result in an incorrect `totalToBeMinted` indicator variable, and possibly the disabling of this `revokeAccount(...)` function if `totalToBeMinted` underflows. Consider adding a check to only allow the revocation of accounts that have not been already revoked. See [`revokeAccount(...)` underflow testing results](https://github.com/bokkypoobah/HoprTokenAudit/blob/8eefbb8bccfca153342f769b1420256342ded7d4/results/TestHoprToken.txt#L159-L180)
+  * [x] Updated [HoprDistributor.sol](https://github.com/hoprnet/hoprnet/blob/29ddf2500c2c5bd15035a9e994e08da9be2c269f/packages/ethereum/contracts/HoprDistributor.sol)
 * NOTE - `HoprDistributor.revokeAccount(...)` should ideally emit an event
-* NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded. See [Solidity `assert` and `require`](https://docs.soliditylang.org/en/v0.6.12/control-structures.html#id4)
-* NOTE - Consider adding a check to `HoprDistributor._claim(...)` to only mint tokens if `claimable > 0` - this will reduce the gas cost if an account claims more than once per period
+* [x] NOTE - The use of `assert(...)` in `HoprDistributor` will result in ALL gas being consumed if an error condition occurs. Use `revert(...)` or `require(...)` as any remaining gas will be refunded. See [Solidity `assert` and `require`](https://docs.soliditylang.org/en/v0.6.12/control-structures.html#id4)
+  * [x] Developer acknowledged, no changes
+* [x] NOTE - Consider adding a check to `HoprDistributor._claim(...)` to only mint tokens if `claimable > 0` - this will reduce the gas cost if an account claims more than once per period
+  * [x] Developer acknowledged, no changes
 * `uint128` used in HoprDistributor. Range is for a 18 decimal place number up to `340282366920938463463` (`new BigNumber(2).pow(128).sub(1).shift(-18).toFixed(18)`
 * `defaultOperators` can transfer any account's tokens - need to confirm that this is left as an empty array after deployment
 

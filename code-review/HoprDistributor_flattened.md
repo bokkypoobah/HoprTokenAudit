@@ -2080,6 +2080,7 @@ contract HoprDistributor is Ownable {
         Allocation storage allocation = allocations[account][scheduleName];
         // BK NOTE - Should add a check that the allocation has not already been revoked
         require(allocation.amount != 0, "Allocation must exist");
+        require(!allocation.revoked, "Allocation must not be already revoked");
 
         // BK OK
         allocation.revoked = true;
@@ -2251,7 +2252,7 @@ contract HoprDistributor is Ownable {
 
         // mint tokens
         // BK NOTE - Consider adding a check to only mint tokens if `claimable > 0` - this will reduce the gas cost if an account claims more than once per period
-        // BK OK - NOTE - Potential reentrancy here, state variables allocation.{claimed|lastClaim} already updated consistently
+        // BK OK - Potential reentrancy here for ERC777Recipient accounts. However, allocation.{claimed|lastClaim} have already been updated consistently
         token.mint(account, claimable, "", "");
 
         // BK OK
