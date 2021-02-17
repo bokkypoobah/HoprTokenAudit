@@ -252,22 +252,22 @@ describe("TestHoprToken", function() {
     printEvents(hoprDistributor, claimTx1);
     await printHoprDistributorDetails();
 
-    // console.log("    user0 -> hoprDistributor.claim('test')");
-    // const claim2 = await hoprDistributor.connect(user0Signer).claim('test');
-    // const claimTx2 = await claim2.wait();
-    // printEvents(hoprToken, claimTx2);
-    // printEvents(hoprDistributor, claimTx2);
+    console.log("    user0 -> hoprDistributor.claim('test')");
+    const claim2 = await hoprDistributor.connect(user0Signer).claim('test');
+    const claimTx2 = await claim2.wait();
+    printEvents(hoprToken, claimTx2);
+    printEvents(hoprDistributor, claimTx2);
+    await printHoprDistributorDetails();
+
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test)");
+    // const revokeAccount1 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount1.wait());
     // await printHoprDistributorDetails();
-
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test)");
-    const revokeAccount1 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount1.wait());
-    await printHoprDistributorDetails();
-
-    console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time");
-    const revokeAccount2 = await hoprDistributor.revokeAccount(user0, 'test');
-    printEvents(hoprDistributor, await revokeAccount2.wait());
-    await printHoprDistributorDetails();
+    //
+    // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Second time");
+    // const revokeAccount2 = await hoprDistributor.revokeAccount(user0, 'test');
+    // printEvents(hoprDistributor, await revokeAccount2.wait());
+    // await printHoprDistributorDetails();
     //
     // console.log("    owner -> hoprDistributor.revokeAccount(user0, 'test) Third time");
     // const revokeAccount3 = await hoprDistributor.revokeAccount(user0, 'test');
