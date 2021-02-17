@@ -385,11 +385,13 @@ library EnumerableSet {
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.2;
 
 /**
  * @dev Collection of functions related to the address type
  */
+// BK OK
 library Address {
     /**
      * @dev Returns true if `account` is a contract.
@@ -408,14 +410,19 @@ library Address {
      *  - an address where a contract lived, but was destroyed
      * ====
      */
+    // BK OK
     function isContract(address account) internal view returns (bool) {
         // According to EIP-1052, 0x0 is the value returned for not-yet created accounts
         // and 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 is returned
         // for accounts without code, i.e. `keccak256('')`
+        // BK OK
         bytes32 codehash;
+        // BK OK - web3.sha3('') => "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
         bytes32 accountHash = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
         // solhint-disable-next-line no-inline-assembly
+        // BK OK
         assembly { codehash := extcodehash(account) }
+        // BK OK
         return (codehash != accountHash && codehash != 0x0);
     }
 
@@ -435,6 +442,7 @@ library Address {
      * {ReentrancyGuard} or the
      * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
      */
+    // BK Not used
     function sendValue(address payable recipient, uint256 amount) internal {
         require(address(this).balance >= amount, "Address: insufficient balance");
 
@@ -665,16 +673,19 @@ pragma solidity ^0.6.0;
  * for the associated interfaces in said registry. See {IERC1820Registry} and
  * {ERC1820Implementer}.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-777#erc777token-token-contract
 interface IERC777 {
     /**
      * @dev Returns the name of the token.
      */
+    // BK OK - function name() external view returns (string memory);
     function name() external view returns (string memory);
 
     /**
      * @dev Returns the symbol of the token, usually a shorter version of the
      * name.
      */
+    // BK OK - function symbol() external view returns (string memory);
     function symbol() external view returns (string memory);
 
     /**
@@ -684,16 +695,19 @@ interface IERC777 {
      *
      * For most token contracts, this value will equal 1.
      */
+    // BK OK - function granularity() external view returns (uint256);
     function granularity() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens in existence.
      */
+    // BK OK - function totalSupply() external view returns (uint256);
     function totalSupply() external view returns (uint256);
 
     /**
      * @dev Returns the amount of tokens owned by an account (`owner`).
      */
+    // BK OK - function balanceOf(address holder) external view returns (uint256);
     function balanceOf(address owner) external view returns (uint256);
 
     /**
@@ -712,6 +726,7 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+    // BK OK - function send(address to, uint256 amount, bytes calldata data) external;
     function send(address recipient, uint256 amount, bytes calldata data) external;
 
     /**
@@ -727,6 +742,7 @@ interface IERC777 {
      *
      * - the caller must have at least `amount` tokens.
      */
+    // BK OK - function burn(uint256 amount, bytes calldata data) external;
     function burn(uint256 amount, bytes calldata data) external;
 
     /**
@@ -736,6 +752,7 @@ interface IERC777 {
      *
      * See {operatorSend} and {operatorBurn}.
      */
+    // BK OK - function isOperatorFor(address operator, address holder) external view returns (bool);
     function isOperatorFor(address operator, address tokenHolder) external view returns (bool);
 
     /**
@@ -749,6 +766,7 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
+    // BK OK - function authorizeOperator(address operator) external;
     function authorizeOperator(address operator) external;
 
     /**
@@ -762,6 +780,7 @@ interface IERC777 {
      *
      * - `operator` cannot be calling address.
      */
+    // BK OK - function revokeOperator(address operator) external;
     function revokeOperator(address operator) external;
 
     /**
@@ -772,6 +791,7 @@ interface IERC777 {
      * This list is immutable, but individual holders may revoke these via
      * {revokeOperator}, in which case {isOperatorFor} will return false.
      */
+    // BK OK - function defaultOperators() external view returns (address[] memory);
     function defaultOperators() external view returns (address[] memory);
 
     /**
@@ -793,6 +813,7 @@ interface IERC777 {
      * - if `recipient` is a contract, it must implement the {IERC777Recipient}
      * interface.
      */
+    // BK OK - function operatorSend(address from, address to, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function operatorSend(
         address sender,
         address recipient,
@@ -816,6 +837,7 @@ interface IERC777 {
      * - `account` must have at least `amount` tokens.
      * - the caller must be an operator for `account`.
      */
+    // BK OK - function operatorBurn(address from, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function operatorBurn(
         address account,
         uint256 amount,
@@ -823,6 +845,7 @@ interface IERC777 {
         bytes calldata operatorData
     ) external;
 
+    // BK OK - event Sent(address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData);
     event Sent(
         address indexed operator,
         address indexed from,
@@ -832,12 +855,16 @@ interface IERC777 {
         bytes operatorData
     );
 
+    // BK OK - event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
     event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData);
 
+    // BK OK - event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
     event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData);
 
+    // BK OK - event AuthorizedOperator(address indexed operator, address indexed holder);
     event AuthorizedOperator(address indexed operator, address indexed tokenHolder);
 
+    // BK OK - event RevokedOperator(address indexed operator, address indexed holder);
     event RevokedOperator(address indexed operator, address indexed tokenHolder);
 }
 
@@ -857,6 +884,7 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-777#erc777tokensrecipient-and-the-tokensreceived-hook
 interface IERC777Recipient {
     /**
      * @dev Called by an {IERC777} token contract whenever tokens are being
@@ -868,6 +896,7 @@ interface IERC777Recipient {
      *
      * This function may revert to prevent the operation from being executed.
      */
+    // BK OK - function tokensReceived(address operator, address from, address to, uint256 amount, bytes calldata data, bytes calldata operatorData) external;
     function tokensReceived(
         address operator,
         address from,
@@ -894,6 +923,7 @@ pragma solidity ^0.6.0;
  *
  * See {IERC1820Registry} and {ERC1820Implementer}.
  */
+// BK https://eips.ethereum.org/EIPS/eip-777#erc777tokenssender-and-the-tokenstosend-hook
 interface IERC777Sender {
     /**
      * @dev Called by an {IERC777} token contract whenever a registered holder's
@@ -905,6 +935,7 @@ interface IERC777Sender {
      *
      * This function may revert to prevent the operation from being executed.
      */
+    // BK OK - function tokensToSend(address operator, address from, address to, uint256 amount, bytes calldata userData, bytes calldata operatorData) external;
     function tokensToSend(
         address operator,
         address from,
@@ -919,6 +950,7 @@ interface IERC777Sender {
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.0;
 
 /**
@@ -1008,6 +1040,7 @@ interface IERC20 {
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.0;
 
 /**
@@ -1023,6 +1056,7 @@ pragma solidity ^0.6.0;
  * Using this library instead of the unchecked operations eliminates an entire
  * class of bugs, so it's recommended to use it always.
  */
+// BK OK
 library SafeMath {
     /**
      * @dev Returns the addition of two unsigned integers, reverting on
@@ -1033,10 +1067,14 @@ library SafeMath {
      * Requirements:
      * - Addition cannot overflow.
      */
+    // BK OK - Internal
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        // BK OK
         uint256 c = a + b;
+        // BK OK
         require(c >= a, "SafeMath: addition overflow");
 
+        // BK OK
         return c;
     }
 
@@ -1049,7 +1087,9 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
+    // BK OK - Internal
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        // BK OK
         return sub(a, b, "SafeMath: subtraction overflow");
     }
 
@@ -1062,10 +1102,14 @@ library SafeMath {
      * Requirements:
      * - Subtraction cannot overflow.
      */
+    // BK OK - Internal
     function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        // BK OK
         require(b <= a, errorMessage);
+        // BK OK
         uint256 c = a - b;
 
+        // BK OK
         return c;
     }
 
@@ -1078,6 +1122,7 @@ library SafeMath {
      * Requirements:
      * - Multiplication cannot overflow.
      */
+    // BK Not used
     function mul(uint256 a, uint256 b) internal pure returns (uint256) {
         // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
         // benefit is lost if 'b' is also tested.
@@ -1103,6 +1148,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
         return div(a, b, "SafeMath: division by zero");
     }
@@ -1118,6 +1164,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         // Solidity only automatically asserts when dividing by 0
         require(b > 0, errorMessage);
@@ -1138,6 +1185,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
         return mod(a, b, "SafeMath: modulo by zero");
     }
@@ -1153,6 +1201,7 @@ library SafeMath {
      * Requirements:
      * - The divisor cannot be zero.
      */
+    // BK Not used
     function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
         require(b != 0, errorMessage);
         return a % b;
@@ -1163,6 +1212,7 @@ library SafeMath {
 
 // SPDX-License-Identifier: MIT
 
+// BK OK
 pragma solidity ^0.6.0;
 
 /**
@@ -1179,6 +1229,7 @@ pragma solidity ^0.6.0;
  *
  * For an in-depth explanation and source code analysis, see the EIP text.
  */
+// BK OK - https://eips.ethereum.org/EIPS/eip-1820
 interface IERC1820Registry {
     /**
      * @dev Sets `newManager` as the manager for `account`. A manager of an
@@ -1193,6 +1244,7 @@ interface IERC1820Registry {
      *
      * - the caller must be the current manager for `account`.
      */
+    // BK OK - function setManager(address _addr, address _newManager) external
     function setManager(address account, address newManager) external;
 
     /**
@@ -1200,6 +1252,7 @@ interface IERC1820Registry {
      *
      * See {setManager}.
      */
+    // BK OK - function getManager(address _addr) public view returns(address)
     function getManager(address account) external view returns (address);
 
     /**
@@ -1222,6 +1275,7 @@ interface IERC1820Registry {
      * queried for support, unless `implementer` is the caller. See
      * {IERC1820Implementer-canImplementInterfaceForAddress}.
      */
+    // BK OK - function setInterfaceImplementer(address _addr, bytes32 _interfaceHash, address _implementer) external
     function setInterfaceImplementer(address account, bytes32 interfaceHash, address implementer) external;
 
     /**
@@ -1233,6 +1287,7 @@ interface IERC1820Registry {
      *
      * `account` being the zero address is an alias for the caller's address.
      */
+    // BK OK - function getInterfaceImplementer(address _addr, bytes32 _interfaceHash) external view returns (address)
     function getInterfaceImplementer(address account, bytes32 interfaceHash) external view returns (address);
 
     /**
@@ -1240,6 +1295,7 @@ interface IERC1820Registry {
      * corresponding
      * https://eips.ethereum.org/EIPS/eip-1820#interface-name[section of the EIP].
      */
+    // BK OK - function interfaceHash(string calldata _interfaceName) external pure returns(bytes32)
     function interfaceHash(string calldata interfaceName) external pure returns (bytes32);
 
     /**
@@ -1247,6 +1303,7 @@ interface IERC1820Registry {
      *  @param account Address of the contract for which to update the cache.
      *  @param interfaceId ERC165 interface for which to update the cache.
      */
+    // BK OK - function updateERC165Cache(address _contract, bytes4 _interfaceId) external
     function updateERC165Cache(address account, bytes4 interfaceId) external;
 
     /**
@@ -1258,6 +1315,7 @@ interface IERC1820Registry {
      *  @param interfaceId ERC165 interface to check.
      *  @return True if `account` implements `interfaceId`, false otherwise.
      */
+     // BK OK - function implementsERC165Interface(address _contract, bytes4 _interfaceId) public view returns (bool)
     function implementsERC165Interface(address account, bytes4 interfaceId) external view returns (bool);
 
     /**
@@ -1266,10 +1324,13 @@ interface IERC1820Registry {
      *  @param interfaceId ERC165 interface to check.
      *  @return True if `account` implements `interfaceId`, false otherwise.
      */
+     // BK OK - function implementsERC165InterfaceNoCache(address _contract, bytes4 _interfaceId) public view returns (bool)
     function implementsERC165InterfaceNoCache(address account, bytes4 interfaceId) external view returns (bool);
 
+    // BK OK - event InterfaceImplementerSet(address indexed addr, bytes32 indexed interfaceHash, address indexed implementer);
     event InterfaceImplementerSet(address indexed account, bytes32 indexed interfaceHash, address indexed implementer);
 
+    // BK OK - event ManagerChanged(address indexed addr, address indexed newManager);
     event ManagerChanged(address indexed account, address indexed newManager);
 }
 
